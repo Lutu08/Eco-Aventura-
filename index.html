@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Clicker Pro - Versión Compacta</title>
+    <title>Crypto Clicker Pro - Sistema Económico Equilibrado</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -16,6 +16,8 @@
             --dark: #1e293b;
             --darker: #0f172a;
             --light: #f1f5f9;
+            --mission: #8b5cf6;
+            --temporal: #ec4899;
         }
         
         * {
@@ -31,7 +33,7 @@
             color: var(--light);
             min-height: 100vh;
             overflow-x: hidden;
-            padding-bottom: 80px; /* Espacio para el bottom nav */
+            padding-bottom: 80px;
         }
         
         /* Header fijo compacto */
@@ -224,6 +226,14 @@
             border-color: var(--crypto);
         }
         
+        .section-missions {
+            border-color: var(--mission);
+        }
+        
+        .section-temporal {
+            border-color: var(--temporal);
+        }
+        
         .section-title {
             font-size: 1.2rem;
             font-weight: bold;
@@ -364,6 +374,15 @@
             transform: translateY(-2px);
         }
         
+        .btn-temporal {
+            background: linear-gradient(135deg, var(--temporal), #db2777);
+            color: white;
+        }
+        
+        .btn-temporal:active:not(:disabled) {
+            transform: translateY(-2px);
+        }
+        
         .btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
@@ -442,6 +461,11 @@
             background: rgba(16, 185, 129, 0.1);
         }
         
+        .upgrade-card-compact.temporal {
+            border-color: var(--temporal);
+            background: rgba(236, 72, 153, 0.1);
+        }
+        
         .upgrade-header {
             display: flex;
             align-items: center;
@@ -452,6 +476,10 @@
         .upgrade-icon {
             font-size: 1.5rem;
             color: var(--primary);
+        }
+        
+        .upgrade-icon.temporal {
+            color: var(--temporal);
         }
         
         .upgrade-title {
@@ -465,6 +493,40 @@
             font-weight: bold;
             margin: 10px 0;
             text-align: center;
+        }
+        
+        /* Temporizador para mejoras temporales */
+        .timer {
+            font-size: 0.8rem;
+            color: var(--temporal);
+            font-weight: bold;
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        
+        /* ROI (Retorno de inversión) */
+        .roi-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+        
+        .roi-positive {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--secondary);
+            border: 1px solid var(--secondary);
+        }
+        
+        .roi-high {
+            background: rgba(251, 191, 36, 0.2);
+            color: var(--premium);
+            border: 1px solid var(--premium);
         }
         
         /* Sección de cripto compacta */
@@ -489,6 +551,96 @@
             color: white;
             font-size: 0.9rem;
             margin-bottom: 10px;
+        }
+        
+        /* Misiones */
+        .missions-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+        
+        .mission-card {
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            transition: all 0.3s;
+        }
+        
+        .mission-card.completed {
+            border-color: var(--secondary);
+            background: rgba(16, 185, 129, 0.1);
+        }
+        
+        .mission-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .mission-title {
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .mission-reward {
+            font-size: 0.9rem;
+            color: var(--premium);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .mission-progress {
+            margin-top: 10px;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--mission), #7c3aed);
+            border-radius: 4px;
+            transition: width 0.5s;
+        }
+        
+        .progress-text {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        /* Tabla de ganancias */
+        .earnings-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+        
+        .earnings-table th, .earnings-table td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .earnings-table th {
+            color: var(--crypto);
+            font-weight: bold;
         }
         
         /* Notificaciones */
@@ -520,11 +672,13 @@
         .notification.info { background: var(--primary); }
         .notification.premium { background: var(--premium); color: #1e293b; }
         .notification.crypto { background: var(--crypto); }
+        .notification.mission { background: var(--mission); }
+        .notification.temporal { background: var(--temporal); }
         
         /* Stats adicionales debajo del clicker */
         .clicker-stats-compact {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
             gap: 15px;
             margin: 20px auto;
             max-width: 400px;
@@ -599,6 +753,58 @@
                 transform: translateY(-3px);
             }
         }
+        
+        /* Badge de ROI */
+        .roi-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+        
+        .roi-label {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+        
+        .roi-value {
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        
+        .roi-value.positive {
+            color: var(--secondary);
+        }
+        
+        .roi-value.negative {
+            color: var(--danger);
+        }
+        
+        /* Bono diario */
+        .daily-bonus {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(30, 41, 59, 0.8));
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 2px solid var(--mission);
+            text-align: center;
+        }
+        
+        .streak-counter {
+            font-size: 0.9rem;
+            color: var(--premium);
+            margin-bottom: 10px;
+        }
+        
+        .bonus-amount {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--mission);
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -642,18 +848,37 @@
                     <div class="stat-label-small">Poder Click</div>
                     <div class="stat-value-small" id="clickPower">1</div>
                 </div>
+                <div class="stat-box">
+                    <div class="stat-label-small">Multiplicador</div>
+                    <div class="stat-value-small" id="clickMultiplier">1x</div>
+                </div>
             </div>
             
             <button class="btn btn-warning" id="upgradeClicker" style="max-width: 250px; margin: 0 auto;">
                 <i class="fas fa-arrow-up"></i>
-                Mejorar Click (<span id="clickUpgradeCost">50</span>)
+                Mejorar Click (<span id="clickUpgradeCost">100</span>)
             </button>
         </div>
         
-        <!-- Tabs de contenido (se activan con los botones de abajo) -->
+        <!-- Tabs de contenido -->
         
         <!-- Generadores -->
         <div class="tab-content active" id="tab-generators">
+            <!-- Bono diario -->
+            <div class="daily-bonus">
+                <h4 style="color: var(--mission); margin-bottom: 10px;">
+                    <i class="fas fa-gift"></i> BONO DIARIO
+                </h4>
+                <div class="streak-counter" id="streakCounter">Día 1 - Mañana: +5 gemas</div>
+                <div class="bonus-amount" id="dailyBonusAmount">+5 💎</div>
+                <button class="btn btn-premium" id="claimDailyBonus" style="margin-top: 10px;">
+                    <i class="fas fa-gift"></i> Reclamar Bono
+                </button>
+                <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 10px;">
+                    Vuelve cada día para aumentar tu racha y obtener más gemas
+                </div>
+            </div>
+            
             <div class="section section-generators">
                 <h3 class="section-title">
                     <i class="fas fa-industry"></i> Generadores
@@ -662,16 +887,42 @@
                     <!-- Los generadores se cargan aquí -->
                 </div>
             </div>
+            
+            <!-- Mejoras con dinero -->
+            <div class="section section-upgrades">
+                <h3 class="section-title">
+                    <i class="fas fa-arrow-up"></i> Mejoras con Dinero
+                </h3>
+                <div class="upgrades-grid" id="moneyUpgradesGrid">
+                    <!-- Las mejoras con dinero se cargan aquí -->
+                </div>
+            </div>
         </div>
         
         <!-- Mejoras con gemas -->
         <div class="tab-content" id="tab-upgrades">
             <div class="section section-upgrades">
                 <h3 class="section-title">
-                    <i class="fas fa-arrow-up"></i> Mejoras con Gemas
+                    <i class="fas fa-gem"></i> Mejoras Permanentes
                 </h3>
-                <div class="upgrades-grid" id="upgradesGrid">
-                    <!-- Las mejoras se cargan aquí -->
+                <p style="margin-bottom: 15px; color: #cbd5e1; font-size: 0.9rem;">
+                    Estas mejoras son para siempre. El ROI muestra cuánto ganarás en relación a lo que gastas.
+                </p>
+                <div class="upgrades-grid" id="permanentUpgradesGrid">
+                    <!-- Las mejoras permanentes se cargan aquí -->
+                </div>
+            </div>
+            
+            <!-- Mejoras temporales -->
+            <div class="section section-temporal">
+                <h3 class="section-title">
+                    <i class="fas fa-clock"></i> Mejoras Temporales
+                </h3>
+                <p style="margin-bottom: 15px; color: #cbd5e1; font-size: 0.9rem;">
+                    Estas mejoras duran 24 horas. Son más poderosas y generan mucho más de lo que cuestan.
+                </p>
+                <div class="upgrades-grid" id="temporalUpgradesGrid">
+                    <!-- Las mejoras temporales se cargan aquí -->
                 </div>
             </div>
         </div>
@@ -680,699 +931,1230 @@
         <div class="tab-content" id="tab-gems">
             <div class="section section-gems">
                 <h3 class="section-title">
-                    <i class="fas fa-gem"></i> Tienda de Gemas
+                    <i class="fas fa-shopping-cart"></i> Comprar Gemas
                 </h3>
-                <p style="color: #94a3b8; margin-bottom: 15px; font-size: 0.9rem;">
-                    Compra gemas para desbloquear mejoras especiales y aumentar tus ganancias.
+                <p style="margin-bottom: 15px; color: #cbd5e1; font-size: 0.9rem;">
+                    <strong>¡Invierte para ganar más!</strong> Cada $1 que gastes te generará $3-5 en ganancias a largo plazo.
                 </p>
-                <div class="gems-grid" id="gemsGrid">
-                    <!-- Las ofertas de gemas se cargan aquí -->
+                
+                <!-- Calculadora de ROI -->
+                <div style="background: rgba(16, 185, 129, 0.1); border-radius: 10px; padding: 15px; margin-bottom: 20px; border: 1px solid var(--secondary);">
+                    <h4 style="color: var(--secondary); margin-bottom: 10px;"><i class="fas fa-calculator"></i> Calculadora de ROI</h4>
+                    <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 10px;">
+                        <strong>ROI (Retorno de Inversión):</strong> 
+                        <span id="roiValue" style="color: var(--secondary); font-weight: bold;">300%</span>
+                    </p>
+                    <p style="font-size: 0.85rem; color: #94a3b8;">
+                        Por cada $1 que gastes, ganarás aproximadamente $3-5 en el juego.
+                        Tu inversión se recupera en <span id="roiTime" style="color: var(--premium); font-weight: bold;">2-3 días</span>.
+                    </p>
+                </div>
+                
+                <div class="gems-grid" id="gemsShopGrid">
+                    <!-- La tienda de gemas se carga aquí -->
                 </div>
             </div>
         </div>
         
-        <!-- Criptomonedas -->
+        <!-- Misiones -->
+        <div class="tab-content" id="tab-missions">
+            <div class="section section-missions">
+                <h3 class="section-title">
+                    <i class="fas fa-tasks"></i> Misiones y Logros
+                </h3>
+                <p style="margin-bottom: 15px; color: #cbd5e1; font-size: 0.9rem;">
+                    Gana gemas gratis completando misiones. ¡Sin gemas el progreso es lento!
+                </p>
+                <div class="missions-grid" id="missionsGrid">
+                    <!-- Las misiones se cargan aquí -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Cripto y ganancias -->
         <div class="tab-content" id="tab-crypto">
             <div class="section section-crypto">
                 <h3 class="section-title">
-                    <i class="fas fa-coins"></i> Criptomonedas
+                    <i class="fab fa-bitcoin"></i> Criptomonedas y Ganancias
                 </h3>
                 
                 <div class="crypto-info">
-                    <div style="text-align: center; margin-bottom: 15px;">
-                        <div style="font-size: 2rem; color: var(--crypto);">₿</div>
-                        <div style="font-size: 1.8rem; color: var(--crypto); font-weight: bold;" id="cryptoBalance">0.000000</div>
-                        <div style="color: #94a3b8; font-size: 0.9rem;">≈ $<span id="cryptoUSD">0.00</span> USD</div>
+                    <h4 style="margin-bottom: 10px; color: var(--crypto);">💰 Balance de Ganancias</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+                        <div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px;">
+                            <div style="font-size: 0.8rem; color: #94a3b8;">Tus Ganancias</div>
+                            <div style="font-size: 1.2rem; font-weight: bold; color: var(--secondary);">$<span id="userEarnings">0.00</span></div>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px;">
+                            <div style="font-size: 0.8rem; color: #94a3b8;">Fondo Disponible</div>
+                            <div style="font-size: 1.2rem; font-weight: bold; color: var(--premium);">$<span id="availableFund">1000.00</span></div>
+                        </div>
                     </div>
                     
-                    <div style="background: rgba(0, 209, 178, 0.2); padding: 12px; border-radius: 10px; margin: 15px 0;">
-                        <div style="color: white; font-size: 0.9rem; margin-bottom: 8px;">
-                            <i class="fas fa-info-circle"></i> Mínimo para retirar: 0.0001 BTC (~$4.50 USD)
-                        </div>
-                        <div style="color: white; font-size: 0.9rem;">
-                            Comisión: <span style="color: var(--crypto); font-weight: bold;">15%</span> (mantiene el sistema)
-                        </div>
-                    </div>
+                    <p style="font-size: 0.8rem; color: #cbd5e1; margin-bottom: 15px;">
+                        <i class="fas fa-info-circle"></i> Sistema garantizado: 60% para pagos, 40% para desarrollo
+                    </p>
                 </div>
                 
+                <h4 style="margin: 20px 0 10px; color: var(--crypto);">📊 Historial de Conversión</h4>
+                <div style="overflow-x: auto;">
+                    <table class="earnings-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Dinero Convertido</th>
+                                <th>Cripto Obtenido</th>
+                                <th>Valor USD</th>
+                            </tr>
+                        </thead>
+                        <tbody id="conversionHistory">
+                            <!-- Historial de conversiones -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <h4 style="margin: 20px 0 10px; color: var(--crypto);">🔄 Convertir a Cripto</h4>
+                <p style="margin-bottom: 10px; color: #cbd5e1; font-size: 0.9rem;">
+                    Tasa de conversión: <span id="conversionRate">10,000</span> dinero = 0.000001 BTC (~$0.05)<br>
+                    Mínimo para retirar: 0.0001 BTC (~$5.00)<br>
+                    <strong>Se necesitan: 1,000,000 dinero para $5</strong>
+                </p>
+                
                 <div class="withdrawal-input">
-                    <input type="text" id="walletAddress" placeholder="Dirección de Bitcoin">
-                    <button class="btn btn-crypto" id="withdrawButton" disabled>
-                        <i class="fas fa-paper-plane"></i> RETIRAR FONDOS
+                    <input type="number" id="cryptoAmount" placeholder="Cantidad de dinero a convertir" min="10000" step="10000">
+                    <button class="btn btn-crypto" id="convertToCrypto" style="width: 100%;">
+                        <i class="fas fa-exchange-alt"></i> Convertir a Cripto
                     </button>
+                </div>
+                
+                <div style="background: rgba(59, 130, 246, 0.1); border-radius: 10px; padding: 15px; margin-top: 20px; border: 1px solid var(--primary);">
+                    <h4 style="color: var(--primary); margin-bottom: 10px;"><i class="fas fa-chart-line"></i> Proyección de Ganancias</h4>
+                    
+                    <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 10px;">
+                        <strong>Sin gastar dinero real:</strong>
+                    </p>
+                    <ul style="font-size: 0.9rem; color: #cbd5e1; margin-left: 20px; margin-bottom: 15px;">
+                        <li><strong>Primeras 2 horas:</strong> ~$0.10 en ganancias</li>
+                        <li><strong>10-15 horas:</strong> ~$1-2 en ganancias</li>
+                        <li><strong>1 mes (2h/día):</strong> ~$10-20 en ganancias</li>
+                    </ul>
+                    
+                    <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 10px;">
+                        <strong>Inversión inteligente (ROI 300-500%):</strong>
+                    </p>
+                    <ul style="font-size: 0.9rem; color: #cbd5e1; margin-left: 20px;">
+                        <li><strong>$1 inversión:</strong> Genera $3-5 en ganancias</li>
+                        <li><strong>$10 inversión:</strong> Genera $30-50 en ganancias</li>
+                        <li><strong>$60 inversión:</strong> Genera $180-300 en ganancias</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- Tabs de navegación fijas en la parte inferior -->
+    <!-- Tabs de navegación -->
     <div class="tabs-container">
-        <button class="tab-button active" data-tab="generators">
-            <i class="fas fa-industry tab-icon"></i>
+        <button class="tab-button active" data-tab="tab-generators">
+            <i class="fas fa-industry"></i>
             <span>Generadores</span>
         </button>
-        
-        <button class="tab-button" data-tab="upgrades">
-            <i class="fas fa-arrow-up tab-icon"></i>
+        <button class="tab-button" data-tab="tab-upgrades">
+            <i class="fas fa-gem"></i>
             <span>Mejoras</span>
         </button>
-        
-        <button class="tab-button" data-tab="gems">
-            <i class="fas fa-gem tab-icon"></i>
-            <span>Gemas</span>
+        <button class="tab-button" data-tab="tab-gems">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Tienda</span>
         </button>
-        
-        <button class="tab-button" data-tab="crypto">
-            <i class="fas fa-coins tab-icon"></i>
+        <button class="tab-button" data-tab="tab-missions">
+            <i class="fas fa-tasks"></i>
+            <span>Misiones</span>
+        </button>
+        <button class="tab-button" data-tab="tab-crypto">
+            <i class="fab fa-bitcoin"></i>
             <span>Cripto</span>
         </button>
     </div>
     
-    <!-- Notificación -->
-    <div class="notification" id="notification"></div>
+    <!-- Notificaciones -->
+    <div id="notification" class="notification"></div>
 
     <script>
-        // ============================
-        // CONFIGURACIÓN DEL JUEGO
-        // ============================
-        const gameConfig = {
-            btcPrice: 45000,
-            minWithdrawal: 0.0001,
-            withdrawalFee: 0.15,
-            moneyToCrypto: 0.000000001,
-            clickToCrypto: 0.0000000001,
-            levelMultiplier: 1.2
-        };
-
-        // ============================
-        // ESTADO DEL JUEGO
-        // ============================
-        const gameState = {
-            money: 0,
-            crypto: 0,
-            gems: 0,
-            clicks: 0,
-            clickPower: 1,
-            clickLevel: 1,
-            totalMoney: 0,
-            totalCrypto: 0,
-            level: 1,
-            xp: 0,
-            totalXp: 0,
-            earnedToday: 0,
-            totalEarned: 0,
-            
-            generators: [
-                { id: 1, name: "Minería", icon: "⛏️", level: 0, cost: 25, production: 0.1 },
-                { id: 2, name: "Granja", icon: "🌾", level: 0, cost: 100, production: 0.5 },
-                { id: 3, name: "Fábrica", icon: "🏭", level: 0, cost: 500, production: 2 },
-                { id: 4, name: "Energía", icon: "⚡", level: 0, cost: 2500, production: 10 },
-                { id: 5, name: "Investigación", icon: "🔬", level: 0, cost: 10000, production: 50 },
-                { id: 6, name: "Espacio", icon: "🚀", level: 0, cost: 50000, production: 200 }
-            ],
-            
-            upgrades: [
-                { id: 1, name: "Click x2", icon: "👆", cost: 100, effect: "click", value: 2, purchased: false },
-                { id: 2, name: "Generadores x2", icon: "⚙️", cost: 200, effect: "generator", value: 2, purchased: false },
-                { id: 3, name: "Boost 1h", icon: "🚀", cost: 150, effect: "boost", value: 3, purchased: false },
-                { id: 4, name: "Auto-Click", icon: "🤖", cost: 300, effect: "autoclick", value: 1, purchased: false }
-            ],
-            
-            gemStore: [
-                { id: 1, name: "Paquete Pequeño", icon: "💎", gems: 50, priceUSD: 0.99, bonus: "+5% multiplicador" },
-                { id: 2, name: "Paquete Medio", icon: "💎💎", gems: 150, priceUSD: 2.99, bonus: "+10% multiplicador" },
-                { id: 3, name: "Paquete Grande", icon: "💎💎💎", gems: 500, priceUSD: 4.99, bonus: "+25% multiplicador" },
-                { id: 4, name: "Paquete Premium", icon: "👑", gems: 1200, priceUSD: 9.99, bonus: "+50% multiplicador" }
-            ]
-        };
-
-        // ============================
-        // INICIALIZACIÓN
-        // ============================
+        // Variables del juego
+        let money = 0;
+        let crypto = 0;
+        let gems = 0;
+        let clickPower = 1;
+        let totalClicks = 0;
+        let totalMoneyEarned = 0;
+        let moneyPerSecond = 0;
+        let userEarningsUSD = 0;
+        let availableFund = 1000.00;
+        let clickMultiplier = 1;
+        
+        // Sistema de bonos diarios
+        let lastBonusClaim = localStorage.getItem('lastBonusClaim') || null;
+        let bonusStreak = parseInt(localStorage.getItem('bonusStreak')) || 1;
+        
+        // Precios de mejoras de click
+        let clickUpgradeCost = 100;
+        let clickUpgradeLevel = 1;
+        
+        // Generadores (más caros sin mejoras)
+        const generators = [
+            { id: 1, name: "Minería Básica", baseCost: 100, baseCPS: 0.1, level: 0, icon: "fas fa-server", description: "Muy lento sin mejoras" },
+            { id: 2, name: "Granja GPU", baseCost: 1000, baseCPS: 1, level: 0, icon: "fas fa-microchip", description: "Requiere inversión" },
+            { id: 3, name: "Data Center", baseCost: 10000, baseCPS: 5, level: 0, icon: "fas fa-database", description: "Carro pero necesario" },
+            { id: 4, name: "Minería ASIC", baseCost: 100000, baseCPS: 20, level: 0, icon: "fas fa-hdd", description: "Solo para jugadores activos" },
+            { id: 5, name: "Granja Solar", baseCost: 1000000, baseCPS: 80, level: 0, icon: "fas fa-solar-panel", description: "Para inversores serios" },
+            { id: 6, name: "Blockchain Corp", baseCost: 10000000, baseCPS: 400, level: 0, icon: "fas fa-building", description: "Máxima eficiencia" }
+        ];
+        
+        // Mejoras con dinero
+        const moneyUpgrades = [
+            { id: 1, name: "Click Mejorado", cost: 200, type: "click", value: 1, purchased: false, icon: "fas fa-mouse-pointer", description: "+1 al poder de click", roi: 1.5 },
+            { id: 2, name: "Multiplicador x2", cost: 1000, type: "multiplier", value: 2, purchased: false, icon: "fas fa-times", description: "Duplica todo el dinero", roi: 3 },
+            { id: 3, name: "Auto-Click", cost: 5000, type: "autoclick", value: 1, purchased: false, icon: "fas fa-robot", description: "1 click cada 10s", roi: 2 },
+            { id: 4, name: "Generadores +20%", cost: 20000, type: "generatorBoost", value: 1.2, purchased: false, icon: "fas fa-chart-line", description: "+20% producción", roi: 1.8 },
+            { id: 5, name: "Multiplicador x3", cost: 50000, type: "multiplier", value: 3, purchased: false, icon: "fas fa-times", description: "Triplica el dinero", roi: 4 }
+        ];
+        
+        // Mejoras PERMANENTES con gemas (ROI alto)
+        const permanentGemUpgrades = [
+            { id: 1, name: "Click Dorado", cost: 10, type: "goldenClick", value: 50, purchased: false, icon: "fas fa-crown", description: "5% de chance de x50 dinero", roi: 50, multiplier: 1.5 },
+            { id: 2, name: "Generador VIP", cost: 25, type: "vipGenerator", value: 3, purchased: false, icon: "fas fa-star", description: "x3 producción generadores", roi: 40, multiplier: 3 },
+            { id: 3, name: "Multiplicador Élite", cost: 50, type: "eliteMultiplier", value: 5, purchased: false, icon: "fas fa-gem", description: "x5 todo el dinero", roi: 60, multiplier: 5 },
+            { id: 4, name: "Cripto Boost", cost: 75, type: "cryptoBoost", value: 5, purchased: false, icon: "fas fa-rocket", description: "x5 cripto obtenida", roi: 45, multiplier: 5 }
+        ];
+        
+        // Mejoras TEMPORALES con gemas (24 horas, ROI MUY alto)
+        const temporalGemUpgrades = [
+            { 
+                id: 1, 
+                name: "Boost x10 Temporal", 
+                cost: 15, 
+                type: "temporalMultiplier", 
+                value: 10, 
+                purchased: false, 
+                icon: "fas fa-bolt", 
+                description: "x10 dinero por 24h", 
+                roi: 100, // ROI del 1000%
+                duration: 24 * 60 * 60 * 1000, // 24 horas en milisegundos
+                endTime: null,
+                active: false
+            },
+            { 
+                id: 2, 
+                name: "Auto-Click Premium", 
+                cost: 20, 
+                type: "premiumAutoclick", 
+                value: 10, 
+                purchased: false, 
+                icon: "fas fa-robot", 
+                description: "10 clicks/s por 24h", 
+                roi: 80,
+                duration: 24 * 60 * 60 * 1000,
+                endTime: null,
+                active: false
+            },
+            { 
+                id: 3, 
+                name: "Generadores x5", 
+                cost: 30, 
+                type: "temporalGenerator", 
+                value: 5, 
+                purchased: false, 
+                icon: "fas fa-industry", 
+                description: "x5 producción por 24h", 
+                roi: 120,
+                duration: 24 * 60 * 60 * 1000,
+                endTime: null,
+                active: false
+            },
+            { 
+                id: 4, 
+                name: "Cripto x10", 
+                cost: 25, 
+                type: "temporalCrypto", 
+                value: 10, 
+                purchased: false, 
+                icon: "fab fa-bitcoin", 
+                description: "x10 cripto por 24h", 
+                roi: 150,
+                duration: 24 * 60 * 60 * 1000,
+                endTime: null,
+                active: false
+            }
+        ];
+        
+        // Tienda de gemas con ROI garantizado
+        const gemShop = [
+            { id: 1, name: "Inversión Básica", gems: 50, price: 0.99, icon: "fas fa-gem", description: "ROI: 300%", roi: 3 },
+            { id: 2, name: "Inversión Plata", gems: 150, price: 2.99, icon: "fas fa-gem", description: "ROI: 350%", roi: 3.5 },
+            { id: 3, name: "Inversión Oro", gems: 300, price: 4.99, icon: "fas fa-gem", description: "ROI: 400%", roi: 4 },
+            { id: 4, name: "Inversión Platino", gems: 750, price: 9.99, icon: "fas fa-gem", description: "ROI: 450%", roi: 4.5 },
+            { id: 5, name: "Inversión Diamante", gems: 1500, price: 19.99, icon: "fas fa-gem", description: "ROI: 500%", roi: 5 },
+            { id: 6, name: "Inversión Élite", gems: 3500, price: 39.99, icon: "fas fa-gem", description: "ROI: 550%", roi: 5.5 }
+        ];
+        
+        // Misiones
+        const missions = [
+            { id: 1, name: "Primeros Clicks", target: 10, current: 0, type: "clicks", reward: { gems: 3, money: 50 }, completed: false, icon: "fas fa-play" },
+            { id: 2, name: "Clicker Novato", target: 100, current: 0, type: "clicks", reward: { gems: 5, money: 200 }, completed: false, icon: "fas fa-user" },
+            { id: 3, name: "Clicker Experto", target: 500, current: 0, type: "clicks", reward: { gems: 10, money: 1000 }, completed: false, icon: "fas fa-user-check" },
+            { id: 4, name: "Primer Generador", target: 1, current: 0, type: "generators", reward: { gems: 2, money: 100 }, completed: false, icon: "fas fa-server" },
+            { id: 5, name: "Granjero", target: 3, current: 0, type: "generatorLevels", reward: { gems: 5, money: 500 }, completed: false, icon: "fas fa-microchip" },
+            { id: 6, name: "Inversor", target: 100000, current: 0, type: "money", reward: { gems: 15, money: 5000 }, completed: false, icon: "fas fa-money-bill-wave" },
+            { id: 7, name: "Cripto Iniciado", target: 0.00001, current: 0, type: "crypto", reward: { gems: 8, money: 2000 }, completed: false, icon: "fab fa-bitcoin" },
+            { id: 8, name: "Mejoras Iniciales", target: 2, current: 0, type: "upgrades", reward: { gems: 10, money: 3000 }, completed: false, icon: "fas fa-arrow-up" }
+        ];
+        
+        // Historial de conversiones
+        let conversionHistory = [];
+        
+        // Inicializar el juego
         function initGame() {
             loadGame();
-            setupGenerators();
-            setupUpgrades();
-            setupGemStore();
-            updateUI();
             setupEventListeners();
-            startGameLoop();
+            updateUI();
+            renderGenerators();
+            renderMoneyUpgrades();
+            renderPermanentUpgrades();
+            renderTemporalUpgrades();
+            renderGemShop();
+            renderMissions();
+            updateConversionHistory();
+            checkDailyBonus();
             
-            showNotification("¡Toca el círculo azul para empezar a ganar!", "info");
+            // Bucle del juego
+            setInterval(gameLoop, 1000);
+            
+            // Verificar mejoras temporales
+            setInterval(checkTemporalUpgrades, 1000);
+            
+            // Auto-click básico
+            const autoClickUpgrade = moneyUpgrades.find(u => u.type === "autoclick" && u.purchased);
+            if (autoClickUpgrade) {
+                setInterval(() => {
+                    if (autoClickUpgrade.purchased) {
+                        click();
+                    }
+                }, 10000);
+            }
         }
-
-        function setupGenerators() {
-            const grid = document.getElementById("generatorsGrid");
-            grid.innerHTML = "";
+        
+        // Bucle principal del juego
+        function gameLoop() {
+            // Calcular CPS base
+            moneyPerSecond = 0;
+            generators.forEach(gen => {
+                if (gen.level > 0) {
+                    let genCPS = gen.baseCPS * gen.level;
+                    
+                    // Boost de mejoras con dinero
+                    const generatorBoost = moneyUpgrades.find(u => u.type === "generatorBoost" && u.purchased);
+                    if (generatorBoost) {
+                        genCPS *= generatorBoost.value;
+                    }
+                    
+                    // Boost de mejoras permanentes con gemas
+                    const vipGenerator = permanentGemUpgrades.find(u => u.type === "vipGenerator" && u.purchased);
+                    if (vipGenerator) {
+                        genCPS *= vipGenerator.value;
+                    }
+                    
+                    // Boost de mejoras temporales
+                    const temporalGenerator = temporalGemUpgrades.find(u => u.type === "temporalGenerator" && u.active);
+                    if (temporalGenerator) {
+                        genCPS *= temporalGenerator.value;
+                    }
+                    
+                    moneyPerSecond += genCPS;
+                }
+            });
             
-            gameState.generators.forEach(gen => {
-                const cost = Math.floor(gen.cost * Math.pow(1.5, gen.level));
-                const production = gen.production * gen.level;
+            // Aplicar multiplicadores temporales
+            let temporalMultiplier = 1;
+            const temporalMultiplierUpgrade = temporalGemUpgrades.find(u => u.type === "temporalMultiplier" && u.active);
+            if (temporalMultiplierUpgrade) {
+                temporalMultiplier *= temporalMultiplierUpgrade.value;
+            }
+            
+            // Aplicar multiplicadores permanentes
+            const eliteMultiplier = permanentGemUpgrades.find(u => u.type === "eliteMultiplier" && u.purchased);
+            if (eliteMultiplier) {
+                temporalMultiplier *= eliteMultiplier.value;
+            }
+            
+            // Calcular dinero ganado con multiplicadores
+            const moneyEarnedThisSecond = moneyPerSecond * temporalMultiplier;
+            money += moneyEarnedThisSecond;
+            totalMoneyEarned += moneyEarnedThisSecond;
+            
+            // Auto-click premium si está activo
+            const premiumAutoClick = temporalGemUpgrades.find(u => u.type === "premiumAutoclick" && u.active);
+            if (premiumAutoClick) {
+                for (let i = 0; i < premiumAutoClick.value; i++) {
+                    click();
+                }
+            }
+            
+            // Actualizar misiones
+            updateMissionProgress("money", moneyEarnedThisSecond);
+            
+            // Actualizar UI
+            updateUI();
+            updateGeneratorsUI();
+            updateMissionsUI();
+            updateTemporalUpgradesUI();
+        }
+        
+        // Sistema de clicks
+        function click() {
+            totalClicks++;
+            
+            // Calcular valor base del click
+            let clickValue = clickPower;
+            
+            // Aplicar multiplicadores
+            clickValue *= clickMultiplier;
+            
+            // Aplicar multiplicadores de gemas
+            const eliteMultiplier = permanentGemUpgrades.find(u => u.type === "eliteMultiplier" && u.purchased);
+            if (eliteMultiplier) {
+                clickValue *= eliteMultiplier.value;
+            }
+            
+            // Aplicar multiplicadores temporales
+            const temporalMultiplier = temporalGemUpgrades.find(u => u.type === "temporalMultiplier" && u.active);
+            if (temporalMultiplier) {
+                clickValue *= temporalMultiplier.value;
+            }
+            
+            // Verificar click dorado
+            const goldenClick = permanentGemUpgrades.find(u => u.type === "goldenClick" && u.purchased);
+            if (goldenClick && Math.random() < 0.05) {
+                clickValue *= goldenClick.value;
+                showNotification(`¡Click Dorado! +${formatNumber(clickValue)}`, "premium");
+            }
+            
+            money += clickValue;
+            totalMoneyEarned += clickValue;
+            
+            // Actualizar misiones de clicks
+            updateMissionProgress("clicks", 1);
+            
+            // Actualizar UI
+            updateUI();
+            
+            // Efecto visual
+            createClickEffect(event);
+        }
+        
+        // Comprar generador
+        function buyGenerator(generatorId) {
+            const generator = generators.find(g => g.id === generatorId);
+            const cost = generator.baseCost * Math.pow(1.25, generator.level);
+            
+            if (money >= cost) {
+                money -= cost;
+                generator.level++;
                 
-                const card = document.createElement("div");
-                card.className = `compact-card ${gameState.money >= cost ? "" : "disabled"}`;
-                card.id = `gen-${gen.id}`;
+                updateMissionProgress("generators", 1);
+                updateMissionProgress("generatorLevels", 1);
+                
+                showNotification(`¡${generator.name} comprado!`, "success");
+                updateUI();
+                updateGeneratorsUI();
+            } else {
+                showNotification("¡No tienes suficiente dinero!", "error");
+            }
+        }
+        
+        // Mejorar click con dinero
+        function upgradeClick() {
+            if (money >= clickUpgradeCost) {
+                money -= clickUpgradeCost;
+                clickPower++;
+                clickUpgradeLevel++;
+                clickUpgradeCost = Math.floor(100 * Math.pow(1.8, clickUpgradeLevel));
+                
+                showNotification(`¡Click mejorado a nivel ${clickUpgradeLevel}!`, "success");
+                updateUI();
+            } else {
+                showNotification("¡No tienes suficiente dinero!", "error");
+            }
+        }
+        
+        // Comprar mejora con dinero
+        function buyMoneyUpgrade(upgradeId) {
+            const upgrade = moneyUpgrades.find(u => u.id === upgradeId);
+            
+            if (!upgrade.purchased && money >= upgrade.cost) {
+                money -= upgrade.cost;
+                upgrade.purchased = true;
+                
+                if (upgrade.type === "multiplier") {
+                    clickMultiplier *= upgrade.value;
+                }
+                
+                updateMissionProgress("upgrades", 1);
+                showNotification(`¡${upgrade.name} comprado! (ROI: ${upgrade.roi}x)`, "success");
+                updateUI();
+                updateMoneyUpgradesUI();
+            } else if (upgrade.purchased) {
+                showNotification("¡Ya tienes esta mejora!", "warning");
+            } else {
+                showNotification("¡No tienes suficiente dinero!", "error");
+            }
+        }
+        
+        // Comprar mejora PERMANENTE con gemas
+        function buyPermanentUpgrade(upgradeId) {
+            const upgrade = permanentGemUpgrades.find(u => u.id === upgradeId);
+            
+            if (!upgrade.purchased && gems >= upgrade.cost) {
+                gems -= upgrade.cost;
+                upgrade.purchased = true;
+                
+                if (upgrade.type === "eliteMultiplier") {
+                    clickMultiplier *= upgrade.value;
+                }
+                
+                showNotification(`¡${upgrade.name} comprado! (ROI: ${upgrade.roi}x)`, "premium");
+                updateUI();
+                updatePermanentUpgradesUI();
+            } else if (upgrade.purchased) {
+                showNotification("¡Ya tienes esta mejora!", "warning");
+            } else {
+                showNotification("¡No tienes suficientes gemas!", "error");
+            }
+        }
+        
+        // Comprar mejora TEMPORAL con gemas
+        function buyTemporalUpgrade(upgradeId) {
+            const upgrade = temporalGemUpgrades.find(u => u.id === upgradeId);
+            
+            if (gems >= upgrade.cost) {
+                gems -= upgrade.cost;
+                upgrade.active = true;
+                upgrade.endTime = Date.now() + upgrade.duration;
+                upgrade.purchased = true;
+                
+                showNotification(`¡${upgrade.name} activado por 24h! (ROI: ${upgrade.roi}x)`, "temporal");
+                updateUI();
+                updateTemporalUpgradesUI();
+            } else {
+                showNotification("¡No tienes suficientes gemas!", "error");
+            }
+        }
+        
+        // Verificar mejoras temporales
+        function checkTemporalUpgrades() {
+            const now = Date.now();
+            let changed = false;
+            
+            temporalGemUpgrades.forEach(upgrade => {
+                if (upgrade.active && upgrade.endTime && now >= upgrade.endTime) {
+                    upgrade.active = false;
+                    upgrade.endTime = null;
+                    changed = true;
+                    
+                    showNotification(`¡${upgrade.name} ha expirado!`, "warning");
+                }
+            });
+            
+            if (changed) {
+                updateTemporalUpgradesUI();
+            }
+        }
+        
+        // Comprar gemas (simulación)
+        function buyGems(packageId) {
+            const gemPackage = gemShop.find(p => p.id === packageId);
+            
+            // Actualizar fondo (60% para pagos, 40% ganancia)
+            availableFund += gemPackage.price * 0.6;
+            
+            // Añadir gemas al jugador
+            gems += gemPackage.gems;
+            
+            // Calcular ganancia estimada para el usuario
+            const estimatedEarnings = gemPackage.price * gemPackage.roi;
+            
+            showNotification(`¡${gemPackage.name} comprado! +${gemPackage.gems} gemas. ROI estimado: $${estimatedEarnings.toFixed(2)}`, "premium");
+            updateUI();
+        }
+        
+        // Convertir dinero a cripto
+        function convertToCrypto() {
+            const amountInput = document.getElementById('cryptoAmount');
+            const amount = parseInt(amountInput.value);
+            
+            if (!amount || amount < 10000) {
+                showNotification("Mínimo 10,000 dinero para convertir", "error");
+                return;
+            }
+            
+            if (money < amount) {
+                showNotification("No tienes suficiente dinero", "error");
+                return;
+            }
+            
+            // Tasa base: 10,000 dinero = 0.000001 BTC (~$0.05)
+            let btcAmount = (amount / 10000) * 0.000001;
+            
+            // Boost permanente
+            const cryptoBoost = permanentGemUpgrades.find(u => u.type === "cryptoBoost" && u.purchased);
+            if (cryptoBoost) {
+                btcAmount *= cryptoBoost.value;
+            }
+            
+            // Boost temporal
+            const temporalCrypto = temporalGemUpgrades.find(u => u.type === "temporalCrypto" && u.active);
+            if (temporalCrypto) {
+                btcAmount *= temporalCrypto.value;
+            }
+            
+            // Calcular valor en USD
+            const btcPrice = 50000;
+            const usdValue = btcAmount * btcPrice;
+            
+            // Actualizar balances
+            money -= amount;
+            crypto += btcAmount;
+            userEarningsUSD += usdValue;
+            
+            // Actualizar misiones
+            updateMissionProgress("crypto", btcAmount);
+            
+            // Añadir al historial
+            const conversion = {
+                date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString().substring(0,5),
+                money: amount,
+                crypto: btcAmount.toFixed(8),
+                usdValue: usdValue.toFixed(2)
+            };
+            
+            conversionHistory.unshift(conversion);
+            if (conversionHistory.length > 10) {
+                conversionHistory.pop();
+            }
+            
+            updateUI();
+            updateConversionHistory();
+            amountInput.value = '';
+            
+            showNotification(`¡Convertido a ${btcAmount.toFixed(8)} BTC (≈$${usdValue.toFixed(2)})!`, "crypto");
+        }
+        
+        // Completar misión
+        function claimMission(missionId) {
+            const mission = missions.find(m => m.id === missionId);
+            
+            if (mission.completed || mission.current < mission.target) {
+                return;
+            }
+            
+            mission.completed = true;
+            gems += mission.reward.gems;
+            money += mission.reward.money;
+            
+            showNotification(`¡Misión completada! +${mission.reward.gems} gemas`, "mission");
+            updateUI();
+            updateMissionsUI();
+        }
+        
+        // Actualizar progreso de misiones
+        function updateMissionProgress(type, value) {
+            missions.forEach(mission => {
+                if (!mission.completed && mission.type === type) {
+                    mission.current += value;
+                    if (mission.current > mission.target) {
+                        mission.current = mission.target;
+                    }
+                }
+            });
+        }
+        
+        // Sistema de bono diario
+        function checkDailyBonus() {
+            const now = new Date();
+            const today = now.toDateString();
+            
+            if (lastBonusClaim !== today) {
+                // El usuario puede reclamar el bono hoy
+                const bonusGems = 3 + (bonusStreak - 1) * 2; // 3, 5, 7, 9...
+                if (bonusStreak > 7) bonusGems = 15; // Máximo 15 gemas
+                
+                document.getElementById('dailyBonusAmount').textContent = `+${bonusGems} 💎`;
+                document.getElementById('streakCounter').textContent = `Día ${bonusStreak} - Reclama tus ${bonusGems} gemas`;
+                
+                // Mostrar notificación si es un nuevo día
+                if (lastBonusClaim && lastBonusClaim !== today) {
+                    showNotification(`¡Bono diario disponible! Racha: ${bonusStreak} días`, "info");
+                }
+            } else {
+                // Ya reclamó hoy
+                const tomorrow = new Date(now);
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                tomorrow.setHours(0, 0, 0, 0);
+                
+                const hoursLeft = Math.floor((tomorrow - now) / (1000 * 60 * 60));
+                const minutesLeft = Math.floor((tomorrow - now) / (1000 * 60)) % 60;
+                
+                document.getElementById('dailyBonusAmount').textContent = "Ya reclamado";
+                document.getElementById('streakCounter').textContent = `Vuelve en ${hoursLeft}h ${minutesLeft}m`;
+            }
+        }
+        
+        // Reclamar bono diario
+        function claimDailyBonus() {
+            const now = new Date();
+            const today = now.toDateString();
+            
+            if (lastBonusClaim === today) {
+                showNotification("¡Ya reclamaste tu bono hoy!", "warning");
+                return;
+            }
+            
+            // Calcular gemas del bono
+            let bonusGems = 3 + (bonusStreak - 1) * 2;
+            if (bonusStreak >= 7) bonusGems = 15;
+            
+            // Incrementar racha si fue ayer
+            const yesterday = new Date(now);
+            yesterday.setDate(yesterday.getDate() - 1);
+            
+            if (lastBonusClaim === yesterday.toDateString()) {
+                bonusStreak++;
+            } else if (lastBonusClaim !== today) {
+                // Si no fue ayer, reiniciar racha
+                bonusStreak = 1;
+            }
+            
+            // Dar gemas
+            gems += bonusGems;
+            lastBonusClaim = today;
+            
+            // Guardar en localStorage
+            localStorage.setItem('lastBonusClaim', lastBonusClaim);
+            localStorage.setItem('bonusStreak', bonusStreak);
+            
+            showNotification(`¡Bono diario reclamado! +${bonusGems} gemas (Racha: ${bonusStreak} días)`, "premium");
+            updateUI();
+            checkDailyBonus();
+        }
+        
+        // Mostrar notificación
+        function showNotification(message, type = "info") {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Actualizar UI principal
+        function updateUI() {
+            // Actualizar header
+            document.getElementById('compactMoney').textContent = formatNumber(money);
+            document.getElementById('compactMoneyPerSec').textContent = `+${formatNumber(moneyPerSecond)}/s`;
+            document.getElementById('compactCrypto').textContent = crypto.toFixed(8);
+            document.getElementById('compactCryptoUSD').textContent = (crypto * 50000).toFixed(2);
+            document.getElementById('compactGems').textContent = gems;
+            document.getElementById('compactLevel').textContent = `Nivel ${clickUpgradeLevel}`;
+            
+            // Actualizar clicker
+            document.getElementById('clickAmount').textContent = `+${formatNumber(clickPower * clickMultiplier)}`;
+            document.getElementById('totalClicks').textContent = formatNumber(totalClicks);
+            document.getElementById('clickPower').textContent = clickPower;
+            document.getElementById('clickMultiplier').textContent = `${clickMultiplier}x`;
+            document.getElementById('cpsDisplay').textContent = `${formatNumber(moneyPerSecond)} CPS`;
+            document.getElementById('clickUpgradeCost').textContent = formatNumber(clickUpgradeCost);
+            
+            // Actualizar sección de cripto
+            document.getElementById('userEarnings').textContent = userEarningsUSD.toFixed(2);
+            document.getElementById('availableFund').textContent = availableFund.toFixed(2);
+            document.getElementById('conversionRate').textContent = "10,000";
+            
+            // Calcular ROI promedio
+            const totalInvested = gemShop.reduce((total, pack) => total + (pack.price * 0.4), 0);
+            const totalPaidOut = userEarningsUSD;
+            const avgROI = totalInvested > 0 ? ((totalPaidOut / totalInvested) * 100).toFixed(0) : 300;
+            document.getElementById('roiValue').textContent = `${Math.max(300, avgROI)}%`;
+            
+            // Guardar juego
+            saveGame();
+        }
+        
+        // Formatear números
+        function formatNumber(num) {
+            if (num >= 1e12) return (num / 1e12).toFixed(2) + 'T';
+            if (num >= 1e9) return (num / 1e9).toFixed(2) + 'B';
+            if (num >= 1e6) return (num / 1e6).toFixed(2) + 'M';
+            if (num >= 1e3) return (num / 1e3).toFixed(2) + 'K';
+            return Math.floor(num);
+        }
+        
+        // Crear efecto de partículas
+        function createClickEffect(e) {
+            const button = document.getElementById('clickerButton');
+            const rect = button.getBoundingClientRect();
+            const x = rect.left + rect.width / 2;
+            const y = rect.top + rect.height / 2;
+            
+            for (let i = 0; i < 5; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'click-particle';
+                particle.style.width = '10px';
+                particle.style.height = '10px';
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                particle.style.position = 'fixed';
+                
+                document.body.appendChild(particle);
+                
+                const angle = Math.random() * Math.PI * 2;
+                const speed = 2 + Math.random() * 3;
+                const vx = Math.cos(angle) * speed;
+                const vy = Math.sin(angle) * speed;
+                
+                let opacity = 1;
+                const animate = () => {
+                    opacity -= 0.05;
+                    particle.style.opacity = opacity;
+                    particle.style.transform = `translate(${vx * 10}px, ${vy * 10}px)`;
+                    
+                    if (opacity > 0) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        document.body.removeChild(particle);
+                    }
+                };
+                
+                requestAnimationFrame(animate);
+            }
+        }
+        
+        // Renderizar generadores
+        function renderGenerators() {
+            const grid = document.getElementById('generatorsGrid');
+            grid.innerHTML = '';
+            
+            generators.forEach(gen => {
+                const cost = gen.baseCost * Math.pow(1.25, gen.level);
+                const production = gen.baseCPS * gen.level;
+                
+                let finalProduction = production;
+                const generatorBoost = moneyUpgrades.find(u => u.type === "generatorBoost" && u.purchased);
+                if (generatorBoost) {
+                    finalProduction *= generatorBoost.value;
+                }
+                
+                const vipGenerator = permanentGemUpgrades.find(u => u.type === "vipGenerator" && u.purchased);
+                if (vipGenerator) {
+                    finalProduction *= vipGenerator.value;
+                }
+                
+                const temporalGenerator = temporalGemUpgrades.find(u => u.type === "temporalGenerator" && u.active);
+                if (temporalGenerator) {
+                    finalProduction *= temporalGenerator.value;
+                }
+                
+                const card = document.createElement('div');
+                card.className = `compact-card ${money >= cost ? '' : 'disabled'}`;
+                card.onclick = () => buyGenerator(gen.id);
                 
                 card.innerHTML = `
                     <div class="card-header">
-                        <div class="card-icon">${gen.icon}</div>
+                        <div class="card-icon"><i class="${gen.icon}"></i></div>
                         <div>
                             <div class="card-name">${gen.name}</div>
                             <div class="card-level">Nivel ${gen.level}</div>
                         </div>
                     </div>
                     <div class="card-stats">
-                        <div class="card-production">${production.toFixed(1)}/s</div>
+                        <div class="card-production">+${formatNumber(finalProduction)}/s</div>
                         <div class="card-cost">${formatNumber(cost)}</div>
                     </div>
-                    <button class="btn btn-success">
-                        ${gen.level === 0 ? "COMPRAR" : "MEJORAR"}
+                    <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 10px;">${gen.description}</div>
+                    <button class="btn btn-success" ${money >= cost ? '' : 'disabled'}>
+                        ${gen.level === 0 ? 'Comprar' : 'Mejorar'}
                     </button>
                 `;
-                
-                const button = card.querySelector("button");
-                button.addEventListener("click", (e) => {
-                    e.stopPropagation();
-                    buyGenerator(gen.id);
-                });
                 
                 grid.appendChild(card);
             });
         }
-
-        function setupUpgrades() {
-            const grid = document.getElementById("upgradesGrid");
-            grid.innerHTML = "";
+        
+        // Actualizar UI de generadores
+        function updateGeneratorsUI() {
+            renderGenerators();
+        }
+        
+        // Renderizar mejoras con dinero
+        function renderMoneyUpgrades() {
+            const grid = document.getElementById('moneyUpgradesGrid');
+            grid.innerHTML = '';
             
-            gameState.upgrades.forEach(upgrade => {
-                const card = document.createElement("div");
-                card.className = `upgrade-card-compact ${upgrade.purchased ? "purchased" : ""}`;
-                card.id = `upgrade-${upgrade.id}`;
+            moneyUpgrades.forEach(upgrade => {
+                const card = document.createElement('div');
+                card.className = `upgrade-card-compact ${upgrade.purchased ? 'purchased' : ''} ${money >= upgrade.cost && !upgrade.purchased ? '' : 'disabled'}`;
+                card.onclick = () => buyMoneyUpgrade(upgrade.id);
                 
                 card.innerHTML = `
                     <div class="upgrade-header">
-                        <div class="upgrade-icon">${upgrade.icon}</div>
+                        <div class="upgrade-icon"><i class="${upgrade.icon}"></i></div>
                         <div class="upgrade-title">${upgrade.name}</div>
                     </div>
-                    <div style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 10px;">
-                        ${getUpgradeDescription(upgrade)}
+                    <div style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 10px;">${upgrade.description}</div>
+                    <div class="roi-container">
+                        <div class="roi-label">ROI:</div>
+                        <div class="roi-value positive">${upgrade.roi}x</div>
                     </div>
-                    <div class="upgrade-cost">${upgrade.cost} 💎</div>
-                    <button class="btn btn-primary" ${upgrade.purchased ? "disabled" : ""}>
-                        ${upgrade.purchased ? "✅ COMPRADO" : "COMPRAR"}
+                    <div class="upgrade-cost">${formatNumber(upgrade.cost)} dinero</div>
+                    <button class="btn ${upgrade.purchased ? 'btn-success' : 'btn-warning'}" ${money >= upgrade.cost && !upgrade.purchased ? '' : 'disabled'}>
+                        ${upgrade.purchased ? '<i class="fas fa-check"></i> Comprado' : 'Comprar'}
                     </button>
                 `;
-                
-                const button = card.querySelector("button");
-                if (!upgrade.purchased) {
-                    button.addEventListener("click", (e) => {
-                        e.stopPropagation();
-                        buyUpgrade(upgrade.id);
-                    });
-                }
                 
                 grid.appendChild(card);
             });
         }
-
-        function setupGemStore() {
-            const grid = document.getElementById("gemsGrid");
-            grid.innerHTML = "";
+        
+        // Actualizar UI de mejoras con dinero
+        function updateMoneyUpgradesUI() {
+            renderMoneyUpgrades();
+        }
+        
+        // Renderizar mejoras PERMANENTES con gemas
+        function renderPermanentUpgrades() {
+            const grid = document.getElementById('permanentUpgradesGrid');
+            grid.innerHTML = '';
             
-            gameState.gemStore.forEach(pack => {
-                const card = document.createElement("div");
-                card.className = "gem-card-compact";
-                card.id = `gem-${pack.id}`;
+            permanentGemUpgrades.forEach(upgrade => {
+                const card = document.createElement('div');
+                card.className = `upgrade-card-compact ${upgrade.purchased ? 'purchased' : ''} ${gems >= upgrade.cost && !upgrade.purchased ? '' : 'disabled'}`;
+                card.onclick = () => buyPermanentUpgrade(upgrade.id);
                 
                 card.innerHTML = `
-                    <div class="gem-icon-compact">${pack.icon}</div>
-                    <div class="gem-name-compact">${pack.name}</div>
-                    <div style="color: #cbd5e1; font-size: 0.8rem; margin-bottom: 10px;">
-                        ${pack.bonus}
+                    <div class="upgrade-header">
+                        <div class="upgrade-icon"><i class="${upgrade.icon}"></i></div>
+                        <div class="upgrade-title">${upgrade.name}</div>
                     </div>
-                    <div class="gem-price-compact">$${pack.priceUSD.toFixed(2)}</div>
-                    <button class="btn btn-premium">
-                        ${pack.gems} 💎
+                    <div style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 10px;">${upgrade.description}</div>
+                    <div class="roi-container">
+                        <div class="roi-label">ROI:</div>
+                        <div class="roi-value positive">${upgrade.roi}x</div>
+                    </div>
+                    <div class="upgrade-cost">${upgrade.cost} gemas</div>
+                    <button class="btn ${upgrade.purchased ? 'btn-success' : 'btn-premium'}" ${gems >= upgrade.cost && !upgrade.purchased ? '' : 'disabled'}>
+                        ${upgrade.purchased ? '<i class="fas fa-check"></i> Comprado' : 'Comprar'}
                     </button>
                 `;
-                
-                const button = card.querySelector("button");
-                button.addEventListener("click", (e) => {
-                    e.stopPropagation();
-                    buyGems(pack.id);
-                });
                 
                 grid.appendChild(card);
             });
         }
-
-        function getUpgradeDescription(upgrade) {
-            switch(upgrade.effect) {
-                case "click": return `Multiplica clicks por ${upgrade.value}`;
-                case "generator": return `Multiplica generadores por ${upgrade.value}`;
-                case "boost": return `Boost ${upgrade.value}x por 1 hora`;
-                case "autoclick": return `Auto-click ${upgrade.value}/s`;
-                default: return "Mejora especial";
-            }
+        
+        // Actualizar UI de mejoras permanentes
+        function updatePermanentUpgradesUI() {
+            renderPermanentUpgrades();
         }
-
-        // ============================
-        // MECÁNICAS DEL JUEGO
-        // ============================
-        function handleClick() {
-            gameState.money += gameState.clickPower;
-            gameState.totalMoney += gameState.clickPower;
-            gameState.clicks++;
-            gameState.xp += 1;
-            gameState.totalXp += 1;
+        
+        // Renderizar mejoras TEMPORALES con gemas
+        function renderTemporalUpgrades() {
+            const grid = document.getElementById('temporalUpgradesGrid');
+            grid.innerHTML = '';
             
-            updateLevel();
-            updateUI();
-            updateGeneratorsDisplay();
-            createClickParticle(event?.clientX || 150, event?.clientY || 150, gameState.clickPower);
-        }
-
-        function buyGenerator(genId) {
-            const gen = gameState.generators.find(g => g.id === genId);
-            const cost = Math.floor(gen.cost * Math.pow(1.5, gen.level));
-            
-            if (gameState.money >= cost) {
-                gameState.money -= cost;
-                gen.level++;
-                gameState.xp += 10;
-                gameState.totalXp += 10;
+            temporalGemUpgrades.forEach(upgrade => {
+                const timeLeft = upgrade.active && upgrade.endTime ? upgrade.endTime - Date.now() : 0;
+                const hoursLeft = Math.floor(timeLeft / (1000 * 60 * 60));
+                const minutesLeft = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
                 
-                updateLevel();
-                updateUI();
-                setupGenerators();
+                const card = document.createElement('div');
+                card.className = `upgrade-card-compact temporal ${upgrade.active ? 'purchased' : ''} ${gems >= upgrade.cost && !upgrade.active ? '' : 'disabled'}`;
+                card.onclick = () => buyTemporalUpgrade(upgrade.id);
                 
-                showNotification(`¡${gen.name} nivel ${gen.level}!`, "success");
-            }
-        }
-
-        function upgradeClicker() {
-            const cost = Math.floor(50 * Math.pow(1.8, gameState.clickLevel - 1));
-            
-            if (gameState.money >= cost) {
-                gameState.money -= cost;
-                gameState.clickPower = Math.floor(gameState.clickPower * 1.5);
-                gameState.clickLevel++;
-                gameState.xp += 20;
-                gameState.totalXp += 20;
-                
-                updateLevel();
-                updateUI();
-                
-                showNotification(`¡Click nivel ${gameState.clickLevel}! (+${gameState.clickPower})`, "success");
-            }
-        }
-
-        function buyUpgrade(upgradeId) {
-            const upgrade = gameState.upgrades.find(u => u.id === upgradeId);
-            
-            if (!upgrade || upgrade.purchased) return;
-            
-            if (gameState.gems >= upgrade.cost) {
-                gameState.gems -= upgrade.cost;
-                upgrade.purchased = true;
-                
-                applyUpgradeEffect(upgrade);
-                updateUI();
-                setupUpgrades();
-                
-                showNotification(`¡${upgrade.name} activada!`, "success");
-            }
-        }
-
-        function applyUpgradeEffect(upgrade) {
-            switch(upgrade.effect) {
-                case "click":
-                    gameState.clickPower *= upgrade.value;
-                    break;
-                case "generator":
-                    gameState.generators.forEach(gen => {
-                        gen.production *= upgrade.value;
-                    });
-                    break;
-                case "boost":
-                    // Boost temporal (simulado)
-                    break;
-                case "autoclick":
-                    // Auto-clicker (simulado)
-                    break;
-            }
-        }
-
-        function buyGems(packId) {
-            const pack = gameState.gemStore.find(p => p.id === packId);
-            
-            if (!pack) return;
-            
-            if (confirm(`¿Comprar ${pack.name} por $${pack.priceUSD.toFixed(2)}?\nRecibirás ${pack.gems} gemas.`)) {
-                gameState.gems += pack.gems;
-                
-                // Aplicar bonus
-                applyGemBonus(pack);
-                
-                updateUI();
-                showNotification(`¡+${pack.gems} gemas!`, "premium");
-            }
-        }
-
-        function applyGemBonus(pack) {
-            let multiplier = 1;
-            switch(pack.id) {
-                case 1: multiplier = 1.05; break;
-                case 2: multiplier = 1.10; break;
-                case 3: multiplier = 1.25; break;
-                case 4: multiplier = 1.50; break;
-            }
-            
-            gameState.clickPower = Math.floor(gameState.clickPower * multiplier);
-        }
-
-        function withdrawFunds() {
-            const wallet = document.getElementById("walletAddress").value.trim();
-            const cryptoAmount = gameState.crypto;
-            const usdAmount = cryptoAmount * gameConfig.btcPrice;
-            const minUSD = gameConfig.minWithdrawal * gameConfig.btcPrice;
-            
-            if (!wallet) {
-                showNotification("Ingresa una dirección de wallet", "error");
-                return;
-            }
-            
-            if (usdAmount < minUSD) {
-                showNotification(`Mínimo: $${minUSD.toFixed(2)} (${gameConfig.minWithdrawal} BTC)`, "error");
-                return;
-            }
-            
-            if (confirm(`Retirar ${cryptoAmount.toFixed(6)} BTC?\n\nRecibirás: ${(cryptoAmount * 0.85).toFixed(6)} BTC\nComisión (15%): ${(cryptoAmount * 0.15).toFixed(6)} BTC`)) {
-                gameState.crypto = 0;
-                gameState.earnedToday = 0;
-                
-                updateUI();
-                showNotification(`¡Retiro procesado! Recibirás ${(cryptoAmount * 0.85).toFixed(6)} BTC`, "crypto");
-            }
-        }
-
-        // ============================
-        // BUCLE DEL JUEGO
-        // ============================
-        function startGameLoop() {
-            setInterval(() => {
-                // Producción de generadores
-                let production = 0;
-                gameState.generators.forEach(gen => {
-                    if (gen.level > 0) {
-                        production += gen.production * gen.level;
-                    }
-                });
-                
-                gameState.money += production / 10;
-                gameState.totalMoney += production / 10;
-                gameState.xp += production / 100;
-                gameState.totalXp += production / 100;
-                
-                updateLevel();
-                updateCryptoEarnings();
-                updateUI();
-                updateGeneratorsDisplay();
-                
-            }, 100);
-        }
-
-        function updateLevel() {
-            const xpNeeded = Math.floor(100 * Math.pow(gameConfig.levelMultiplier, gameState.level - 1));
-            
-            if (gameState.xp >= xpNeeded) {
-                gameState.level++;
-                gameState.xp = 0;
-                gameState.gems += gameState.level * 5;
-                
-                showNotification(`¡Nivel ${gameState.level}! +${gameState.level * 5} gemas`, "info");
-            }
-        }
-
-        function updateCryptoEarnings() {
-            const fromMoney = gameConfig.moneyToCrypto * (gameState.totalMoney / 1000000);
-            const fromClicks = gameConfig.clickToCrypto * (gameState.clicks / 10000);
-            const levelBonus = 1 + (gameState.level * 0.01);
-            
-            gameState.crypto = (fromMoney + fromClicks) * levelBonus;
-            gameState.totalCrypto = gameState.crypto;
-            gameState.earnedToday = gameState.crypto;
-            gameState.totalEarned = gameState.crypto;
-        }
-
-        // ============================
-        // ACTUALIZACIÓN DE UI
-        // ============================
-        function updateUI() {
-            // Header
-            document.getElementById("compactMoney").textContent = formatNumber(gameState.money);
-            document.getElementById("compactCrypto").textContent = gameState.crypto.toFixed(6);
-            document.getElementById("compactCryptoUSD").textContent = (gameState.crypto * gameConfig.btcPrice).toFixed(2);
-            document.getElementById("compactGems").textContent = gameState.gems;
-            document.getElementById("compactLevel").textContent = `Nivel ${gameState.level}`;
-            
-            // Clicker
-            document.getElementById("clickAmount").textContent = `+${gameState.clickPower}`;
-            document.getElementById("clickPower").textContent = gameState.clickPower;
-            document.getElementById("clickUpgradeCost").textContent = formatNumber(Math.floor(50 * Math.pow(1.8, gameState.clickLevel - 1)));
-            
-            // Estadísticas
-            document.getElementById("totalClicks").textContent = formatNumber(gameState.clicks);
-            
-            // Cripto
-            document.getElementById("cryptoBalance").textContent = gameState.crypto.toFixed(6);
-            document.getElementById("cryptoUSD").textContent = (gameState.crypto * gameConfig.btcPrice).toFixed(2);
-            
-            // Production per second
-            updateProductionPerSecond();
-            
-            // Habilitar/deshabilitar botones
-            document.getElementById("withdrawButton").disabled = (gameState.crypto * gameConfig.btcPrice) < (gameConfig.minWithdrawal * gameConfig.btcPrice);
-        }
-
-        function updateProductionPerSecond() {
-            let production = 0;
-            gameState.generators.forEach(gen => {
-                if (gen.level > 0) {
-                    production += gen.production * gen.level;
+                let timerHtml = '';
+                if (upgrade.active) {
+                    timerHtml = `<div class="timer"><i class="fas fa-clock"></i> ${hoursLeft}h ${minutesLeft}m</div>`;
                 }
-            });
-            
-            document.getElementById("compactMoneyPerSec").textContent = `+${production.toFixed(1)}/s`;
-            
-            // Calcular CPS estimado
-            const estimatedCPS = gameState.clickPower * 5;
-            document.getElementById("cpsDisplay").textContent = `${estimatedCPS} CPS`;
-        }
-
-        function updateGeneratorsDisplay() {
-            gameState.generators.forEach(gen => {
-                const cost = Math.floor(gen.cost * Math.pow(1.5, gen.level));
-                const card = document.getElementById(`gen-${gen.id}`);
                 
-                if (card) {
-                    const button = card.querySelector("button");
-                    const costElement = card.querySelector(".card-cost");
-                    const productionElement = card.querySelector(".card-production");
-                    
-                    if (costElement) costElement.textContent = formatNumber(cost);
-                    if (productionElement) {
-                        productionElement.textContent = `${(gen.production * gen.level).toFixed(1)}/s`;
-                    }
-                    
-                    if (button) {
-                        if (gameState.money >= cost) {
-                            card.classList.remove("disabled");
-                            button.disabled = false;
-                        } else {
-                            card.classList.add("disabled");
-                            button.disabled = true;
-                        }
-                    }
-                }
+                card.innerHTML = `
+                    <div class="upgrade-header">
+                        <div class="upgrade-icon temporal"><i class="${upgrade.icon}"></i></div>
+                        <div class="upgrade-title">${upgrade.name}</div>
+                    </div>
+                    <div style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 10px;">${upgrade.description}</div>
+                    <div class="roi-container">
+                        <div class="roi-label">ROI:</div>
+                        <div class="roi-value positive">${upgrade.roi}x</div>
+                    </div>
+                    ${timerHtml}
+                    <div class="upgrade-cost">${upgrade.cost} gemas</div>
+                    <button class="btn ${upgrade.active ? 'btn-success' : 'btn-temporal'}" ${gems >= upgrade.cost && !upgrade.active ? '' : 'disabled'}>
+                        ${upgrade.active ? '<i class="fas fa-check"></i> Activo' : 'Activar (24h)'}
+                    </button>
+                `;
+                
+                grid.appendChild(card);
             });
         }
-
-        // ============================
-        // EVENT LISTENERS
-        // ============================
+        
+        // Actualizar UI de mejoras temporales
+        function updateTemporalUpgradesUI() {
+            renderTemporalUpgrades();
+        }
+        
+        // Renderizar tienda de gemas
+        function renderGemShop() {
+            const grid = document.getElementById('gemsShopGrid');
+            grid.innerHTML = '';
+            
+            gemShop.forEach(pack => {
+                const card = document.createElement('div');
+                card.className = 'gem-card-compact';
+                card.onclick = () => buyGems(pack.id);
+                
+                card.innerHTML = `
+                    <div class="gem-icon-compact"><i class="${pack.icon}"></i></div>
+                    <div class="gem-name-compact">${pack.name}</div>
+                    <div style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 8px;">${pack.description}</div>
+                    <div style="font-size: 1.5rem; font-weight: bold; color: var(--premium); margin: 10px 0;">${pack.gems} 💎</div>
+                    <div style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 10px;">$${pack.price}</div>
+                    <div class="roi-container" style="margin: 10px 0;">
+                        <div class="roi-label">ROI Estimado:</div>
+                        <div class="roi-value positive">$${(pack.price * pack.roi).toFixed(2)}</div>
+                    </div>
+                    <button class="btn btn-premium">
+                        <i class="fas fa-shopping-cart"></i> Comprar
+                    </button>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+        
+        // Renderizar misiones
+        function renderMissions() {
+            const grid = document.getElementById('missionsGrid');
+            grid.innerHTML = '';
+            
+            missions.forEach(mission => {
+                const progress = (mission.current / mission.target) * 100;
+                const isCompleted = mission.completed;
+                const canClaim = !isCompleted && mission.current >= mission.target;
+                
+                const card = document.createElement('div');
+                card.className = `mission-card ${isCompleted ? 'completed' : ''}`;
+                
+                card.innerHTML = `
+                    <div class="mission-header">
+                        <div class="mission-title">
+                            <i class="${mission.icon}"></i>
+                            ${mission.name}
+                        </div>
+                        <div class="mission-reward">
+                            <i class="fas fa-gem"></i> ${mission.reward.gems}
+                        </div>
+                    </div>
+                    <div style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 10px;">
+                        ${mission.type === 'clicks' ? 'Haz ' + mission.target + ' clicks' :
+                          mission.type === 'generators' ? 'Compra ' + mission.target + ' generador(es)' :
+                          mission.type === 'generatorLevels' ? 'Mejora generadores ' + mission.target + ' veces' :
+                          mission.type === 'money' ? 'Consigue ' + formatNumber(mission.target) + ' dinero' :
+                          mission.type === 'crypto' ? 'Consigue ' + mission.target + ' BTC' :
+                          mission.type === 'upgrades' ? 'Compra ' + mission.target + ' mejoras' : ''}
+                    </div>
+                    <div class="mission-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${progress}%"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span>${formatNumber(mission.current)} / ${formatNumber(mission.target)}</span>
+                            <span>${progress.toFixed(1)}%</span>
+                        </div>
+                    </div>
+                    <button class="btn ${isCompleted ? 'btn-success' : canClaim ? 'btn-premium' : 'btn-warning'}" 
+                            style="margin-top: 15px;"
+                            ${canClaim ? '' : 'disabled'}
+                            onclick="claimMission(${mission.id})">
+                        ${isCompleted ? '<i class="fas fa-check"></i> Completada' : 
+                          canClaim ? '<i class="fas fa-gift"></i> Reclamar' : 
+                          'En progreso'}
+                    </button>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+        
+        // Actualizar UI de misiones
+        function updateMissionsUI() {
+            renderMissions();
+        }
+        
+        // Actualizar historial de conversiones
+        function updateConversionHistory() {
+            const tbody = document.getElementById('conversionHistory');
+            tbody.innerHTML = '';
+            
+            conversionHistory.forEach(record => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${record.date}</td>
+                    <td>${formatNumber(record.money)}</td>
+                    <td>${record.crypto}</td>
+                    <td>$${record.usdValue}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        // Configurar event listeners
         function setupEventListeners() {
             // Clicker
-            const clickerButton = document.getElementById("clickerButton");
-            clickerButton.addEventListener("click", handleClick);
-            clickerButton.addEventListener("touchstart", handleClick, { passive: true });
+            document.getElementById('clickerButton').addEventListener('click', click);
             
-            // También con espacio/enter
-            document.addEventListener("keydown", (e) => {
-                if (e.code === "Space" || e.code === "Enter") {
-                    e.preventDefault();
-                    handleClick();
-                    
-                    // Efecto visual
-                    clickerButton.style.transform = "scale(0.95)";
-                    setTimeout(() => {
-                        clickerButton.style.transform = "scale(1)";
-                    }, 100);
-                }
-            });
+            // Mejorar click
+            document.getElementById('upgradeClicker').addEventListener('click', upgradeClick);
             
-            // Mejorar clicker
-            document.getElementById("upgradeClicker").addEventListener("click", upgradeClicker);
+            // Convertir a cripto
+            document.getElementById('convertToCrypto').addEventListener('click', convertToCrypto);
             
-            // Tabs de navegación
-            document.querySelectorAll(".tab-button").forEach(button => {
-                button.addEventListener("click", () => {
-                    const tabId = button.dataset.tab;
+            // Bono diario
+            document.getElementById('claimDailyBonus').addEventListener('click', claimDailyBonus);
+            
+            // Navegación por tabs
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.getAttribute('data-tab');
                     
-                    // Activar botón
-                    document.querySelectorAll(".tab-button").forEach(btn => btn.classList.remove("active"));
-                    button.classList.add("active");
-                    
-                    // Mostrar contenido
-                    document.querySelectorAll(".tab-content").forEach(content => {
-                        content.classList.remove("active");
+                    document.querySelectorAll('.tab-button').forEach(btn => {
+                        btn.classList.remove('active');
                     });
-                    document.getElementById(`tab-${tabId}`).classList.add("active");
+                    button.classList.add('active');
                     
-                    // Scroll suave al inicio del contenido
-                    document.querySelector(".main-content").scrollTo({ top: 0, behavior: 'smooth' });
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    document.getElementById(tabId).classList.add('active');
                 });
             });
-            
-            // Retirar
-            document.getElementById("withdrawButton").addEventListener("click", withdrawFunds);
-            
-            // Soporte para swipe en móviles
-            let touchStartX = 0;
-            let touchEndX = 0;
-            
-            document.addEventListener('touchstart', e => {
-                touchStartX = e.changedTouches[0].screenX;
-            }, false);
-            
-            document.addEventListener('touchend', e => {
-                touchEndX = e.changedTouches[0].screenX;
-                handleSwipe();
-            }, false);
-            
-            function handleSwipe() {
-                const swipeThreshold = 50;
-                const diff = touchStartX - touchEndX;
-                
-                if (Math.abs(diff) > swipeThreshold) {
-                    const tabs = Array.from(document.querySelectorAll('.tab-button'));
-                    const currentIndex = tabs.findIndex(tab => tab.classList.contains('active'));
-                    
-                    if (diff > 0 && currentIndex < tabs.length - 1) {
-                        // Swipe izquierda - siguiente tab
-                        tabs[currentIndex + 1].click();
-                    } else if (diff < 0 && currentIndex > 0) {
-                        // Swipe derecha - tab anterior
-                        tabs[currentIndex - 1].click();
-                    }
-                }
-            }
         }
-
-        // ============================
-        // EFECTOS VISUALES
-        // ============================
-        function createClickParticle(x, y, amount) {
-            const particle = document.createElement("div");
-            particle.className = "click-particle";
-            particle.textContent = `+${formatNumber(amount)}`;
-            particle.style.left = x + "px";
-            particle.style.top = y + "px";
-            particle.style.color = "#fbbf24";
-            particle.style.fontWeight = "bold";
-            particle.style.fontSize = "16px";
-            particle.style.pointerEvents = "none";
-            particle.style.position = "fixed";
-            particle.style.zIndex = "1000";
-            
-            document.body.appendChild(particle);
-            
-            // Animación
-            const startY = y;
-            const startX = x;
-            const endY = startY - 80;
-            const endX = startX + (Math.random() * 60 - 30);
-            const startTime = Date.now();
-            const duration = 800;
-            
-            function animate() {
-                const elapsed = Date.now() - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                
-                const currentY = startY - (progress * 80);
-                const currentX = startX + (progress * (endX - startX));
-                const opacity = 1 - progress;
-                const scale = 1 + (progress * 0.3);
-                
-                particle.style.top = currentY + "px";
-                particle.style.left = currentX + "px";
-                particle.style.opacity = opacity;
-                particle.style.transform = `scale(${scale})`;
-                
-                if (progress < 1) {
-                    requestAnimationFrame(animate);
-                } else {
-                    particle.remove();
-                }
-            }
-            
-            animate();
-        }
-
-        function showNotification(message, type) {
-            const notification = document.getElementById("notification");
-            notification.textContent = message;
-            notification.className = `notification ${type}`;
-            notification.style.display = "block";
-            
-            setTimeout(() => {
-                notification.style.display = "none";
-            }, 2000);
-        }
-
-        // ============================
-        // UTILIDADES
-        // ============================
-        function formatNumber(num) {
-            if (num >= 1e12) return (num / 1e12).toFixed(1) + 'T';
-            if (num >= 1e9) return (num / 1e9).toFixed(1) + 'B';
-            if (num >= 1e6) return (num / 1e6).toFixed(1) + 'M';
-            if (num >= 1e3) return (num / 1e3).toFixed(1) + 'K';
-            return Math.floor(num);
-        }
-
-        function loadGame() {
-            try {
-                const saved = localStorage.getItem("cryptoClickerCompactSave");
-                if (saved) {
-                    Object.assign(gameState, JSON.parse(saved));
-                    showNotification("Partida cargada", "success");
-                }
-            } catch (e) {
-                console.log("Nueva partida");
-            }
-        }
-
+        
+        // Guardar juego
         function saveGame() {
-            localStorage.setItem("cryptoClickerCompactSave", JSON.stringify(gameState));
+            const gameData = {
+                money,
+                crypto,
+                gems,
+                clickPower,
+                totalClicks,
+                totalMoneyEarned,
+                clickUpgradeCost,
+                clickUpgradeLevel,
+                clickMultiplier,
+                userEarningsUSD,
+                availableFund,
+                generators,
+                moneyUpgrades,
+                permanentGemUpgrades,
+                temporalGemUpgrades,
+                missions,
+                conversionHistory,
+                lastBonusClaim,
+                bonusStreak
+            };
+            
+            localStorage.setItem('cryptoClickerPro', JSON.stringify(gameData));
         }
-
-        // ============================
-        // INICIAR EL JUEGO
-        // ============================
-        document.addEventListener("DOMContentLoaded", initGame);
-        window.addEventListener("beforeunload", saveGame);
-        setInterval(saveGame, 30000);
+        
+        // Cargar juego
+        function loadGame() {
+            const savedData = localStorage.getItem('cryptoClickerPro');
+            
+            if (savedData) {
+                const gameData = JSON.parse(savedData);
+                
+                money = gameData.money || 0;
+                crypto = gameData.crypto || 0;
+                gems = gameData.gems || 0;
+                clickPower = gameData.clickPower || 1;
+                totalClicks = gameData.totalClicks || 0;
+                totalMoneyEarned = gameData.totalMoneyEarned || 0;
+                clickUpgradeCost = gameData.clickUpgradeCost || 100;
+                clickUpgradeLevel = gameData.clickUpgradeLevel || 1;
+                clickMultiplier = gameData.clickMultiplier || 1;
+                userEarningsUSD = gameData.userEarningsUSD || 0;
+                availableFund = gameData.availableFund || 1000;
+                lastBonusClaim = gameData.lastBonusClaim || null;
+                bonusStreak = gameData.bonusStreak || 1;
+                
+                if (gameData.generators) {
+                    generators.forEach((gen, index) => {
+                        if (gameData.generators[index]) {
+                            gen.level = gameData.generators[index].level || 0;
+                        }
+                    });
+                }
+                
+                if (gameData.moneyUpgrades) {
+                    moneyUpgrades.forEach((upgrade, index) => {
+                        if (gameData.moneyUpgrades[index]) {
+                            upgrade.purchased = gameData.moneyUpgrades[index].purchased || false;
+                        }
+                    });
+                }
+                
+                if (gameData.permanentGemUpgrades) {
+                    permanentGemUpgrades.forEach((upgrade, index) => {
+                        if (gameData.permanentGemUpgrades[index]) {
+                            upgrade.purchased = gameData.permanentGemUpgrades[index].purchased || false;
+                        }
+                    });
+                }
+                
+                if (gameData.temporalGemUpgrades) {
+                    temporalGemUpgrades.forEach((upgrade, index) => {
+                        if (gameData.temporalGemUpgrades[index]) {
+                            upgrade.purchased = gameData.temporalGemUpgrades[index].purchased || false;
+                            upgrade.active = gameData.temporalGemUpgrades[index].active || false;
+                            upgrade.endTime = gameData.temporalGemUpgrades[index].endTime || null;
+                            
+                            // Si tiene endTime pero ya pasó
+                            if (upgrade.endTime && Date.now() >= upgrade.endTime) {
+                                upgrade.active = false;
+                                upgrade.endTime = null;
+                            }
+                        }
+                    });
+                }
+                
+                if (gameData.missions) {
+                    missions.forEach((mission, index) => {
+                        if (gameData.missions[index]) {
+                            mission.current = gameData.missions[index].current || 0;
+                            mission.completed = gameData.missions[index].completed || false;
+                        }
+                    });
+                }
+                
+                conversionHistory = gameData.conversionHistory || [];
+                
+                showNotification("Juego cargado correctamente", "success");
+            } else {
+                showNotification("¡Bienvenido a Crypto Clicker Pro!", "info");
+            }
+        }
+        
+        // Iniciar el juego cuando se carga la página
+        window.addEventListener('DOMContentLoaded', initGame);
     </script>
 </body>
 </html>

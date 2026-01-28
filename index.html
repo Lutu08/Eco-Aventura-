@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Clicker Pro - Sistema de Cuentas</title>
+    <title>Crypto Clicker Pro - Sistema Completo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Estilos base */
+        /* Estilos generales */
         :root {
             --primary: #3b82f6;
             --secondary: #10b981;
@@ -15,6 +15,7 @@
             --premium: #f59e0b;
             --mission: #8b5cf6;
             --success: #10b981;
+            --crypto: #f59e0b;
         }
         
         * {
@@ -74,52 +75,24 @@
             color: var(--warning);
         }
         
-        /* Estilos de login (mantener) */
-        .login-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, #0f172a, #1e1b4b);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
+        /* Contenido principal */
+        .main-content {
             padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
         }
         
-        .login-container {
-            background: rgba(30, 41, 59, 0.95);
-            border-radius: 20px;
-            padding: 30px;
-            width: 100%;
-            max-width: 500px;
-            border: 3px solid var(--primary);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-        }
-        
-        .login-title {
-            text-align: center;
-            color: var(--premium);
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
-        
-        .login-subtitle {
-            text-align: center;
-            color: #94a3b8;
-            margin-bottom: 30px;
-            font-size: 1rem;
-        }
-        
-        .login-tabs {
+        /* Navegación por pestañas */
+        .tabs-navigation {
             display: flex;
+            background: rgba(30, 41, 59, 0.9);
+            border-radius: 12px;
             margin-bottom: 20px;
-            border-bottom: 2px solid rgba(59, 130, 246, 0.3);
+            overflow: hidden;
+            border: 2px solid var(--primary);
         }
         
-        .login-tab {
+        .tab-button {
             flex: 1;
             padding: 15px;
             background: none;
@@ -128,144 +101,33 @@
             font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s;
-        }
-        
-        .login-tab.active {
-            color: var(--primary);
-            border-bottom: 3px solid var(--primary);
-            font-weight: bold;
-        }
-        
-        .login-form {
-            display: none;
-        }
-        
-        .login-form.active {
-            display: block;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            color: #cbd5e1;
-            font-size: 0.9rem;
-        }
-        
-        .form-input {
-            width: 100%;
-            padding: 14px;
-            border-radius: 10px;
-            border: 2px solid rgba(59, 130, 246, 0.3);
-            background: rgba(15, 23, 42, 0.8);
-            color: white;
-            font-size: 1rem;
-            transition: all 0.3s;
-        }
-        
-        .form-input:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-        }
-        
-        .password-container {
-            position: relative;
-        }
-        
-        .password-toggle {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: #94a3b8;
-            cursor: pointer;
-        }
-        
-        .confirm-btn {
-            background: linear-gradient(135deg, var(--primary), #3b82f6);
-            color: white;
-            border: none;
-            padding: 14px 28px;
-            border-radius: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: block;
-            width: 100%;
-            margin-top: 20px;
-            font-size: 1.1rem;
-        }
-        
-        .confirm-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
-        }
-        
-        .login-footer {
-            text-align: center;
-            margin-top: 20px;
-            color: #94a3b8;
-            font-size: 0.9rem;
-        }
-        
-        .login-link {
-            color: var(--primary);
-            cursor: pointer;
-            text-decoration: underline;
-        }
-        
-        .subscribe-btn {
-            background: linear-gradient(135deg, var(--success), #10b981);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            margin: 0 10px;
-            font-size: 1rem;
         }
         
-        .subscribe-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+        .tab-button:hover {
+            background: rgba(59, 130, 246, 0.1);
+            color: white;
         }
         
-        /* Sync status */
-        .sync-status {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 0.8rem;
+        .tab-button.active {
+            background: var(--primary);
+            color: white;
             font-weight: bold;
-            margin-left: 10px;
         }
         
-        .sync-synced {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--secondary);
-            border: 1px solid var(--secondary);
+        /* Contenido de pestañas */
+        .tab-content {
+            display: none;
         }
         
-        /* CONTENIDO PRINCIPAL DEL JUEGO */
-        .main-game {
-            display: none; /* Oculto inicialmente hasta login */
-            padding: 20px;
-            max-width: 1400px;
-            margin: 0 auto;
+        .tab-content.active {
+            display: block;
         }
         
+        /* Estilos del juego (pestaña principal) */
         .game-container {
             display: grid;
             grid-template-columns: 1fr 300px;
@@ -279,7 +141,7 @@
             }
         }
         
-        /* Sección de clic principal */
+        /* Sección de clic */
         .click-section {
             background: rgba(30, 41, 59, 0.7);
             border-radius: 20px;
@@ -348,7 +210,7 @@
             color: #94a3b8;
         }
         
-        /* Sección de mejoras */
+        /* Mejoras */
         .upgrades-section {
             background: rgba(30, 41, 59, 0.7);
             border-radius: 20px;
@@ -387,9 +249,9 @@
             transform: translateY(-5px);
         }
         
-        .upgrade-card.purchased {
-            border-color: var(--secondary);
-            background: rgba(16, 185, 129, 0.1);
+        .upgrade-card.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
         
         .upgrade-header {
@@ -422,7 +284,7 @@
             font-weight: bold;
         }
         
-        /* Panel lateral derecho */
+        /* Panel derecho */
         .right-panel {
             display: flex;
             flex-direction: column;
@@ -443,6 +305,12 @@
             padding: 15px;
             margin-bottom: 15px;
             border: 1px solid rgba(139, 92, 246, 0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .mission-item:hover {
+            background: rgba(139, 92, 246, 0.2);
         }
         
         .mission-header {
@@ -461,24 +329,10 @@
             font-weight: bold;
         }
         
-        .mission-progress {
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            overflow: hidden;
-            margin: 10px 0;
-        }
-        
-        .mission-progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--mission), #a78bfa);
-            width: 0%;
-            transition: width 0.5s;
-        }
-        
-        .mission-complete {
-            background: rgba(16, 185, 129, 0.2);
-            border-color: var(--secondary);
+        .mission-description {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
         }
         
         /* Logros */
@@ -512,11 +366,6 @@
             font-size: 1.2rem;
         }
         
-        .achievement-locked .achievement-icon {
-            background: #475569;
-            color: #64748b;
-        }
-        
         .achievement-info {
             flex: 1;
         }
@@ -531,24 +380,382 @@
             color: #94a3b8;
         }
         
-        /* Botón de cuenta */
-        .account-btn {
-            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
-            font-weight: bold;
-            cursor: pointer;
+        /* Sección de cuenta (ya existente) */
+        .account-section {
+            background: rgba(30, 41, 59, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid var(--primary);
+        }
+        
+        /* Login overlay (ya existente) */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #0f172a, #1e1b4b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 20px;
+        }
+        
+        .login-container {
+            background: rgba(30, 41, 59, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            border: 3px solid var(--primary);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Estilos de pagos (TU CÓDIGO - EXACTAMENTE IGUAL) */
+        .payment-methods {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        @media (min-width: 768px) {
+            .payment-methods {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        .payment-method {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            border: 2px solid;
             transition: all 0.3s;
+        }
+        
+        .payment-method.solana {
+            border-color: #9945FF;
+            background: linear-gradient(135deg, rgba(153, 69, 255, 0.1), rgba(30, 41, 59, 0.8));
+        }
+        
+        .payment-method.optimism {
+            border-color: #FF0420;
+            background: linear-gradient(135deg, rgba(255, 4, 32, 0.1), rgba(30, 41, 59, 0.8));
+        }
+        
+        .payment-method.ethereum {
+            border-color: #627EEA;
+            background: linear-gradient(135deg, rgba(98, 126, 234, 0.1), rgba(30, 41, 59, 0.8));
+        }
+        
+        .network-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .network-icon {
+            font-size: 1.5rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .solana .network-icon {
+            background: #9945FF;
+            color: white;
+        }
+        
+        .optimism .network-icon {
+            background: #FF0420;
+            color: white;
+        }
+        
+        .ethereum .network-icon {
+            background: #627EEA;
+            color: white;
+        }
+        
+        .network-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .address-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            position: relative;
+        }
+        
+        .address-label {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .address-value {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            word-break: break-all;
+            color: white;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid var(--primary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background: var(--primary);
+        }
+        
+        .qrcode-placeholder {
+            width: 150px;
+            height: 150px;
+            background: #f1f5f9;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            font-size: 0.9rem;
+            margin: 0 auto;
+        }
+        
+        .withdrawal-form {
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px solid var(--secondary);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #cbd5e1;
+            font-size: 0.9rem;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 2px solid var(--crypto);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-size: 0.9rem;
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 2px solid var(--primary);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-size: 0.9rem;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 20px;
+        }
+        
+        .amount-preview {
+            background: rgba(251, 191, 36, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid var(--premium);
+        }
+        
+        .preview-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .preview-label {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        
+        .preview-value {
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .preview-value.usd {
+            color: var(--secondary);
+        }
+        
+        .preview-value.crypto {
+            color: var(--premium);
+        }
+        
+        .min-amount {
+            color: var(--warning);
+            font-size: 0.9rem;
+            margin-top: 10px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
         
-        .account-btn:hover {
+        /* Historial de transacciones */
+        .transactions-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.85rem;
+        }
+        
+        .transactions-table th {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 12px;
+            text-align: left;
+            color: var(--crypto);
+            font-weight: bold;
+            border-bottom: 2px solid var(--crypto);
+        }
+        
+        .transactions-table td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+        }
+        
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        
+        .status-pending {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+        }
+        
+        .status-completed {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--secondary);
+            border: 1px solid var(--secondary);
+        }
+        
+        .status-failed {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+        
+        /* Instrucciones */
+        .instructions {
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px solid var(--mission);
+        }
+        
+        .step {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: flex-start;
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--mission);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-title {
+            color: white;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .step-description {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        /* Botones */
+        .btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #2563eb);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--secondary), #059669);
+            color: white;
+        }
+        
+        .btn-premium {
+            background: linear-gradient(135deg, var(--premium), #d97706);
+            color: white;
+        }
+        
+        .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
         
         /* Responsive */
@@ -571,139 +778,37 @@
             .crypto-display {
                 font-size: 2.5rem;
             }
+            
+            .payment-methods {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Overlay de Login (se muestra al inicio) -->
-    <div id="loginOverlay" class="login-overlay">
+    <!-- Overlay de Login (inicial) -->
+    <div id="loginOverlay" class="login-overlay" style="display: flex;">
         <div class="login-container">
-            <h1 class="login-title">Crypto Clicker Pro</h1>
-            <p class="login-subtitle">Inicia sesión o crea una cuenta para comenzar</p>
+            <h1 class="section-title">Crypto Clicker Pro</h1>
+            <p style="text-align: center; color: #94a3b8; margin-bottom: 30px;">Inicia sesión para comenzar a jugar</p>
             
-            <div class="login-tabs">
-                <button class="login-tab active" data-form="loginForm">Iniciar Sesión</button>
-                <button class="login-tab" data-form="registerForm">Crear Cuenta</button>
-                <button class="login-tab" data-form="guestForm">Jugar como Invitado</button>
+            <div class="form-group">
+                <label class="form-label">Nombre de Usuario</label>
+                <input type="text" id="usernameInput" class="form-input" placeholder="Elige tu nombre de usuario">
             </div>
             
-            <!-- Formulario de Login -->
-            <form id="loginForm" class="login-form active">
-                <div class="form-group">
-                    <label class="form-label">Correo Electrónico o ID de Usuario</label>
-                    <input type="text" id="loginEmail" class="form-input" placeholder="tucorreo@ejemplo.com">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Contraseña</label>
-                    <div class="password-container">
-                        <input type="password" id="loginPassword" class="form-input" placeholder="Tu contraseña">
-                        <button type="button" class="password-toggle" onclick="togglePassword('loginPassword')">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <button type="button" class="confirm-btn" onclick="loginUser()">
-                    <i class="fas fa-check-circle"></i> OK - Iniciar Sesión
-                </button>
-                
-                <div class="login-footer">
-                    <a class="login-link" onclick="showForm('recoveryForm')">¿Olvidaste tu contraseña?</a>
-                </div>
-            </form>
+            <button type="button" class="btn btn-primary" onclick="startGame()" style="width: 100%; margin-top: 20px;">
+                <i class="fas fa-play"></i> Empezar a Jugar
+            </button>
             
-            <!-- Formulario de Registro -->
-            <form id="registerForm" class="login-form">
-                <div class="form-group">
-                    <label class="form-label">Correo Electrónico</label>
-                    <input type="email" id="registerEmail" class="form-input" placeholder="tucorreo@ejemplo.com">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Nombre de Usuario</label>
-                    <input type="text" id="registerUsername" class="form-input" placeholder="Tu nombre de usuario">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Contraseña</label>
-                    <div class="password-container">
-                        <input type="password" id="registerPassword" class="form-input" placeholder="Mínimo 8 caracteres">
-                        <button type="button" class="password-toggle" onclick="togglePassword('registerPassword')">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Confirmar Contraseña</label>
-                    <div class="password-container">
-                        <input type="password" id="registerConfirmPassword" class="form-input" placeholder="Repite tu contraseña">
-                        <button type="button" class="password-toggle" onclick="togglePassword('registerConfirmPassword')">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Código de Referido (Opcional)</label>
-                    <input type="text" id="registerReferral" class="form-input" placeholder="Código de amigo">
-                </div>
-                
-                <button type="button" class="subscribe-btn" onclick="registerUser()" style="width: 100%; margin: 15px 0;">
-                    <i class="fas fa-user-check"></i> INSCRIBIRSE - Crear Cuenta
-                </button>
-                
-                <div class="login-footer">
-                    Al hacer clic en "INSCRIBIRSE", aceptas los términos y condiciones.
-                </div>
-            </form>
-            
-            <!-- Modo Invitado -->
-            <form id="guestForm" class="login-form">
-                <div class="form-group">
-                    <p style="color: #cbd5e1; text-align: center; margin-bottom: 20px;">
-                        Juega sin crear cuenta. Tus datos se guardarán localmente en este dispositivo.
-                        <br><br>
-                        <strong>⚠️ Advertencia:</strong> Si borras el caché del navegador, perderás tu progreso.
-                    </p>
-                </div>
-                
-                <button type="button" class="confirm-btn" onclick="enterAsGuest()">
-                    <i class="fas fa-play"></i> OK - Jugar como Invitado
-                </button>
-                
-                <div class="login-footer">
-                    Puedes crear una cuenta más tarde para guardar tu progreso en la nube.
-                </div>
-            </form>
-            
-            <!-- Recuperación de Contraseña -->
-            <form id="recoveryForm" class="login-form">
-                <div class="form-group">
-                    <p style="color: #cbd5e1; text-align: center; margin-bottom: 20px;">
-                        Introduce tu correo electrónico o ID de usuario para recuperar tu cuenta.
-                    </p>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Correo o ID de Usuario</label>
-                    <input type="text" id="recoveryEmail" class="form-input" placeholder="tucorreo@ejemplo.com">
-                </div>
-                
-                <button type="button" class="confirm-btn" onclick="recoverAccount()">
-                    <i class="fas fa-check-circle"></i> OK - Recuperar Cuenta
-                </button>
-                
-                <div class="login-footer">
-                    <a class="login-link" onclick="showForm('loginForm')">Volver al Login</a>
-                </div>
-            </form>
+            <div style="text-align: center; margin-top: 20px; color: #94a3b8; font-size: 0.9rem;">
+                <i class="fas fa-info-circle"></i> Tu progreso se guarda automáticamente
+            </div>
         </div>
     </div>
     
-    <!-- Header con Avatar de Usuario -->
-    <div class="compact-header">
+    <!-- Header compacto -->
+    <div class="compact-header" style="display: none;">
         <div class="compact-stat">
             <div class="compact-label">💰 Dinero</div>
             <div class="compact-value" id="compactMoney">0</div>
@@ -717,86 +822,386 @@
         </div>
         
         <div class="compact-stat">
-            <div class="compact-label">👤 Usuario</div>
-            <div class="compact-value" id="compactUsername">Invitado</div>
-            <div class="compact-subvalue">
-                <span id="compactSyncStatus" class="sync-status sync-synced">Online</span>
-            </div>
+            <div class="compact-label">💎 Gemas</div>
+            <div class="compact-value" id="compactGems">0</div>
+            <div class="compact-subvalue">Nivel <span id="compactLevel">1</span></div>
         </div>
         
-        <button class="subscribe-btn" onclick="showForm('registerForm')" id="headerSubscribeBtn">
-            <i class="fas fa-user-plus"></i> INSCRIBIRSE
-        </button>
-        
-        <button class="account-btn" onclick="toggleAccountMenu()">
-            <i class="fas fa-user-circle"></i> Cuenta
-        </button>
+        <div class="compact-stat">
+            <div class="compact-label">👤 Usuario</div>
+            <div class="compact-value" id="compactUsername">Invitado</div>
+            <div class="compact-subvalue" style="color: var(--secondary);">
+                <i class="fas fa-circle"></i> Online
+            </div>
+        </div>
     </div>
     
-    <!-- CONTENIDO PRINCIPAL DEL JUEGO (oculto inicialmente) -->
-    <div id="mainGame" class="main-game">
-        <div class="game-container">
-            <!-- Columna izquierda: Juego principal -->
-            <div class="left-column">
-                <!-- Sección de clic -->
-                <div class="click-section">
-                    <h2>Haz clic para minar criptomonedas</h2>
-                    <div class="crypto-display" id="cryptoDisplay">0.000000 BTC</div>
-                    <button class="click-button" id="clickButton" onclick="clickCrypto()">
-                        <i class="fas fa-coins"></i><br>
-                        MINAR
-                    </button>
+    <!-- Contenido principal (oculto inicialmente) -->
+    <div class="main-content" style="display: none;">
+        <!-- Navegación por pestañas -->
+        <div class="tabs-navigation">
+            <button class="tab-button active" onclick="switchTab('game')">
+                <i class="fas fa-gamepad"></i> Juego
+            </button>
+            <button class="tab-button" onclick="switchTab('payments')">
+                <i class="fas fa-money-bill-wave"></i> Pagos
+            </button>
+            <button class="tab-button" onclick="switchTab('account')">
+                <i class="fas fa-user"></i> Cuenta
+            </button>
+        </div>
+        
+        <!-- Pestaña: JUEGO -->
+        <div id="tab-game" class="tab-content active">
+            <div class="game-container">
+                <!-- Columna izquierda: Juego principal -->
+                <div class="left-column">
+                    <!-- Sección de clic -->
+                    <div class="click-section">
+                        <h2>Haz clic para minar criptomonedas</h2>
+                        <div class="crypto-display" id="cryptoDisplay">0.000000 BTC</div>
+                        <button class="click-button" id="clickButton" onclick="clickCrypto()">
+                            <i class="fas fa-coins"></i><br>
+                            MINAR
+                        </button>
+                        
+                        <div class="click-stats">
+                            <div class="click-stat">
+                                <div class="click-stat-value" id="clickPower">1.0</div>
+                                <div class="click-stat-label">Poder por clic</div>
+                            </div>
+                            <div class="click-stat">
+                                <div class="click-stat-value" id="autoClickers">0</div>
+                                <div class="click-stat-label">Auto-mineros</div>
+                            </div>
+                            <div class="click-stat">
+                                <div class="click-stat-value" id="cryptoPerSec">0.0</div>
+                                <div class="click-stat-label">BTC/segundo</div>
+                            </div>
+                        </div>
+                    </div>
                     
-                    <div class="click-stats">
-                        <div class="click-stat">
-                            <div class="click-stat-value" id="clickPower">1.0</div>
-                            <div class="click-stat-label">Poder por clic</div>
+                    <!-- Sección de mejoras -->
+                    <div class="upgrades-section">
+                        <div class="section-title">
+                            <i class="fas fa-arrow-up"></i> Mejoras de Minería
                         </div>
-                        <div class="click-stat">
-                            <div class="click-stat-value" id="autoClickers">0</div>
-                            <div class="click-stat-label">Auto-mineros</div>
-                        </div>
-                        <div class="click-stat">
-                            <div class="click-stat-value" id="cryptoPerSec">0.0</div>
-                            <div class="click-stat-label">BTC/segundo</div>
+                        
+                        <div class="upgrades-grid" id="upgradesGrid">
+                            <!-- Las mejoras se generarán dinámicamente -->
                         </div>
                     </div>
                 </div>
                 
-                <!-- Sección de mejoras -->
-                <div class="upgrades-section">
-                    <div class="section-title">
-                        <i class="fas fa-arrow-up"></i> Mejoras de Minería
+                <!-- Columna derecha: Misiones y logros -->
+                <div class="right-panel">
+                    <!-- Misiones -->
+                    <div class="missions-section">
+                        <div class="section-title">
+                            <i class="fas fa-tasks"></i> Misiones Diarias
+                        </div>
+                        
+                        <div id="missionsList">
+                            <!-- Las misiones se generarán dinámicamente -->
+                        </div>
                     </div>
                     
-                    <div class="upgrades-grid" id="upgradesGrid">
-                        <!-- Las mejoras se generarán dinámicamente con JavaScript -->
+                    <!-- Logros -->
+                    <div class="achievements-section">
+                        <div class="section-title">
+                            <i class="fas fa-trophy"></i> Logros
+                        </div>
+                        
+                        <div id="achievementsList">
+                            <!-- Los logros se generarán dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pestaña: PAGOS (TU CÓDIGO EXACTO) -->
+        <div id="tab-payments" class="tab-content">
+            <!-- Sección para comprar gemas -->
+            <div class="section section-gems">
+                <h3 class="section-title">
+                    <i class="fas fa-shopping-cart"></i> Comprar Gemas con USDT
+                </h3>
+                <p style="margin-bottom: 15px; color: #cbd5e1; font-size: 0.9rem;">
+                    Envía USDT a una de nuestras direcciones para comprar gemas. Cada $1 = 50 gemas (ROI 300-500%).
+                </p>
+                
+                <!-- Métodos de pago -->
+                <div class="payment-methods">
+                    <!-- Solana -->
+                    <div class="payment-method solana">
+                        <div class="network-header">
+                            <div class="network-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div class="network-name">Solana (SOL)</div>
+                        </div>
+                        
+                        <div class="address-container">
+                            <span class="address-label">Dirección USDT en Solana:</span>
+                            <div class="address-value" id="solanaAddress">
+                                68rKWUCbuFnjZUsezsHcRh9Nr8G139XGXQhDBQuuSr5U
+                            </div>
+                            <button class="copy-btn" onclick="copyToClipboard('solanaAddress')">
+                                <i class="fas fa-copy"></i> Copiar
+                            </button>
+                        </div>
+                        
+                        <div style="text-align: center; margin: 15px 0;">
+                            <div class="qrcode-placeholder">
+                                <div>Escanea para enviar USDT<br>en Solana</div>
+                            </div>
+                        </div>
+                        
+                        <div style="font-size: 0.85rem; color: #94a3b8;">
+                            <i class="fas fa-info-circle"></i> Red rápida y económica. Comisión: ~$0.01
+                        </div>
+                    </div>
+                    
+                    <!-- Optimism -->
+                    <div class="payment-method optimism">
+                        <div class="network-header">
+                            <div class="network-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <div class="network-name">Optimism (OP)</div>
+                        </div>
+                        
+                        <div class="address-container">
+                            <span class="address-label">Dirección USDT en Optimism:</span>
+                            <div class="address-value" id="optimismAddress">
+                                0xadc2fbf9052fe4746a3d415342f4ce31ab0f20c0
+                            </div>
+                            <button class="copy-btn" onclick="copyToClipboard('optimismAddress')">
+                                <i class="fas fa-copy"></i> Copiar
+                            </button>
+                        </div>
+                        
+                        <div style="text-align: center; margin: 15px 0;">
+                            <div class="qrcode-placeholder">
+                                <div>Escanea para enviar USDT<br>en Optimism</div>
+                            </div>
+                        </div>
+                        
+                        <div style="font-size: 0.85rem; color: #94a3b8;">
+                            <i class="fas fa-info-circle"></i> Layer 2 de Ethereum. Comisión: ~$0.10
+                        </div>
+                    </div>
+                    
+                    <!-- Ethereum -->
+                    <div class="payment-method ethereum">
+                        <div class="network-header">
+                            <div class="network-icon">
+                                <i class="fab fa-ethereum"></i>
+                            </div>
+                            <div class="network-name">Ethereum (ETH)</div>
+                        </div>
+                        
+                        <div class="address-container">
+                            <span class="address-label">Dirección USDT en Ethereum:</span>
+                            <div class="address-value" id="ethereumAddress">
+                                0xadc2fbf9052fe4746a3d415342f4ce31ab0f20c0
+                            </div>
+                            <button class="copy-btn" onclick="copyToClipboard('ethereumAddress')">
+                                <i class="fas fa-copy"></i> Copiar
+                            </button>
+                        </div>
+                        
+                        <div style="text-align: center; margin: 15px 0;">
+                            <div class="qrcode-placeholder">
+                                <div>Escanea para enviar USDT<br>en Ethereum</div>
+                            </div>
+                        </div>
+                        
+                        <div style="font-size: 0.85rem; color: #94a3b8;">
+                            <i class="fas fa-info-circle"></i> Red principal. Comisión alta: ~$5-20
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Instrucciones para comprar -->
+                <div class="instructions">
+                    <h4 style="color: var(--mission); margin-bottom: 15px;">
+                        <i class="fas fa-graduation-cap"></i> Instrucciones para Comprar Gemas
+                    </h4>
+                    
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <div class="step-title">Envía USDT</div>
+                            <div class="step-description">
+                                Envía USDT a una de nuestras direcciones. Mínimo $1, máximo $1000 por transacción.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <div class="step-title">Toma Captura</div>
+                            <div class="step-description">
+                                Toma captura del comprobante (hash de transacción) y envía a nuestro Telegram.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <div class="step-title">Recibe Gemas</div>
+                            <div class="step-description">
+                                Te acreditaremos las gemas en 5-30 minutos (dependiendo de la red).
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <div class="step-title">Verifica</div>
+                            <div class="step-description">
+                                Verifica que las gemas aparezcan en tu cuenta. Si no, contáctanos inmediatamente.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 20px;">
+                        <a href="https://t.me/tu_canal_telegram" target="_blank" class="btn btn-premium" style="text-decoration: none;">
+                            <i class="fab fa-telegram"></i> Contactar en Telegram
+                        </a>
                     </div>
                 </div>
             </div>
             
-            <!-- Columna derecha: Misiones y logros -->
-            <div class="right-panel">
-                <!-- Misiones -->
-                <div class="missions-section">
-                    <div class="section-title">
-                        <i class="fas fa-tasks"></i> Misiones Diarias
+            <!-- Sección para retirar ganancias -->
+            <div class="section section-crypto" style="margin-top: 20px;">
+                <h3 class="section-title">
+                    <i class="fas fa-wallet"></i> Retirar Ganancias en USDT
+                </h3>
+                <p style="margin-bottom: 15px; color: #cbd5e1; font-size: 0.9rem;">
+                    Retira tus ganancias en USDT a cualquier red compatible. Mínimo $5 para retirar.
+                </p>
+                
+                <!-- Formulario de retiro -->
+                <div class="withdrawal-form">
+                    <h4 style="color: var(--secondary); margin-bottom: 15px;">
+                        <i class="fas fa-money-bill-wave"></i> Solicitar Retiro
+                    </h4>
+                    
+                    <div class="amount-preview">
+                        <div class="preview-row">
+                            <div class="preview-label">Ganancias disponibles:</div>
+                            <div class="preview-value usd">$<span id="availableEarnings">0.00</span></div>
+                        </div>
+                        <div class="preview-row">
+                            <div class="preview-label">Mínimo para retirar:</div>
+                            <div class="preview-value">$5.00</div>
+                        </div>
                     </div>
                     
-                    <div id="missionsList">
-                        <!-- Las misiones se generarán dinámicamente -->
+                    <div class="form-group">
+                        <label class="form-label">Red de retiro:</label>
+                        <select class="form-select" id="withdrawalNetwork">
+                            <option value="solana">Solana (Recomendado)</option>
+                            <option value="optimism">Optimism</option>
+                            <option value="ethereum">Ethereum</option>
+                            <option value="bsc">BNB Chain</option>
+                            <option value="polygon">Polygon</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Tu dirección de billetera:</label>
+                        <input type="text" class="form-input" id="walletAddress" placeholder="Ej: 0x... o 68r...">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Cantidad a retirar (USD):</label>
+                        <input type="number" class="form-input" id="withdrawalAmount" placeholder="Mínimo $5.00" step="0.01" min="5">
+                    </div>
+                    
+                    <div class="min-amount">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Las transacciones menores a $20 pueden tener comisiones proporcionalmente más altas
+                    </div>
+                    
+                    <button class="btn btn-secondary" onclick="requestWithdrawal()" style="width: 100%; margin-top: 15px;">
+                        <i class="fas fa-paper-plane"></i> Solicitar Retiro
+                    </button>
+                </div>
+                
+                <!-- Historial de transacciones -->
+                <div style="margin-top: 30px;">
+                    <h4 class="section-title">
+                        <i class="fas fa-history"></i> Historial de Transacciones
+                    </h4>
+                    
+                    <table class="transactions-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Tipo</th>
+                                <th>Cantidad</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactionsTable">
+                            <!-- Las transacciones se cargarán aquí -->
+                            <tr>
+                                <td colspan="4" style="text-align: center; padding: 20px; color: #94a3b8;">
+                                    No hay transacciones aún
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pestaña: CUENTA -->
+        <div id="tab-account" class="tab-content">
+            <div class="account-section">
+                <h3 class="section-title">
+                    <i class="fas fa-user-circle"></i> Información de Cuenta
+                </h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                    <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 10px;">
+                        <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 5px;">Usuario</div>
+                        <div style="font-size: 1.2rem; font-weight: bold; color: white;" id="accountUsername">Invitado</div>
+                    </div>
+                    
+                    <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 10px;">
+                        <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 5px;">Tiempo jugando</div>
+                        <div style="font-size: 1.2rem; font-weight: bold; color: white;" id="playTime">0h 0m</div>
                     </div>
                 </div>
                 
-                <!-- Logros -->
-                <div class="achievements-section">
-                    <div class="section-title">
-                        <i class="fas fa-trophy"></i> Logros
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div style="background: rgba(59, 130, 246, 0.1); padding: 15px; border-radius: 10px; border: 1px solid var(--primary);">
+                        <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 5px;">Total de clics</div>
+                        <div style="font-size: 1.2rem; font-weight: bold; color: white;" id="totalClicks">0</div>
                     </div>
                     
-                    <div id="achievementsList">
-                        <!-- Los logros se generarán dinámicamente -->
+                    <div style="background: rgba(16, 185, 129, 0.1); padding: 15px; border-radius: 10px; border: 1px solid var(--secondary);">
+                        <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 5px;">Mejoras compradas</div>
+                        <div style="font-size: 1.2rem; font-weight: bold; color: white;" id="totalUpgrades">0</div>
                     </div>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <button class="btn btn-primary" onclick="saveGame()" style="width: 100%;">
+                        <i class="fas fa-save"></i> Guardar Progreso
+                    </button>
+                    
+                    <button class="btn" onclick="resetGame()" style="width: 100%; margin-top: 10px; background: rgba(239, 68, 68, 0.2); color: var(--danger); border: 1px solid var(--danger);">
+                        <i class="fas fa-redo"></i> Reiniciar Juego
+                    </button>
                 </div>
             </div>
         </div>
@@ -807,11 +1212,15 @@
         let gameData = {
             crypto: 0,
             money: 0,
+            gems: 0,
             cryptoPerClick: 1,
             autoClickers: 0,
             cryptoPerSecond: 0,
             username: 'Invitado',
-            isLoggedIn: false
+            totalClicks: 0,
+            playTime: 0,
+            purchasedUpgrades: [],
+            level: 1
         };
         
         // Mejoras disponibles
@@ -826,10 +1235,10 @@
         
         // Misiones
         const missions = [
-            { id: 1, name: "Primeros pasos", description: "Realiza 10 clics", target: 10, current: 0, reward: 100, type: "clicks" },
-            { id: 2, name: "Minero novato", description: "Consigue 1.0 BTC", target: 1.0, current: 0, reward: 500, type: "crypto" },
-            { id: 3, name: "Primera mejora", description: "Compra una mejora", target: 1, current: 0, reward: 200, type: "upgrades" },
-            { id: 4, name: "Auto-minería", description: "Consigue 5 auto-mineros", target: 5, current: 0, reward: 1000, type: "autoClickers" }
+            { id: 1, name: "Primeros pasos", description: "Realiza 10 clics", target: 10, current: 0, reward: 100, type: "clicks", completed: false },
+            { id: 2, name: "Minero novato", description: "Consigue 1.0 BTC", target: 1.0, current: 0, reward: 500, type: "crypto", completed: false },
+            { id: 3, name: "Primera mejora", description: "Compra una mejora", target: 1, current: 0, reward: 200, type: "upgrades", completed: false },
+            { id: 4, name: "Auto-minería", description: "Consigue 5 auto-mineros", target: 5, current: 0, reward: 1000, type: "autoClickers", completed: false }
         ];
         
         // Logros
@@ -840,26 +1249,9 @@
             { id: 4, name: "Millonario", description: "Consigue $1,000,000", unlocked: false, target: 1000000 }
         ];
         
-        // Elementos del DOM
-        const loginOverlay = document.getElementById('loginOverlay');
-        const mainGame = document.getElementById('mainGame');
-        const clickButton = document.getElementById('clickButton');
-        const cryptoDisplay = document.getElementById('cryptoDisplay');
-        const compactMoney = document.getElementById('compactMoney');
-        const compactCrypto = document.getElementById('compactCrypto');
-        const compactCryptoUSD = document.getElementById('compactCryptoUSD');
-        const compactMoneyPerSec = document.getElementById('compactMoneyPerSec');
-        const compactUsername = document.getElementById('compactUsername');
-        const clickPower = document.getElementById('clickPower');
-        const autoClickers = document.getElementById('autoClickers');
-        const cryptoPerSec = document.getElementById('cryptoPerSec');
-        const upgradesGrid = document.getElementById('upgradesGrid');
-        const missionsList = document.getElementById('missionsList');
-        const achievementsList = document.getElementById('achievementsList');
-        const headerSubscribeBtn = document.getElementById('headerSubscribeBtn');
-        
         // Inicializar el juego
         function initGame() {
+            loadGameData();
             renderUpgrades();
             renderMissions();
             renderAchievements();
@@ -867,6 +1259,19 @@
             
             // Iniciar el juego automático
             setInterval(gameLoop, 1000);
+            setInterval(updatePlayTime, 60000); // Actualizar tiempo cada minuto
+            
+            // Configurar botón de clic
+            const clickButton = document.getElementById('clickButton');
+            clickButton.addEventListener('mousedown', () => {
+                clickButton.style.transform = 'scale(0.95)';
+            });
+            clickButton.addEventListener('mouseup', () => {
+                clickButton.style.transform = 'scale(1)';
+            });
+            clickButton.addEventListener('mouseleave', () => {
+                clickButton.style.transform = 'scale(1)';
+            });
         }
         
         // Bucle principal del juego
@@ -874,6 +1279,7 @@
             // Generar cripto automáticamente
             if (gameData.autoClickers > 0) {
                 gameData.crypto += gameData.cryptoPerSecond;
+                gameData.money += gameData.cryptoPerSecond * 50000; // 1 BTC = $50,000
                 updateDisplay();
             }
             
@@ -882,32 +1288,36 @@
             
             // Actualizar logros
             updateAchievements();
+            
+            // Guardar datos cada 30 segundos
+            if (Math.floor(Date.now() / 1000) % 30 === 0) {
+                saveGameData();
+            }
         }
         
         // Función de clic
         function clickCrypto() {
-            // Añadir efecto visual
+            // Añadir cripto
+            gameData.crypto += gameData.cryptoPerClick;
+            gameData.money += gameData.cryptoPerClick * 50000;
+            gameData.totalClicks++;
+            
+            // Actualizar estadísticas
+            updateDisplay();
+            
+            // Efecto visual
+            const clickButton = document.getElementById('clickButton');
             clickButton.style.transform = 'scale(0.95)';
             setTimeout(() => {
                 clickButton.style.transform = 'scale(1)';
             }, 100);
-            
-            // Añadir cripto
-            gameData.crypto += gameData.cryptoPerClick;
-            
-            // Actualizar misión de clics
-            const clickMission = missions.find(m => m.type === "clicks");
-            if (clickMission) {
-                clickMission.current++;
-                renderMissions();
-            }
-            
-            updateDisplay();
         }
         
         // Comprar mejora
         function buyUpgrade(id) {
             const upgrade = upgrades.find(u => u.id === id);
+            
+            if (!upgrade) return;
             
             if (gameData.money >= upgrade.cost) {
                 gameData.money -= upgrade.cost;
@@ -919,68 +1329,106 @@
                     gameData.cryptoPerSecond += upgrade.effect;
                 }
                 
-                // Actualizar misión de mejoras
-                const upgradeMission = missions.find(m => m.type === "upgrades");
-                if (upgradeMission) {
-                    upgradeMission.current++;
-                    renderMissions();
+                // Registrar mejora comprada
+                if (!gameData.purchasedUpgrades.includes(id)) {
+                    gameData.purchasedUpgrades.push(id);
                 }
                 
                 updateDisplay();
                 renderUpgrades();
-                alert(`¡Mejora "${upgrade.name}" comprada!`);
+                showNotification(`¡Mejora "${upgrade.name}" comprada!`);
+                
+                // Guardar datos
+                saveGameData();
             } else {
-                alert("¡No tienes suficiente dinero!");
+                showNotification("¡No tienes suficiente dinero!", "error");
             }
         }
         
         // Actualizar pantalla
         function updateDisplay() {
-            // Actualizar valores principales
-            cryptoDisplay.textContent = gameData.crypto.toFixed(6) + " BTC";
-            compactCrypto.textContent = gameData.crypto.toFixed(6);
-            compactMoney.textContent = gameData.money.toLocaleString();
+            // Actualizar header
+            document.getElementById('compactMoney').textContent = Math.floor(gameData.money).toLocaleString();
+            document.getElementById('compactCrypto').textContent = gameData.crypto.toFixed(6);
+            document.getElementById('compactCryptoUSD').textContent = (gameData.crypto * 50000).toFixed(2);
+            document.getElementById('compactGems').textContent = gameData.gems;
+            document.getElementById('compactLevel').textContent = gameData.level;
+            document.getElementById('compactUsername').textContent = gameData.username;
             
-            // Calcular valor en USD (simulado: 1 BTC = $50,000)
-            const cryptoUSD = (gameData.crypto * 50000).toFixed(2);
-            compactCryptoUSD.textContent = cryptoUSD;
+            // Actualizar dinero por segundo
+            const moneyPerSecond = (gameData.cryptoPerSecond * 50000).toFixed(0);
+            document.getElementById('compactMoneyPerSec').textContent = `+${moneyPerSecond}/s`;
             
-            // Actualizar estadísticas
-            clickPower.textContent = gameData.cryptoPerClick.toFixed(1);
-            autoClickers.textContent = gameData.autoClickers;
-            cryptoPerSec.textContent = gameData.cryptoPerSecond.toFixed(1);
-            compactMoneyPerSec.textContent = `+${(gameData.cryptoPerSecond * 50000).toFixed(0)}/s`;
+            // Actualizar sección de clic
+            document.getElementById('cryptoDisplay').textContent = gameData.crypto.toFixed(6) + " BTC";
+            document.getElementById('clickPower').textContent = gameData.cryptoPerClick.toFixed(1);
+            document.getElementById('autoClickers').textContent = gameData.autoClickers;
+            document.getElementById('cryptoPerSec').textContent = gameData.cryptoPerSecond.toFixed(1);
+            
+            // Actualizar cuenta
+            document.getElementById('accountUsername').textContent = gameData.username;
+            document.getElementById('totalClicks').textContent = gameData.totalClicks;
+            document.getElementById('totalUpgrades').textContent = gameData.purchasedUpgrades.length;
+            
+            // Actualizar ganancias disponibles para retiro
+            document.getElementById('availableEarnings').textContent = gameData.money.toFixed(2);
         }
         
         // Renderizar mejoras
         function renderUpgrades() {
+            const upgradesGrid = document.getElementById('upgradesGrid');
             upgradesGrid.innerHTML = '';
             
             upgrades.forEach(upgrade => {
                 const canAfford = gameData.money >= upgrade.cost;
+                const isPurchased = gameData.purchasedUpgrades.includes(upgrade.id);
+                
                 const upgradeCard = document.createElement('div');
                 upgradeCard.className = `upgrade-card ${canAfford ? '' : 'disabled'}`;
+                if (isPurchased) {
+                    upgradeCard.style.opacity = '0.7';
+                    upgradeCard.style.borderColor = 'var(--secondary)';
+                }
+                
                 upgradeCard.innerHTML = `
                     <div class="upgrade-header">
-                        <div class="upgrade-name">${upgrade.name}</div>
+                        <div class="upgrade-name">${upgrade.name} ${isPurchased ? '✓' : ''}</div>
                         <div class="upgrade-cost">$${upgrade.cost.toLocaleString()}</div>
                     </div>
                     <div class="upgrade-description">${upgrade.description}</div>
                     <div class="upgrade-effect">+${upgrade.effect} ${upgrade.type === 'clickPower' ? 'por clic' : 'BTC/seg'}</div>
                 `;
                 
-                upgradeCard.onclick = () => buyUpgrade(upgrade.id);
+                if (!isPurchased) {
+                    upgradeCard.onclick = () => buyUpgrade(upgrade.id);
+                } else {
+                    upgradeCard.onclick = null;
+                    upgradeCard.style.cursor = 'default';
+                }
+                
                 upgradesGrid.appendChild(upgradeCard);
             });
         }
         
         // Renderizar misiones
         function renderMissions() {
+            const missionsList = document.getElementById('missionsList');
             missionsList.innerHTML = '';
             
             missions.forEach(mission => {
-                const progress = (mission.current / mission.target) * 100;
-                const isComplete = mission.current >= mission.target;
+                // Actualizar progreso actual
+                if (mission.type === "clicks") {
+                    mission.current = gameData.totalClicks;
+                } else if (mission.type === "crypto") {
+                    mission.current = gameData.crypto;
+                } else if (mission.type === "upgrades") {
+                    mission.current = gameData.purchasedUpgrades.length;
+                } else if (mission.type === "autoClickers") {
+                    mission.current = gameData.autoClickers;
+                }
+                
+                const progress = Math.min((mission.current / mission.target) * 100, 100);
+                const isComplete = mission.current >= mission.target && !mission.completed;
                 
                 const missionItem = document.createElement('div');
                 missionItem.className = `mission-item ${isComplete ? 'mission-complete' : ''}`;
@@ -990,17 +1438,18 @@
                         <div class="mission-reward">$${mission.reward}</div>
                     </div>
                     <div class="mission-description">${mission.description}</div>
-                    <div class="mission-progress">
-                        <div class="mission-progress-bar" style="width: ${Math.min(progress, 100)}%"></div>
+                    <div style="height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; margin: 10px 0; overflow: hidden;">
+                        <div style="height: 100%; background: linear-gradient(90deg, var(--mission), #a78bfa); width: ${progress}%;"></div>
                     </div>
-                    <div class="mission-status">${mission.current}/${mission.target}</div>
+                    <div style="font-size: 0.8rem; color: #94a3b8; text-align: right;">
+                        ${isComplete ? '¡RECLAMAR!' : `${mission.current.toFixed(1)}/${mission.target}`}
+                    </div>
                 `;
                 
-                missionItem.onclick = () => {
-                    if (isComplete) {
-                        claimMissionReward(mission.id);
-                    }
-                };
+                if (isComplete) {
+                    missionItem.onclick = () => claimMissionReward(mission.id);
+                    missionItem.style.cursor = 'pointer';
+                }
                 
                 missionsList.appendChild(missionItem);
             });
@@ -1009,34 +1458,24 @@
         // Reclamar recompensa de misión
         function claimMissionReward(id) {
             const mission = missions.find(m => m.id === id);
-            if (mission && mission.current >= mission.target) {
+            if (mission && mission.current >= mission.target && !mission.completed) {
                 gameData.money += mission.reward;
-                mission.current = 0; // Reset para poder repetir
+                mission.completed = true;
                 updateDisplay();
                 renderMissions();
-                alert(`¡Recompensa de $${mission.reward} reclamada!`);
+                showNotification(`¡Recompensa de $${mission.reward} reclamada!`);
+                saveGameData();
             }
         }
         
         // Actualizar misiones automáticamente
         function updateMissions() {
-            // Misión de cripto
-            const cryptoMission = missions.find(m => m.type === "crypto");
-            if (cryptoMission) {
-                cryptoMission.current = gameData.crypto;
-            }
-            
-            // Misión de auto-mineros
-            const autoClickerMission = missions.find(m => m.type === "autoClickers");
-            if (autoClickerMission) {
-                autoClickerMission.current = gameData.autoClickers;
-            }
-            
             renderMissions();
         }
         
         // Renderizar logros
         function renderAchievements() {
+            const achievementsList = document.getElementById('achievementsList');
             achievementsList.innerHTML = '';
             
             achievements.forEach(achievement => {
@@ -1059,198 +1498,218 @@
         function updateAchievements() {
             let updated = false;
             
-            // Logro de BTC
-            const btcAchievement = achievements.find(a => a.id === 1);
-            if (btcAchievement && !btcAchievement.unlocked && gameData.crypto >= btcAchievement.target) {
-                btcAchievement.unlocked = true;
-                updated = true;
-                alert(`¡Logro desbloqueado: ${btcAchievement.name}!`);
-            }
-            
-            // Logro de clics
-            const clickAchievement = achievements.find(a => a.id === 2);
-            if (clickAchievement) {
-                const clickMission = missions.find(m => m.type === "clicks");
-                if (clickMission && !clickAchievement.unlocked && clickMission.current >= clickAchievement.target) {
-                    clickAchievement.unlocked = true;
-                    updated = true;
-                    alert(`¡Logro desbloqueado: ${clickAchievement.name}!`);
+            achievements.forEach(achievement => {
+                if (!achievement.unlocked) {
+                    let currentValue = 0;
+                    
+                    if (achievement.id === 1) {
+                        currentValue = gameData.crypto;
+                    } else if (achievement.id === 2) {
+                        currentValue = gameData.totalClicks;
+                    } else if (achievement.id === 3) {
+                        currentValue = gameData.autoClickers;
+                    } else if (achievement.id === 4) {
+                        currentValue = gameData.money;
+                    }
+                    
+                    if (currentValue >= achievement.target) {
+                        achievement.unlocked = true;
+                        updated = true;
+                        showNotification(`¡Logro desbloqueado: ${achievement.name}!`);
+                    }
                 }
-            }
+            });
             
             if (updated) {
                 renderAchievements();
+                saveGameData();
             }
         }
         
-        // Funciones del sistema de login
-        function showForm(formId) {
-            // Ocultar todos los formularios
-            document.querySelectorAll('.login-form').forEach(form => {
-                form.classList.remove('active');
-            });
+        // Funciones del sistema de pagos
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent;
             
-            // Remover activo de todas las pestañas
-            document.querySelectorAll('.login-tab').forEach(tab => {
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('Dirección copiada al portapapeles');
+            }).catch(err => {
+                console.error('Error al copiar: ', err);
+                showNotification('Error al copiar la dirección', 'error');
+            });
+        }
+        
+        function requestWithdrawal() {
+            const network = document.getElementById('withdrawalNetwork').value;
+            const address = document.getElementById('walletAddress').value;
+            const amount = parseFloat(document.getElementById('withdrawalAmount').value);
+            
+            if (!address) {
+                showNotification('Por favor ingresa tu dirección de billetera', 'error');
+                return;
+            }
+            
+            if (!amount || amount < 5) {
+                showNotification('El monto mínimo para retirar es $5.00', 'error');
+                return;
+            }
+            
+            if (amount > gameData.money) {
+                showNotification('No tienes suficientes fondos para este retiro', 'error');
+                return;
+            }
+            
+            showNotification('Solicitud de retiro enviada. Te contactaremos por Telegram para confirmar.');
+            
+            // Simular retiro
+            gameData.money -= amount;
+            updateDisplay();
+            saveGameData();
+            
+            // Limpiar formulario
+            document.getElementById('walletAddress').value = '';
+            document.getElementById('withdrawalAmount').value = '';
+        }
+        
+        // Funciones de navegación
+        function switchTab(tabName) {
+            // Ocultar todas las pestañas
+            document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.remove('active');
             });
             
-            // Mostrar formulario seleccionado
-            document.getElementById(formId).classList.add('active');
-            
-            // Activar pestaña correspondiente
-            document.querySelector(`.login-tab[data-form="${formId}"]`).classList.add('active');
-        }
-        
-        function togglePassword(inputId) {
-            const input = document.getElementById(inputId);
-            const toggleBtn = input.nextElementSibling;
-            
-            if (input.type === 'password') {
-                input.type = 'text';
-                toggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i>';
-            } else {
-                input.type = 'password';
-                toggleBtn.innerHTML = '<i class="fas fa-eye"></i>';
-            }
-        }
-        
-        function loginUser() {
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            
-            if (!email || !password) {
-                alert('Por favor, completa todos los campos');
-                return;
-            }
-            
-            // Simular login exitoso
-            loginOverlay.style.display = 'none';
-            mainGame.style.display = 'block';
-            gameData.username = email.split('@')[0];
-            gameData.isLoggedIn = true;
-            compactUsername.textContent = gameData.username;
-            headerSubscribeBtn.style.display = 'none';
-            
-            // Inicializar juego
-            initGame();
-            
-            alert('¡Inicio de sesión exitoso! ¡Bienvenido a Crypto Clicker Pro!');
-        }
-        
-        function registerUser() {
-            const email = document.getElementById('registerEmail').value;
-            const username = document.getElementById('registerUsername').value;
-            const password = document.getElementById('registerPassword').value;
-            const confirmPassword = document.getElementById('registerConfirmPassword').value;
-            const referral = document.getElementById('registerReferral').value;
-            
-            // Validaciones
-            if (!email || !username || !password || !confirmPassword) {
-                alert('Por favor, completa todos los campos obligatorios');
-                return;
-            }
-            
-            if (password.length < 8) {
-                alert('La contraseña debe tener al menos 8 caracteres');
-                return;
-            }
-            
-            if (password !== confirmPassword) {
-                alert('Las contraseñas no coinciden');
-                return;
-            }
-            
-            // Simular registro exitoso
-            loginOverlay.style.display = 'none';
-            mainGame.style.display = 'block';
-            gameData.username = username;
-            gameData.isLoggedIn = true;
-            compactUsername.textContent = username;
-            headerSubscribeBtn.style.display = 'none';
-            
-            // Bonificación por registro
-            gameData.money = 1000;
-            gameData.crypto = 0.01;
-            
-            // Inicializar juego
-            initGame();
-            
-            alert(`¡Registro exitoso! Bienvenido ${username}. Has recibido $1000 y 0.01 BTC de bonificación.`);
-        }
-        
-        function enterAsGuest() {
-            // Modo invitado
-            loginOverlay.style.display = 'none';
-            mainGame.style.display = 'block';
-            gameData.username = 'Invitado';
-            gameData.isLoggedIn = false;
-            compactUsername.textContent = 'Invitado';
-            
-            // Inicializar juego
-            initGame();
-            
-            alert('Modo invitado activado. Tu progreso se guardará localmente en este navegador.');
-        }
-        
-        function recoverAccount() {
-            const recoveryEmail = document.getElementById('recoveryEmail').value;
-            
-            if (!recoveryEmail) {
-                alert('Por favor, introduce tu correo o ID de usuario');
-                return;
-            }
-            
-            // Simular recuperación
-            alert('Se ha enviado un enlace de recuperación a tu correo electrónico');
-            showForm('loginForm');
-        }
-        
-        function toggleAccountMenu() {
-            // Menú simple de cuenta
-            const options = gameData.isLoggedIn 
-                ? ['Ver perfil', 'Configuración', 'Cerrar sesión']
-                : ['Crear cuenta', 'Iniciar sesión', 'Modo invitado'];
-            
-            const userChoice = prompt(`Opciones de cuenta:\n${options.join('\n')}\n\nElige una opción (1-${options.length}):`);
-            
-            if (userChoice === '1') {
-                if (gameData.isLoggedIn) {
-                    alert(`Perfil de ${gameData.username}\n\nBTC: ${gameData.crypto.toFixed(6)}\nDinero: $${gameData.money.toLocaleString()}`);
-                } else {
-                    showForm('registerForm');
-                    loginOverlay.style.display = 'flex';
-                }
-            } else if (userChoice === '2') {
-                if (gameData.isLoggedIn) {
-                    alert('Configuración de cuenta (próximamente)');
-                } else {
-                    showForm('loginForm');
-                    loginOverlay.style.display = 'flex';
-                }
-            } else if (userChoice === '3') {
-                if (gameData.isLoggedIn) {
-                    if (confirm('¿Estás seguro de que quieres cerrar sesión?')) {
-                        location.reload();
-                    }
-                } else {
-                    enterAsGuest();
-                }
-            }
-        }
-        
-        // Inicializar pestañas
-        document.querySelectorAll('.login-tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                const formId = this.getAttribute('data-form');
-                showForm(formId);
+            // Desactivar todos los botones
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
             });
-        });
+            
+            // Mostrar pestaña seleccionada
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+            
+            // Activar botón seleccionado
+            document.querySelector(`.tab-button[onclick="switchTab('${tabName}')"]`).classList.add('active');
+        }
         
-        // Mostrar el overlay de login al cargar
-        document.addEventListener('DOMContentLoaded', function() {
-            loginOverlay.style.display = 'flex';
-            mainGame.style.display = 'none';
+        // Funciones de inicio de sesión
+        function startGame() {
+            const usernameInput = document.getElementById('usernameInput');
+            const username = usernameInput.value.trim();
+            
+            if (!username) {
+                showNotification('Por favor ingresa un nombre de usuario', 'error');
+                return;
+            }
+            
+            gameData.username = username;
+            
+            // Ocultar login
+            document.getElementById('loginOverlay').style.display = 'none';
+            
+            // Mostrar juego
+            document.querySelector('.compact-header').style.display = 'flex';
+            document.querySelector('.main-content').style.display = 'block';
+            
+            // Inicializar juego
+            initGame();
+            
+            showNotification(`¡Bienvenido ${username}! Comienza a hacer clic para minar criptomonedas.`);
+        }
+        
+        // Funciones de guardado y carga
+        function saveGameData() {
+            localStorage.setItem('cryptoClicker_data', JSON.stringify(gameData));
+        }
+        
+        function loadGameData() {
+            const savedData = localStorage.getItem('cryptoClicker_data');
+            if (savedData) {
+                const parsed = JSON.parse(savedData);
+                Object.assign(gameData, parsed);
+                updateDisplay();
+            }
+        }
+        
+        function saveGame() {
+            saveGameData();
+            showNotification('Progreso guardado correctamente');
+        }
+        
+        function resetGame() {
+            if (confirm('¿Estás seguro de que quieres reiniciar el juego? Perderás todo tu progreso.')) {
+                localStorage.removeItem('cryptoClicker_data');
+                location.reload();
+            }
+        }
+        
+        function updatePlayTime() {
+            gameData.playTime += 1;
+            const hours = Math.floor(gameData.playTime / 60);
+            const minutes = gameData.playTime % 60;
+            document.getElementById('playTime').textContent = `${hours}h ${minutes}m`;
+        }
+        
+        // Función de notificación
+        function showNotification(message, type = 'success') {
+            // Crear notificación
+            const notification = document.createElement('div');
+            notification.style.position = 'fixed';
+            notification.style.top = '20px';
+            notification.style.right = '20px';
+            notification.style.padding = '15px 20px';
+            notification.style.borderRadius = '10px';
+            notification.style.color = 'white';
+            notification.style.fontWeight = 'bold';
+            notification.style.zIndex = '99999';
+            notification.style.boxShadow = '0 5px 15px rgba(0,0,0,0.3)';
+            notification.style.animation = 'slideIn 0.3s, fadeOut 0.3s 2.7s';
+            
+            if (type === 'success') {
+                notification.style.background = 'linear-gradient(135deg, var(--success), #059669)';
+                notification.style.borderLeft = '5px solid var(--secondary)';
+            } else {
+                notification.style.background = 'linear-gradient(135deg, var(--danger), #dc2626)';
+                notification.style.borderLeft = '5px solid var(--danger)';
+            }
+            
+            notification.textContent = message;
+            
+            // Agregar estilos de animación
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes fadeOut {
+                    from { opacity: 1; }
+                    to { opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            document.body.appendChild(notification);
+            
+            // Eliminar notificación después de 3 segundos
+            setTimeout(() => {
+                notification.remove();
+                style.remove();
+            }, 3000);
+        }
+        
+        // Cargar juego al iniciar
+        window.addEventListener('load', function() {
+            // Verificar si hay datos guardados
+            const savedData = localStorage.getItem('cryptoClicker_data');
+            if (savedData) {
+                const parsed = JSON.parse(savedData);
+                if (parsed.username && parsed.username !== 'Invitado') {
+                    // Iniciar directamente con los datos guardados
+                    document.getElementById('loginOverlay').style.display = 'none';
+                    document.querySelector('.compact-header').style.display = 'flex';
+                    document.querySelector('.main-content').style.display = 'block';
+                    initGame();
+                }
+            }
         });
     </script>
 </body>

@@ -480,6 +480,58 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        
+        /* Botón de Inscripción/OK */
+        .subscribe-btn {
+            background: linear-gradient(135deg, var(--success), #10b981);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin: 15px auto;
+            font-size: 1rem;
+        }
+        
+        .subscribe-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+        }
+        
+        .subscribe-btn:active {
+            transform: translateY(0);
+        }
+        
+        .subscribe-btn i {
+            font-size: 1.2rem;
+        }
+        
+        /* Botón de confirmación en formularios */
+        .confirm-btn {
+            background: linear-gradient(135deg, var(--primary), #3b82f6);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .confirm-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
     </style>
 </head>
 <body>
@@ -512,8 +564,8 @@
                     </div>
                 </div>
                 
-                <button type="button" class="login-btn" onclick="loginUser()">
-                    <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                <button type="button" class="confirm-btn" onclick="loginUser()">
+                    <i class="fas fa-check-circle"></i> OK - Iniciar Sesión
                 </button>
                 
                 <div class="login-footer">
@@ -558,9 +610,14 @@
                     <input type="text" id="registerReferral" class="form-input" placeholder="Código de amigo">
                 </div>
                 
-                <button type="button" class="login-btn" onclick="registerUser()">
-                    <i class="fas fa-user-plus"></i> Crear Cuenta
+                <!-- BOTÓN DE INSCRIPCIÓN/OK -->
+                <button type="button" class="subscribe-btn" onclick="registerUser()">
+                    <i class="fas fa-user-check"></i> INSCRIBIRSE - Crear Cuenta
                 </button>
+                
+                <div class="login-footer">
+                    Al hacer clic en "INSCRIBIRSE", aceptas los términos y condiciones.
+                </div>
             </form>
             
             <!-- Modo Invitado -->
@@ -573,8 +630,8 @@
                     </p>
                 </div>
                 
-                <button type="button" class="login-btn" onclick="enterAsGuest()">
-                    <i class="fas fa-play"></i> Jugar como Invitado
+                <button type="button" class="confirm-btn" onclick="enterAsGuest()">
+                    <i class="fas fa-play"></i> OK - Jugar como Invitado
                 </button>
                 
                 <div class="login-footer">
@@ -595,8 +652,8 @@
                     <input type="text" id="recoveryEmail" class="form-input" placeholder="tucorreo@ejemplo.com">
                 </div>
                 
-                <button type="button" class="login-btn" onclick="recoverAccount()">
-                    <i class="fas fa-key"></i> Recuperar Cuenta
+                <button type="button" class="confirm-btn" onclick="recoverAccount()">
+                    <i class="fas fa-check-circle"></i> OK - Recuperar Cuenta
                 </button>
                 
                 <div class="login-footer">
@@ -628,329 +685,30 @@
             </div>
         </div>
         
-        <!-- Avatar de usuario -->
-        <div style="position: absolute; top: 10px; right: 15px;">
-            <div class="user-avatar" onclick="toggleUserMenu()" id="userAvatar">
-                <span id="avatarInitial">I</span>
-                <div class="user-badge" id="userBadge" style="display: none;">3</div>
-            </div>
-            <div class="user-menu" id="userMenu">
-                <div class="user-menu-item" onclick="showAccountSection()">
-                    <i class="fas fa-user-circle"></i>
-                    <span>Mi Cuenta</span>
-                </div>
-                <div class="user-menu-item" onclick="backupData()">
-                    <i class="fas fa-download"></i>
-                    <span>Descargar Backup</span>
-                </div>
-                <div class="user-menu-item" onclick="showBackupSection()">
-                    <i class="fas fa-upload"></i>
-                    <span>Restaurar Backup</span>
-                </div>
-                <div class="user-menu-divider"></div>
-                <div class="user-menu-item" onclick="showReferralSection()">
-                    <i class="fas fa-users"></i>
-                    <span>Invitar Amigos</span>
-                    <div class="user-badge" style="position: static; margin-left: auto;">5</div>
-                </div>
-                <div class="user-menu-divider"></div>
-                <div class="user-menu-item" onclick="logoutUser()" style="color: var(--danger);">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Cerrar Sesión</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Contenido principal -->
-    <div class="main-content">
-        <!-- Clicker y otras secciones se mantienen igual -->
-        
-        <!-- NUEVA SECCIÓN: Cuenta del Usuario -->
-        <div class="tab-content" id="tab-account">
-            <!-- Info de cuenta -->
-            <div class="account-section">
-                <h3 class="section-title">
-                    <i class="fas fa-user-circle"></i> Información de Cuenta
-                </h3>
-                
-                <div class="account-info">
-                    <div class="account-field copy-field">
-                        <div class="field-label">ID de Usuario</div>
-                        <div class="field-value" id="accountUserId">USR-000000</div>
-                        <button class="copy-field-btn" onclick="copyToClipboard('accountUserId')">
-                            <i class="fas fa-copy"></i>
-                        </button>
-                    </div>
-                    
-                    <div class="account-field">
-                        <div class="field-label">Nombre de Usuario</div>
-                        <div class="field-value" id="accountUsername">Invitado</div>
-                    </div>
-                    
-                    <div class="account-field">
-                        <div class="field-label">Correo Electrónico</div>
-                        <div class="field-value" id="accountEmail">No registrado</div>
-                    </div>
-                    
-                    <div class="account-field">
-                        <div class="field-label">Tipo de Cuenta</div>
-                        <div class="field-value" id="accountType">Invitado</div>
-                    </div>
-                    
-                    <div class="account-field">
-                        <div class="field-label">Miembro desde</div>
-                        <div class="field-value" id="accountCreated">Hoy</div>
-                    </div>
-                    
-                    <div class="account-field">
-                        <div class="field-label">Último Backup</div>
-                        <div class="field-value" id="accountLastBackup">Nunca</div>
-                    </div>
-                </div>
-                
-                <div class="auto-backup-notice">
-                    <div>
-                        <i class="fas fa-sync-alt"></i>
-                        <span>Auto-backup cada: <span class="backup-timer" id="backupTimer">05:00</span></span>
-                    </div>
-                    <button class="btn btn-warning" onclick="forceBackup()">
-                        <i class="fas fa-save"></i> Guardar Ahora
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Sistema de Backup -->
-            <div class="backup-section">
-                <h3 class="section-title">
-                    <i class="fas fa-database"></i> Sistema de Backup
-                </h3>
-                <p style="margin-bottom: 15px; color: #cbd5e1; font-size: 0.9rem;">
-                    Guarda tu progreso de forma segura. Recomendamos hacer backup cada vez que ganes gemas o hagas una compra.
-                </p>
-                
-                <div class="backup-options">
-                    <div class="backup-card" onclick="backupData()">
-                        <div class="backup-icon">
-                            <i class="fas fa-download"></i>
-                        </div>
-                        <div class="backup-title">Descargar Backup</div>
-                        <div class="backup-description">
-                            Guarda un archivo .json con todos tus datos. Guárdalo en un lugar seguro.
-                        </div>
-                        <button class="btn btn-success">
-                            <i class="fas fa-file-download"></i> Descargar
-                        </button>
-                    </div>
-                    
-                    <div class="backup-card" onclick="showBackupInput()">
-                        <div class="backup-icon">
-                            <i class="fas fa-upload"></i>
-                        </div>
-                        <div class="backup-title">Restaurar Backup</div>
-                        <div class="backup-description">
-                            Sube un archivo .json para restaurar tu progreso desde un backup anterior.
-                        </div>
-                        <button class="btn btn-warning">
-                            <i class="fas fa-file-upload"></i> Restaurar
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Input para restaurar backup (oculto por defecto) -->
-                <div id="restoreBackupContainer" style="display: none; margin-top: 20px;">
-                    <div class="form-group">
-                        <label class="form-label">Pega aquí tu código de backup:</label>
-                        <textarea id="backupDataInput" class="recovery-textarea" placeholder='{"userId": "USR-123456", "data": {...}}'></textarea>
-                    </div>
-                    
-                    <div style="display: flex; gap: 10px; margin-top: 10px;">
-                        <button class="btn btn-success" onclick="restoreBackupFromInput()">
-                            <i class="fas fa-check"></i> Restaurar
-                        </button>
-                        <button class="btn btn-danger" onclick="hideBackupInput()">
-                            <i class="fas fa-times"></i> Cancelar
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Sistema de Referidos -->
-            <div class="referral-section">
-                <h3 class="section-title">
-                    <i class="fas fa-users"></i> Sistema de Referidos
-                </h3>
-                <p style="margin-bottom: 15px; color: #cbd5e1; font-size: 0.9rem;">
-                    Invita amigos y gana recompensas. Por cada amigo que se registre con tu código, ambos recibirán gemas.
-                </p>
-                
-                <div class="referral-code-container">
-                    <div class="field-label">Tu Código de Referido</div>
-                    <div class="referral-code" id="referralCode">REF-000000</div>
-                    <button class="btn btn-premium" onclick="copyToClipboard('referralCode')">
-                        <i class="fas fa-copy"></i> Copiar Código
-                    </button>
-                </div>
-                
-                <div class="referral-stats">
-                    <div class="referral-stat">
-                        <div class="stat-number" id="referralsCount">0</div>
-                        <div class="stat-label">Referidos</div>
-                    </div>
-                    <div class="referral-stat">
-                        <div class="stat-number" id="referralEarnings">0</div>
-                        <div class="stat-label">Gemas Ganadas</div>
-                    </div>
-                    <div class="referral-stat">
-                        <div class="stat-number" id="referralBonus">+10%</div>
-                        <div class="stat-label">Bonus por Referido</div>
-                    </div>
-                </div>
-                
-                <div style="background: rgba(251, 191, 36, 0.1); border-radius: 10px; padding: 15px; margin-top: 15px;">
-                    <h4 style="color: var(--premium); margin-bottom: 10px;">
-                        <i class="fas fa-gift"></i> Recompensas por Referidos
-                    </h4>
-                    <ul style="color: #cbd5e1; font-size: 0.9rem; padding-left: 20px;">
-                        <li><strong>Por cada referido:</strong> +10 gemas para ti y para tu amigo</li>
-                        <li><strong>Por 5 referidos:</strong> +10% bonus en todas tus ganancias</li>
-                        <li><strong>Por 10 referidos:</strong> +25% bonus y acceso a mejoras exclusivas</li>
-                        <li><strong>Por 50 referidos:</strong> Cuenta VIP con +50% bonus y retiros sin comisión</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <!-- Historial de Actividad -->
-            <div class="section section-crypto">
-                <h3 class="section-title">
-                    <i class="fas fa-history"></i> Historial de Actividad
-                </h3>
-                
-                <div style="overflow-x: auto;">
-                    <table class="transactions-table">
-                        <thead>
-                            <tr>
-                                <th>Fecha</th>
-                                <th>Actividad</th>
-                                <th>Detalles</th>
-                                <th>IP/Location</th>
-                            </tr>
-                        </thead>
-                        <tbody id="activityHistory">
-                            <tr>
-                                <td colspan="4" style="text-align: center; color: #94a3b8; padding: 20px;">
-                                    Cargando historial...
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                
-                <button class="btn btn-warning" onclick="clearActivityHistory()" style="margin-top: 15px;">
-                    <i class="fas fa-trash"></i> Limpiar Historial
-                </button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Tabs de navegación (actualizadas) -->
-    <div class="tabs-container">
-        <button class="tab-button" data-tab="tab-generators">
-            <i class="fas fa-industry"></i>
-            <span>Generadores</span>
-        </button>
-        <button class="tab-button" data-tab="tab-upgrades">
-            <i class="fas fa-gem"></i>
-            <span>Mejoras</span>
-        </button>
-        <button class="tab-button" data-tab="tab-gems">
-            <i class="fas fa-shopping-cart"></i>
-            <span>Tienda</span>
-        </button>
-        <button class="tab-button" data-tab="tab-missions">
-            <i class="fas fa-tasks"></i>
-            <span>Misiones</span>
-        </button>
-        <button class="tab-button" data-tab="tab-crypto">
-            <i class="fab fa-bitcoin"></i>
-            <span>Cripto</span>
-        </button>
-        <button class="tab-button" data-tab="tab-payments">
-            <i class="fas fa-money-bill-wave"></i>
-            <span>Pagos</span>
-        </button>
-        <button class="tab-button" data-tab="tab-account">
-            <i class="fas fa-user-circle"></i>
-            <span>Cuenta</span>
+        <!-- Botón de Inscripción/OK adicional en el header -->
+        <button class="subscribe-btn" onclick="showForm('registerForm')" style="margin: 0 10px;">
+            <i class="fas fa-user-plus"></i> INSCRIBIRSE
         </button>
     </div>
-    
-    <!-- Notificaciones -->
-    <div id="notification" class="notification"></div>
 
     <script>
-        // ================= SISTEMA DE USUARIOS =================
-        
-        // Variables de usuario
-        let currentUser = null;
-        let isGuest = false;
-        let autoBackupInterval = null;
-        let backupTimer = 300; // 5 minutos en segundos
-        
-        // Almacenamiento de usuarios (simulado - en producción sería una base de datos)
-        const USERS_DB_KEY = 'cryptoClicker_users';
-        const CURRENT_USER_KEY = 'cryptoClicker_currentUser';
-        const USER_DATA_PREFIX = 'cryptoClicker_user_';
-        
-        // Inicializar sistema de usuarios
-        function initUserSystem() {
-            // Intentar cargar usuario actual
-            const savedUser = localStorage.getItem(CURRENT_USER_KEY);
-            
-            if (savedUser) {
-                try {
-                    currentUser = JSON.parse(savedUser);
-                    isGuest = currentUser.type === 'guest';
-                    loadUserData();
-                    hideLoginScreen();
-                    startAutoBackup();
-                } catch (e) {
-                    console.error('Error al cargar usuario:', e);
-                    showLoginScreen();
-                }
-            } else {
-                showLoginScreen();
-            }
-        }
-        
-        // Mostrar pantalla de login
-        function showLoginScreen() {
-            document.getElementById('loginOverlay').style.display = 'flex';
-            document.querySelector('.main-content').style.display = 'none';
-            document.querySelector('.tabs-container').style.display = 'none';
-            document.querySelector('.compact-header').style.display = 'none';
-        }
-        
-        // Ocultar pantalla de login
-        function hideLoginScreen() {
-            document.getElementById('loginOverlay').style.display = 'none';
-            document.querySelector('.main-content').style.display = 'block';
-            document.querySelector('.tabs-container').style.display = 'flex';
-            document.querySelector('.compact-header').style.display = 'grid';
-            
-            // Actualizar avatar
-            updateUserAvatar();
-            updateAccountUI();
-        }
-        
-        // Cambiar entre formularios
+        // Variables CSS para colores
+        document.documentElement.style.setProperty('--primary', '#3b82f6');
+        document.documentElement.style.setProperty('--secondary', '#10b981');
+        document.documentElement.style.setProperty('--warning', '#f59e0b');
+        document.documentElement.style.setProperty('--danger', '#ef4444');
+        document.documentElement.style.setProperty('--premium', '#f59e0b');
+        document.documentElement.style.setProperty('--mission', '#8b5cf6');
+        document.documentElement.style.setProperty('--success', '#10b981');
+
+        // Funciones para el sistema de login
         function showForm(formId) {
             // Ocultar todos los formularios
             document.querySelectorAll('.login-form').forEach(form => {
                 form.classList.remove('active');
             });
             
-            // Desactivar todas las pestañas
+            // Remover activo de todas las pestañas
             document.querySelectorAll('.login-tab').forEach(tab => {
                 tab.classList.remove('active');
             });
@@ -961,869 +719,103 @@
             // Activar pestaña correspondiente
             document.querySelector(`.login-tab[data-form="${formId}"]`).classList.add('active');
         }
-        
-        // Registrar nuevo usuario
-        function registerUser() {
-            const email = document.getElementById('registerEmail').value.trim();
-            const username = document.getElementById('registerUsername').value.trim();
-            const password = document.getElementById('registerPassword').value;
-            const confirmPassword = document.getElementById('registerConfirmPassword').value;
-            const referralCode = document.getElementById('registerReferral').value.trim();
+
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const toggleBtn = input.nextElementSibling;
             
-            // Validaciones
-            if (!email || !username || !password) {
-                showNotification('Por favor completa todos los campos', 'error');
+            if (input.type === 'password') {
+                input.type = 'text';
+                toggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i>';
+            } else {
+                input.type = 'password';
+                toggleBtn.innerHTML = '<i class="fas fa-eye"></i>';
+            }
+        }
+
+        function loginUser() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            if (!email || !password) {
+                alert('Por favor, completa todos los campos');
                 return;
             }
             
-            if (password.length < 6) {
-                showNotification('La contraseña debe tener al menos 6 caracteres', 'error');
+            // Aquí iría la lógica de autenticación
+            console.log('Login attempt:', email);
+            
+            // Simular login exitoso
+            document.getElementById('loginOverlay').style.display = 'none';
+            document.getElementById('compactUsername').textContent = email.split('@')[0];
+            alert('¡Inicio de sesión exitoso!');
+        }
+
+        function registerUser() {
+            const email = document.getElementById('registerEmail').value;
+            const username = document.getElementById('registerUsername').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+            const referral = document.getElementById('registerReferral').value;
+            
+            // Validaciones
+            if (!email || !username || !password || !confirmPassword) {
+                alert('Por favor, completa todos los campos obligatorios');
+                return;
+            }
+            
+            if (password.length < 8) {
+                alert('La contraseña debe tener al menos 8 caracteres');
                 return;
             }
             
             if (password !== confirmPassword) {
-                showNotification('Las contraseñas no coinciden', 'error');
+                alert('Las contraseñas no coinciden');
                 return;
             }
             
-            if (!validateEmail(email)) {
-                showNotification('Correo electrónico inválido', 'error');
-                return;
-            }
+            // Aquí iría la lógica de registro
+            console.log('Register attempt:', { email, username, referral });
             
-            // Cargar base de datos de usuarios
-            let usersDB = JSON.parse(localStorage.getItem(USERS_DB_KEY)) || {};
-            
-            // Verificar si el usuario ya existe
-            if (usersDB[email]) {
-                showNotification('Este correo ya está registrado', 'error');
-                return;
-            }
-            
-            // Verificar si el username ya existe
-            const existingUser = Object.values(usersDB).find(user => user.username === username);
-            if (existingUser) {
-                showNotification('Este nombre de usuario ya está en uso', 'error');
-                return;
-            }
-            
-            // Generar ID único
-            const userId = generateUserId();
-            
-            // Crear usuario
-            const user = {
-                id: userId,
-                email: email,
-                username: username,
-                password: hashPassword(password), // En producción usar bcrypt
-                type: 'registered',
-                created: new Date().toISOString(),
-                lastLogin: new Date().toISOString(),
-                referralCode: generateReferralCode(),
-                referredBy: referralCode || null,
-                referrals: [],
-                totalEarned: 0,
-                totalWithdrawn: 0,
-                trustScore: 100,
-                isVerified: false
-            };
-            
-            // Guardar usuario en base de datos
-            usersDB[email] = user;
-            localStorage.setItem(USERS_DB_KEY, JSON.stringify(usersDB));
-            
-            // Crear datos iniciales para el usuario
-            createUserData(userId);
-            
-            // Iniciar sesión automáticamente
-            loginUserWithCredentials(email, password);
-            
-            // Aplicar bonus por referido si existe
-            if (referralCode) {
-                applyReferralBonus(referralCode, userId);
-            }
-            
-            showNotification('¡Cuenta creada exitosamente!', 'success');
+            // Simular registro exitoso
+            document.getElementById('loginOverlay').style.display = 'none';
+            document.getElementById('compactUsername').textContent = username;
+            alert('¡Registro exitoso! Bienvenido a Crypto Clicker Pro');
         }
-        
-        // Iniciar sesión
-        function loginUser() {
-            const emailOrUsername = document.getElementById('loginEmail').value.trim();
-            const password = document.getElementById('loginPassword').value;
-            
-            loginUserWithCredentials(emailOrUsername, password);
-        }
-        
-        // Iniciar sesión con credenciales
-        function loginUserWithCredentials(emailOrUsername, password) {
-            // Cargar base de datos de usuarios
-            const usersDB = JSON.parse(localStorage.getItem(USERS_DB_KEY)) || {};
-            
-            // Buscar usuario por email o username
-            let user = null;
-            let userKey = null;
-            
-            // Buscar por email
-            if (usersDB[emailOrUsername]) {
-                user = usersDB[emailOrUsername];
-                userKey = emailOrUsername;
-            } else {
-                // Buscar por username
-                for (const [key, u] of Object.entries(usersDB)) {
-                    if (u.username === emailOrUsername) {
-                        user = u;
-                        userKey = key;
-                        break;
-                    }
-                }
-            }
-            
-            // Verificar usuario y contraseña
-            if (!user || user.password !== hashPassword(password)) {
-                showNotification('Credenciales incorrectas', 'error');
-                return;
-            }
-            
-            // Actualizar último login
-            user.lastLogin = new Date().toISOString();
-            usersDB[userKey] = user;
-            localStorage.setItem(USERS_DB_KEY, JSON.stringify(usersDB));
-            
-            // Establecer usuario actual
-            currentUser = user;
-            isGuest = false;
-            
-            // Guardar sesión
-            localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(currentUser));
-            
-            // Cargar datos del usuario
-            loadUserData();
-            
-            // Ocultar login
-            hideLoginScreen();
-            
-            // Iniciar auto-backup
-            startAutoBackup();
-            
-            showNotification(`¡Bienvenido de nuevo, ${user.username}!`, 'success');
-        }
-        
-        // Entrar como invitado
+
         function enterAsGuest() {
-            const guestId = 'guest_' + Date.now();
-            
-            currentUser = {
-                id: guestId,
-                email: null,
-                username: 'Invitado_' + Math.floor(Math.random() * 10000),
-                type: 'guest',
-                created: new Date().toISOString(),
-                lastLogin: new Date().toISOString(),
-                referralCode: null,
-                referrals: [],
-                totalEarned: 0,
-                totalWithdrawn: 0
-            };
-            
-            // Guardar sesión
-            localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(currentUser));
-            
-            // Crear datos iniciales
-            createUserData(guestId);
-            
-            // Cargar datos
-            loadUserData();
-            
-            // Ocultar login
-            hideLoginScreen();
-            
-            // Iniciar auto-backup
-            startAutoBackup();
-            
-            showNotification('Jugando como invitado. ¡Crea una cuenta para guardar tu progreso!', 'warning');
+            // Lógica para modo invitado
+            document.getElementById('loginOverlay').style.display = 'none';
+            document.getElementById('compactUsername').textContent = 'Invitado';
+            alert('Modo invitado activado. Tu progreso se guardará localmente.');
         }
-        
-        // Recuperar cuenta
+
         function recoverAccount() {
-            const emailOrUsername = document.getElementById('recoveryEmail').value.trim();
+            const recoveryEmail = document.getElementById('recoveryEmail').value;
             
-            if (!emailOrUsername) {
-                showNotification('Ingresa tu correo o nombre de usuario', 'error');
+            if (!recoveryEmail) {
+                alert('Por favor, introduce tu correo o ID de usuario');
                 return;
             }
             
-            // Cargar base de datos
-            const usersDB = JSON.parse(localStorage.getItem(USERS_DB_KEY)) || {};
-            
-            // Buscar usuario
-            let user = null;
-            
-            // Buscar por email
-            if (usersDB[emailOrUsername]) {
-                user = usersDB[emailOrUsername];
-            } else {
-                // Buscar por username
-                for (const u of Object.values(usersDB)) {
-                    if (u.username === emailOrUsername) {
-                        user = u;
-                        break;
-                    }
-                }
-            }
-            
-            if (!user) {
-                showNotification('Usuario no encontrado', 'error');
-                return;
-            }
-            
-            // Generar código de recuperación
-            const recoveryCode = Math.random().toString(36).substring(2, 8).toUpperCase();
-            
-            // Guardar código temporalmente (en producción enviar por email)
-            localStorage.setItem('recovery_code_' + user.id, recoveryCode);
-            
-            // Mostrar código (en producción enviar por email)
-            showNotification(`Código de recuperación: ${recoveryCode}. Guárdalo en un lugar seguro.`, 'info');
-            
-            // Pedir código
-            const userCode = prompt('Ingresa el código de recuperación:');
-            
-            if (userCode === recoveryCode) {
-                // Permitir cambiar contraseña
-                const newPassword = prompt('Ingresa tu nueva contraseña (mínimo 6 caracteres):');
-                
-                if (newPassword && newPassword.length >= 6) {
-                    // Actualizar contraseña
-                    user.password = hashPassword(newPassword);
-                    usersDB[user.email] = user;
-                    localStorage.setItem(USERS_DB_KEY, JSON.stringify(usersDB));
-                    
-                    showNotification('Contraseña actualizada exitosamente', 'success');
-                    showForm('loginForm');
-                } else {
-                    showNotification('Contraseña inválida', 'error');
-                }
-            } else {
-                showNotification('Código incorrecto', 'error');
-            }
+            // Lógica de recuperación
+            console.log('Recovery attempt:', recoveryEmail);
+            alert('Se ha enviado un enlace de recuperación a tu correo electrónico');
+            showForm('loginForm');
         }
-        
-        // Cerrar sesión
-        function logoutUser() {
-            // Hacer backup final
-            backupUserData();
-            
-            // Cerrar sesión
-            localStorage.removeItem(CURRENT_USER_KEY);
-            currentUser = null;
-            isGuest = false;
-            
-            // Detener auto-backup
-            if (autoBackupInterval) {
-                clearInterval(autoBackupInterval);
-            }
-            
-            // Mostrar login
-            showLoginScreen();
-            
-            showNotification('Sesión cerrada exitosamente', 'info');
-        }
-        
-        // ================= SISTEMA DE DATOS =================
-        
-        // Cargar datos del usuario
-        function loadUserData() {
-            if (!currentUser) return;
-            
-            const userDataKey = USER_DATA_PREFIX + currentUser.id;
-            const savedData = localStorage.getItem(userDataKey);
-            
-            if (savedData) {
-                try {
-                    const gameData = JSON.parse(savedData);
-                    
-                    // Restaurar datos del juego
-                    money = gameData.money || 0;
-                    crypto = gameData.crypto || 0;
-                    gems = gameData.gems || 0;
-                    clickPower = gameData.clickPower || 1;
-                    totalClicks = gameData.totalClicks || 0;
-                    totalMoneyEarned = gameData.totalMoneyEarned || 0;
-                    clickUpgradeCost = gameData.clickUpgradeCost || 100;
-                    clickUpgradeLevel = gameData.clickUpgradeLevel || 1;
-                    clickMultiplier = gameData.clickMultiplier || 1;
-                    userEarningsUSD = gameData.userEarningsUSD || 0;
-                    availableFund = gameData.availableFund || 1000;
-                    
-                    // Restaurar generadores
-                    if (gameData.generators) {
-                        generators.forEach((gen, index) => {
-                            if (gameData.generators[index]) {
-                                gen.level = gameData.generators[index].level || 0;
-                            }
-                        });
-                    }
-                    
-                    // Restaurar mejoras
-                    if (gameData.moneyUpgrades) {
-                        moneyUpgrades.forEach((upgrade, index) => {
-                            if (gameData.moneyUpgrades[index]) {
-                                upgrade.purchased = gameData.moneyUpgrades[index].purchased || false;
-                            }
-                        });
-                    }
-                    
-                    // Restaurar historial
-                    conversionHistory = gameData.conversionHistory || [];
-                    withdrawalHistory = gameData.withdrawalHistory || [];
-                    
-                    // Restaurar misiones
-                    if (gameData.missions) {
-                        missions.forEach((mission, index) => {
-                            if (gameData.missions[index]) {
-                                mission.current = gameData.missions[index].current || 0;
-                                mission.completed = gameData.missions[index].completed || false;
-                            }
-                        });
-                    }
-                    
-                    showNotification('Datos cargados exitosamente', 'success');
-                } catch (e) {
-                    console.error('Error al cargar datos:', e);
-                    createUserData(currentUser.id);
-                }
-            } else {
-                createUserData(currentUser.id);
-            }
-            
-            // Actualizar UI
-            updateUI();
-            updateAccountUI();
-        }
-        
-        // Crear datos iniciales para usuario
-        function createUserData(userId) {
-            const initialData = {
-                money: 0,
-                crypto: 0,
-                gems: 0,
-                clickPower: 1,
-                totalClicks: 0,
-                totalMoneyEarned: 0,
-                clickUpgradeCost: 100,
-                clickUpgradeLevel: 1,
-                clickMultiplier: 1,
-                userEarningsUSD: 0,
-                availableFund: 1000,
-                generators: generators.map(g => ({ ...g })),
-                moneyUpgrades: moneyUpgrades.map(u => ({ ...u })),
-                gemPurchases: [],
-                conversionHistory: [],
-                withdrawalHistory: [],
-                missions: missions.map(m => ({ ...m })),
-                lastBackup: new Date().toISOString(),
-                gameVersion: '1.0.0'
-            };
-            
-            const userDataKey = USER_DATA_PREFIX + userId;
-            localStorage.setItem(userDataKey, JSON.stringify(initialData));
-        }
-        
-        // Guardar datos del usuario
-        function saveUserData() {
-            if (!currentUser) return;
-            
-            const userDataKey = USER_DATA_PREFIX + currentUser.id;
-            
-            const gameData = {
-                money,
-                crypto,
-                gems,
-                clickPower,
-                totalClicks,
-                totalMoneyEarned,
-                clickUpgradeCost,
-                clickUpgradeLevel,
-                clickMultiplier,
-                userEarningsUSD,
-                availableFund,
-                generators: generators.map(g => ({ 
-                    id: g.id, 
-                    level: g.level 
-                })),
-                moneyUpgrades: moneyUpgrades.map(u => ({
-                    id: u.id,
-                    purchased: u.purchased
-                })),
-                gemPurchases: [],
-                conversionHistory,
-                withdrawalHistory,
-                missions: missions.map(m => ({
-                    id: m.id,
-                    current: m.current,
-                    completed: m.completed
-                })),
-                lastBackup: new Date().toISOString(),
-                gameVersion: '1.0.0'
-            };
-            
-            localStorage.setItem(userDataKey, JSON.stringify(gameData));
-            
-            // Actualizar último backup en UI
-            if (document.getElementById('accountLastBackup')) {
-                document.getElementById('accountLastBackup').textContent = 
-                    new Date().toLocaleTimeString();
-            }
-            
-            return gameData;
-        }
-        
-        // ================= BACKUP Y RESTAURACIÓN =================
-        
-        // Hacer backup de datos
-        function backupData() {
-            if (!currentUser) {
-                showNotification('Inicia sesión para hacer backup', 'error');
-                return;
-            }
-            
-            const gameData = saveUserData();
-            
-            // Crear objeto de backup completo
-            const backup = {
-                userId: currentUser.id,
-                username: currentUser.username,
-                email: currentUser.email,
-                backupDate: new Date().toISOString(),
-                gameData: gameData,
-                checksum: generateChecksum(gameData)
-            };
-            
-            // Convertir a JSON
-            const backupJson = JSON.stringify(backup, null, 2);
-            
-            // Crear archivo para descargar
-            const blob = new Blob([backupJson], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `crypto_clicker_backup_${currentUser.id}_${Date.now()}.json`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            
-            showNotification('Backup descargado exitosamente', 'success');
-        }
-        
-        // Restaurar desde backup
-        function restoreBackupFromInput() {
-            const backupJson = document.getElementById('backupDataInput').value.trim();
-            
-            if (!backupJson) {
-                showNotification('Ingresa los datos del backup', 'error');
-                return;
-            }
-            
-            try {
-                const backup = JSON.parse(backupJson);
-                
-                // Verificar checksum
-                if (backup.checksum !== generateChecksum(backup.gameData)) {
-                    showNotification('Backup corrupto o modificado', 'error');
-                    return;
-                }
-                
-                // Confirmar restauración
-                if (!confirm('¿Estás seguro? Esto sobrescribirá todos tus datos actuales.')) {
-                    return;
-                }
-                
-                // Restaurar datos
-                const gameData = backup.gameData;
-                
-                money = gameData.money || 0;
-                crypto = gameData.crypto || 0;
-                gems = gameData.gems || 0;
-                clickPower = gameData.clickPower || 1;
-                totalClicks = gameData.totalClicks || 0;
-                totalMoneyEarned = gameData.totalMoneyEarned || 0;
-                clickUpgradeCost = gameData.clickUpgradeCost || 100;
-                clickUpgradeLevel = gameData.clickUpgradeLevel || 1;
-                clickMultiplier = gameData.clickMultiplier || 1;
-                userEarningsUSD = gameData.userEarningsUSD || 0;
-                availableFund = gameData.availableFund || 1000;
-                
-                // Restaurar generadores
-                if (gameData.generators) {
-                    generators.forEach((gen, index) => {
-                        const savedGen = gameData.generators.find(g => g.id === gen.id);
-                        if (savedGen) {
-                            gen.level = savedGen.level || 0;
-                        }
-                    });
-                }
-                
-                // Restaurar mejoras
-                if (gameData.moneyUpgrades) {
-                    moneyUpgrades.forEach((upgrade, index) => {
-                        const savedUpgrade = gameData.moneyUpgrades.find(u => u.id === upgrade.id);
-                        if (savedUpgrade) {
-                            upgrade.purchased = savedUpgrade.purchased || false;
-                        }
-                    });
-                }
-                
-                // Restaurar historial
-                conversionHistory = gameData.conversionHistory || [];
-                withdrawalHistory = gameData.withdrawalHistory || [];
-                
-                // Restaurar misiones
-                if (gameData.missions) {
-                    missions.forEach((mission, index) => {
-                        const savedMission = gameData.missions.find(m => m.id === mission.id);
-                        if (savedMission) {
-                            mission.current = savedMission.current || 0;
-                            mission.completed = savedMission.completed || false;
-                        }
-                    });
-                }
-                
-                // Guardar datos
-                saveUserData();
-                
-                // Actualizar UI
-                updateUI();
-                hideBackupInput();
-                
-                showNotification('Backup restaurado exitosamente', 'success');
-            } catch (e) {
-                console.error('Error al restaurar backup:', e);
-                showNotification('Error en el formato del backup', 'error');
-            }
-        }
-        
-        // Mostrar input para restaurar backup
-        function showBackupInput() {
-            document.getElementById('restoreBackupContainer').style.display = 'block';
-        }
-        
-        // Ocultar input de backup
-        function hideBackupInput() {
-            document.getElementById('restoreBackupContainer').style.display = 'none';
-            document.getElementById('backupDataInput').value = '';
-        }
-        
-        // Backup automático
-        function startAutoBackup() {
-            // Detener intervalo anterior si existe
-            if (autoBackupInterval) {
-                clearInterval(autoBackupInterval);
-            }
-            
-            // Configurar timer
-            updateBackupTimer();
-            
-            // Iniciar intervalo de backup (cada 5 minutos)
-            autoBackupInterval = setInterval(() => {
-                backupUserData();
-            }, 5 * 60 * 1000); // 5 minutos
-            
-            // Iniciar contador visual
-            setInterval(() => {
-                backupTimer--;
-                if (backupTimer <= 0) {
-                    backupTimer = 300; // Reset a 5 minutos
-                }
-                updateBackupTimer();
-            }, 1000);
-        }
-        
-        // Actualizar timer de backup
-        function updateBackupTimer() {
-            const minutes = Math.floor(backupTimer / 60);
-            const seconds = backupTimer % 60;
-            const timerElement = document.getElementById('backupTimer');
-            if (timerElement) {
-                timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            }
-        }
-        
-        // Forzar backup ahora
-        function forceBackup() {
-            backupUserData();
-            backupTimer = 300; // Reset timer
-            updateBackupTimer();
-            showNotification('Backup guardado exitosamente', 'success');
-        }
-        
-        // Backup silencioso (sin notificación)
-        function backupUserData() {
-            if (currentUser && !isGuest) {
-                saveUserData();
-            }
-        }
-        
-        // ================= SISTEMA DE REFERIDOS =================
-        
-        // Aplicar bonus por referido
-        function applyReferralBonus(referralCode, newUserId) {
-            const usersDB = JSON.parse(localStorage.getItem(USERS_DB_KEY)) || {};
-            
-            // Buscar usuario por código de referido
-            let referrer = null;
-            for (const user of Object.values(usersDB)) {
-                if (user.referralCode === referralCode) {
-                    referrer = user;
-                    break;
-                }
-            }
-            
-            if (referrer) {
-                // Añadir referido a la lista
-                referrer.referrals.push({
-                    userId: newUserId,
-                    date: new Date().toISOString(),
-                    rewarded: false
-                });
-                
-                // Guardar cambios
-                usersDB[referrer.email] = referrer;
-                localStorage.setItem(USERS_DB_KEY, JSON.stringify(usersDB));
-                
-                // Dar gemas al referido (esto se aplicará cuando cargue su juego)
-                const referrerDataKey = USER_DATA_PREFIX + referrer.id;
-                const referrerData = JSON.parse(localStorage.getItem(referrerDataKey)) || {};
-                referrerData.gems = (referrerData.gems || 0) + 10;
-                localStorage.setItem(referrerDataKey, JSON.stringify(referrerData));
-                
-                // Dar gemas al nuevo usuario
-                const newUserDataKey = USER_DATA_PREFIX + newUserId;
-                const newUserData = JSON.parse(localStorage.getItem(newUserDataKey)) || {};
-                newUserData.gems = (newUserData.gems || 0) + 10;
-                localStorage.setItem(newUserDataKey, JSON.stringify(newUserData));
-                
-                return true;
-            }
-            
-            return false;
-        }
-        
-        // ================= UI Y UTILIDADES =================
-        
-        // Actualizar UI de cuenta
-        function updateAccountUI() {
-            if (!currentUser) return;
-            
-            // Actualizar información de cuenta
-            document.getElementById('accountUserId').textContent = currentUser.id;
-            document.getElementById('accountUsername').textContent = currentUser.username;
-            document.getElementById('accountEmail').textContent = currentUser.email || 'No registrado';
-            document.getElementById('accountType').textContent = isGuest ? 'Invitado' : 'Registrado';
-            document.getElementById('accountCreated').textContent = 
-                new Date(currentUser.created).toLocaleDateString();
-            
-            // Actualizar avatar en header
-            document.getElementById('compactUsername').textContent = currentUser.username;
-            document.getElementById('avatarInitial').textContent = currentUser.username.charAt(0).toUpperCase();
-            
-            // Actualizar código de referido
-            document.getElementById('referralCode').textContent = currentUser.referralCode || 'No disponible';
-            document.getElementById('referralsCount').textContent = currentUser.referrals?.length || 0;
-            document.getElementById('referralEarnings').textContent = ((currentUser.referrals?.length || 0) * 10);
-            
-            // Actualizar badge
-            const badge = document.getElementById('userBadge');
-            if (currentUser.referrals?.length > 0) {
-                badge.textContent = currentUser.referrals.length;
-                badge.style.display = 'flex';
-            } else {
-                badge.style.display = 'none';
-            }
-        }
-        
-        // Actualizar avatar
-        function updateUserAvatar() {
-            if (!currentUser) return;
-            
-            const avatar = document.getElementById('userAvatar');
-            const initial = document.getElementById('avatarInitial');
-            
-            if (currentUser.type === 'guest') {
-                avatar.style.background = 'linear-gradient(135deg, var(--warning), #d97706)';
-            } else {
-                avatar.style.background = 'linear-gradient(135deg, var(--primary), #2563eb)';
-            }
-            
-            initial.textContent = currentUser.username.charAt(0).toUpperCase();
-        }
-        
-        // Mostrar/ocultar menú de usuario
-        function toggleUserMenu() {
-            const menu = document.getElementById('userMenu');
-            menu.classList.toggle('active');
-        }
-        
-        // Mostrar sección de cuenta
-        function showAccountSection() {
-            // Cambiar a pestaña de cuenta
-            document.querySelectorAll('.tab-button').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.querySelector('[data-tab="tab-account"]').classList.add('active');
-            
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
-            document.getElementById('tab-account').classList.add('active');
-            
-            // Ocultar menú
-            document.getElementById('userMenu').classList.remove('active');
-        }
-        
-        // Mostrar sección de backup
-        function showBackupSection() {
-            showAccountSection();
-            showBackupInput();
-            document.getElementById('userMenu').classList.remove('active');
-        }
-        
-        // Mostrar sección de referidos
-        function showReferralSection() {
-            showAccountSection();
-            document.getElementById('userMenu').classList.remove('active');
-        }
-        
-        // ================= FUNCIONES DE UTILIDAD =================
-        
-        // Generar ID de usuario
-        function generateUserId() {
-            return 'USR-' + Date.now().toString(36) + Math.random().toString(36).substring(2, 5).toUpperCase();
-        }
-        
-        // Generar código de referido
-        function generateReferralCode() {
-            return 'REF-' + Math.random().toString(36).substring(2, 8).toUpperCase();
-        }
-        
-        // Hash de contraseña (simple - en producción usar bcrypt)
-        function hashPassword(password) {
-            // Simple hash para demostración
-            let hash = 0;
-            for (let i = 0; i < password.length; i++) {
-                hash = ((hash << 5) - hash) + password.charCodeAt(i);
-                hash |= 0;
-            }
-            return hash.toString(36);
-        }
-        
-        // Validar email
-        function validateEmail(email) {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
-        }
-        
-        // Generar checksum para verificar integridad
-        function generateChecksum(data) {
-            const str = JSON.stringify(data);
-            let hash = 0;
-            for (let i = 0; i < str.length; i++) {
-                hash = ((hash << 5) - hash) + str.charCodeAt(i);
-                hash |= 0;
-            }
-            return hash.toString(36);
-        }
-        
-        // Mostrar/ocultar contraseña
-        function togglePassword(inputId) {
-            const input = document.getElementById(inputId);
-            const toggle = input.nextElementSibling;
-            
-            if (input.type === 'password') {
-                input.type = 'text';
-                toggle.innerHTML = '<i class="fas fa-eye-slash"></i>';
-            } else {
-                input.type = 'password';
-                toggle.innerHTML = '<i class="fas fa-eye"></i>';
-            }
-        }
-        
-        // Copiar al portapapeles
-        function copyToClipboard(elementId) {
-            const element = document.getElementById(elementId);
-            const text = element.textContent || element.innerText;
-            
-            navigator.clipboard.writeText(text).then(() => {
-                showNotification('Copiado al portapapeles', 'success');
-            }).catch(err => {
-                console.error('Error al copiar: ', err);
-                showNotification('Error al copiar', 'error');
-            });
-        }
-        
-        // Mostrar notificación
-        function showNotification(message, type = "info") {
-            const notification = document.getElementById('notification');
-            notification.textContent = message;
-            notification.className = `notification ${type}`;
-            notification.style.display = 'block';
-            
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 3000);
-        }
-        
-        // ================= INICIALIZACIÓN =================
-        
-        // Inicializar cuando cargue la página
-        window.addEventListener('DOMContentLoaded', () => {
-            // Inicializar sistema de usuarios
-            initUserSystem();
-            
-            // Configurar event listeners de tabs
-            document.querySelectorAll('.tab-button').forEach(button => {
-                button.addEventListener('click', () => {
-                    const tabId = button.getAttribute('data-tab');
-                    
-                    document.querySelectorAll('.tab-button').forEach(btn => {
-                        btn.classList.remove('active');
-                    });
-                    button.classList.add('active');
-                    
-                    document.querySelectorAll('.tab-content').forEach(content => {
-                        content.classList.remove('active');
-                    });
-                    document.getElementById(tabId).classList.add('active');
-                });
-            });
-            
-            // Configurar event listeners de login tabs
-            document.querySelectorAll('.login-tab').forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const formId = tab.getAttribute('data-form');
-                    showForm(formId);
-                });
-            });
-            
-            // Cerrar menú de usuario al hacer click fuera
-            document.addEventListener('click', (e) => {
-                const menu = document.getElementById('userMenu');
-                const avatar = document.getElementById('userAvatar');
-                
-                if (menu.classList.contains('active') && 
-                    !menu.contains(e.target) && 
-                    !avatar.contains(e.target)) {
-                    menu.classList.remove('active');
-                }
+
+        // Inicializar pestañas
+        document.querySelectorAll('.login-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const formId = this.getAttribute('data-form');
+                showForm(formId);
             });
         });
-        
-        // Guardar datos automáticamente cada 30 segundos
-        setInterval(() => {
-            if (currentUser) {
-                saveUserData();
-            }
-        }, 30000); // 30 segundos
+
+        // Mostrar el overlay de login al cargar
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('loginOverlay').style.display = 'flex';
+        });
     </script>
 </body>
 </html>

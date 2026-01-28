@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Clicker Pro - Sistema Económico Equilibrado</title>
+    <title>Crypto Clicker Pro - Información Detallada</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -246,13 +246,13 @@
         /* Grid compacto para generadores */
         .compact-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
             gap: 12px;
         }
         
         @media (min-width: 480px) {
             .compact-grid {
-                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             }
         }
         
@@ -319,6 +319,38 @@
         .card-cost {
             color: var(--premium);
             font-weight: bold;
+        }
+        
+        /* Detalles de producción */
+        .production-details {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 0.8rem;
+        }
+        
+        .production-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            padding: 3px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .production-label {
+            color: #94a3b8;
+        }
+        
+        .production-value {
+            color: var(--secondary);
+            font-weight: bold;
+        }
+        
+        .production-increase {
+            color: var(--premium);
+            font-weight: bold;
+            font-size: 0.75rem;
         }
         
         /* Botones compactos */
@@ -493,6 +525,35 @@
             font-weight: bold;
             margin: 10px 0;
             text-align: center;
+        }
+        
+        /* Detalles de mejora */
+        .upgrade-details {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 8px;
+            margin: 8px 0;
+            font-size: 0.8rem;
+        }
+        
+        .upgrade-effect {
+            color: var(--secondary);
+            font-weight: bold;
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .upgrade-effect-before {
+            color: #94a3b8;
+            text-decoration: line-through;
+            margin-right: 5px;
+        }
+        
+        .upgrade-effect-after {
+            color: var(--premium);
+            font-weight: bold;
         }
         
         /* Temporizador para mejoras temporales */
@@ -805,6 +866,61 @@
             color: var(--mission);
             margin: 10px 0;
         }
+        
+        /* Tooltip informativo */
+        .info-tooltip {
+            display: inline-block;
+            margin-left: 5px;
+            color: #94a3b8;
+            cursor: help;
+            position: relative;
+        }
+        
+        .tooltip-text {
+            visibility: hidden;
+            width: 250px;
+            background-color: rgba(30, 41, 59, 0.95);
+            color: white;
+            text-align: left;
+            border-radius: 8px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1002;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8rem;
+            border: 1px solid var(--primary);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .info-tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* Efecto de mejora */
+        .improvement-effect {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--secondary);
+            border-radius: 8px;
+            padding: 8px;
+            margin: 8px 0;
+            font-size: 0.8rem;
+        }
+        
+        .improvement-label {
+            color: var(--secondary);
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+        
+        .improvement-value {
+            color: white;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -858,6 +974,11 @@
                 <i class="fas fa-arrow-up"></i>
                 Mejorar Click (<span id="clickUpgradeCost">100</span>)
             </button>
+            
+            <div class="improvement-effect" style="margin-top: 15px; max-width: 250px; margin-left: auto; margin-right: auto;">
+                <div class="improvement-label">Efecto de la mejora:</div>
+                <div class="improvement-value" id="clickerImprovementEffect">Click actual: +1 → +2</div>
+            </div>
         </div>
         
         <!-- Tabs de contenido -->
@@ -882,6 +1003,16 @@
             <div class="section section-generators">
                 <h3 class="section-title">
                     <i class="fas fa-industry"></i> Generadores
+                    <span class="info-tooltip">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="tooltip-text">
+                            Los generadores producen dinero automáticamente cada segundo.
+                            Cada nivel aumenta su producción. Los precios suben un 15% por nivel.
+                            <br><br>
+                            <strong>Fórmula de producción:</strong><br>
+                            Producción = Base × Nivel × Multiplicadores
+                        </span>
+                    </span>
                 </h3>
                 <div class="compact-grid" id="generatorsGrid">
                     <!-- Los generadores se cargan aquí -->
@@ -892,6 +1023,16 @@
             <div class="section section-upgrades">
                 <h3 class="section-title">
                     <i class="fas fa-arrow-up"></i> Mejoras con Dinero
+                    <span class="info-tooltip">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="tooltip-text">
+                            Estas mejoras usan dinero del juego para potenciar tus estadísticas.
+                            Son permanentes y aplican a toda tu cuenta.
+                            <br><br>
+                            <strong>ROI (Retorno de Inversión):</strong><br>
+                            Muestra cuántas veces recuperarás tu inversión.
+                        </span>
+                    </span>
                 </h3>
                 <div class="upgrades-grid" id="moneyUpgradesGrid">
                     <!-- Las mejoras con dinero se cargan aquí -->
@@ -904,6 +1045,18 @@
             <div class="section section-upgrades">
                 <h3 class="section-title">
                     <i class="fas fa-gem"></i> Mejoras Permanentes
+                    <span class="info-tooltip">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="tooltip-text">
+                            Mejoras permanentes compradas con gemas.
+                            Son para siempre y tienen un ROI muy alto (30-60x).
+                            <br><br>
+                            <strong>Las gemas se obtienen:</strong><br>
+                            1. Completando misiones<br>
+                            2. Bono diario<br>
+                            3. Comprando en la tienda
+                        </span>
+                    </span>
                 </h3>
                 <p style="margin-bottom: 15px; color: #cbd5e1; font-size: 0.9rem;">
                     Estas mejoras son para siempre. El ROI muestra cuánto ganarás en relación a lo que gastas.
@@ -917,6 +1070,18 @@
             <div class="section section-temporal">
                 <h3 class="section-title">
                     <i class="fas fa-clock"></i> Mejoras Temporales
+                    <span class="info-tooltip">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="tooltip-text">
+                            Estas mejoras duran 24 horas y son MUY poderosas.
+                            Tienen ROI altísimo (80-150x) porque son temporales.
+                            <br><br>
+                            <strong>Ideal para:</strong><br>
+                            • Acelerar progreso rápido<br>
+                            • Llegar a retiros más rápido<br>
+                            • Multiplicar ganancias por tiempo limitado
+                        </span>
+                    </span>
                 </h3>
                 <p style="margin-bottom: 15px; color: #cbd5e1; font-size: 0.9rem;">
                     Estas mejoras duran 24 horas. Son más poderosas y generan mucho más de lo que cuestan.
@@ -932,6 +1097,18 @@
             <div class="section section-gems">
                 <h3 class="section-title">
                     <i class="fas fa-shopping-cart"></i> Comprar Gemas
+                    <span class="info-tooltip">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="tooltip-text">
+                            Sistema de ROI garantizado. Por cada $1 que gastes, ganarás $3-5 en el juego.
+                            <br><br>
+                            <strong>Distribución del dinero:</strong><br>
+                            60% → Fondo para pagar a usuarios<br>
+                            40% → Para desarrollo y ganancias<br>
+                            <br>
+                            Tu inversión se recupera en 2-3 días de juego.
+                        </span>
+                    </span>
                 </h3>
                 <p style="margin-bottom: 15px; color: #cbd5e1; font-size: 0.9rem;">
                     <strong>¡Invierte para ganar más!</strong> Cada $1 que gastes te generará $3-5 en ganancias a largo plazo.
@@ -961,6 +1138,16 @@
             <div class="section section-missions">
                 <h3 class="section-title">
                     <i class="fas fa-tasks"></i> Misiones y Logros
+                    <span class="info-tooltip">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="tooltip-text">
+                            Completa misiones para ganar gemas GRATIS.
+                            Las gemas son la forma principal de acelerar tu progreso.
+                            <br><br>
+                            <strong>Sin gemas:</strong> Progreso lento<br>
+                            <strong>Con gemas:</strong> Progreso rápido y retiros reales
+                        </span>
+                    </span>
                 </h3>
                 <p style="margin-bottom: 15px; color: #cbd5e1; font-size: 0.9rem;">
                     Gana gemas gratis completando misiones. ¡Sin gemas el progreso es lento!
@@ -976,6 +1163,20 @@
             <div class="section section-crypto">
                 <h3 class="section-title">
                     <i class="fab fa-bitcoin"></i> Criptomonedas y Ganancias
+                    <span class="info-tooltip">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="tooltip-text">
+                            <strong>Tasa de conversión:</strong><br>
+                            10,000 dinero = 0.000001 BTC (~$0.05 USD)<br>
+                            <br>
+                            <strong>Mínimo para retirar:</strong><br>
+                            0.0001 BTC (~$5.00 USD)<br>
+                            Necesitas 1,000,000 dinero<br>
+                            <br>
+                            <strong>Con mejoras de cripto:</strong><br>
+                            Puedes multiplicar hasta x10 lo que ganas
+                        </span>
+                    </span>
                 </h3>
                 
                 <div class="crypto-info">
@@ -1014,11 +1215,28 @@
                 </div>
                 
                 <h4 style="margin: 20px 0 10px; color: var(--crypto);">🔄 Convertir a Cripto</h4>
-                <p style="margin-bottom: 10px; color: #cbd5e1; font-size: 0.9rem;">
-                    Tasa de conversión: <span id="conversionRate">10,000</span> dinero = 0.000001 BTC (~$0.05)<br>
-                    Mínimo para retirar: 0.0001 BTC (~$5.00)<br>
-                    <strong>Se necesitan: 1,000,000 dinero para $5</strong>
-                </p>
+                <div class="production-details">
+                    <div class="production-row">
+                        <div class="production-label">Tasa base:</div>
+                        <div class="production-value">10,000 dinero = 0.000001 BTC</div>
+                    </div>
+                    <div class="production-row">
+                        <div class="production-label">Valor USD:</div>
+                        <div class="production-value">~$0.05 por 10,000 dinero</div>
+                    </div>
+                    <div class="production-row">
+                        <div class="production-label">Mínimo para retirar:</div>
+                        <div class="production-value">0.0001 BTC (~$5.00)</div>
+                    </div>
+                    <div class="production-row">
+                        <div class="production-label">Total necesario:</div>
+                        <div class="production-value">1,000,000 dinero</div>
+                    </div>
+                    <div class="production-row">
+                        <div class="production-label">Con mejoras de cripto:</div>
+                        <div class="production-value" id="cryptoWithBoost">Hasta x10 más</div>
+                    </div>
+                </div>
                 
                 <div class="withdrawal-input">
                     <input type="number" id="cryptoAmount" placeholder="Cantidad de dinero a convertir" min="10000" step="10000">
@@ -1100,34 +1318,187 @@
         let clickUpgradeCost = 100;
         let clickUpgradeLevel = 1;
         
-        // Generadores (más caros sin mejoras)
+        // Generadores con información DETALLADA
         const generators = [
-            { id: 1, name: "Minería Básica", baseCost: 100, baseCPS: 0.1, level: 0, icon: "fas fa-server", description: "Muy lento sin mejoras" },
-            { id: 2, name: "Granja GPU", baseCost: 1000, baseCPS: 1, level: 0, icon: "fas fa-microchip", description: "Requiere inversión" },
-            { id: 3, name: "Data Center", baseCost: 10000, baseCPS: 5, level: 0, icon: "fas fa-database", description: "Carro pero necesario" },
-            { id: 4, name: "Minería ASIC", baseCost: 100000, baseCPS: 20, level: 0, icon: "fas fa-hdd", description: "Solo para jugadores activos" },
-            { id: 5, name: "Granja Solar", baseCost: 1000000, baseCPS: 80, level: 0, icon: "fas fa-solar-panel", description: "Para inversores serios" },
-            { id: 6, name: "Blockchain Corp", baseCost: 10000000, baseCPS: 400, level: 0, icon: "fas fa-building", description: "Máxima eficiencia" }
+            { 
+                id: 1, 
+                name: "Minería Básica", 
+                baseCost: 100, 
+                baseCPS: 0.1, 
+                level: 0, 
+                icon: "fas fa-server", 
+                description: "Minería de cripto básica",
+                details: "Genera dinero automáticamente. Cada nivel aumenta la producción en 0.1/s"
+            },
+            { 
+                id: 2, 
+                name: "Granja GPU", 
+                baseCost: 1000, 
+                baseCPS: 1, 
+                level: 0, 
+                icon: "fas fa-microchip", 
+                description: "Tarjetas gráficas para mining",
+                details: "10x más potente que la minería básica. Cada nivel: +1/s"
+            },
+            { 
+                id: 3, 
+                name: "Data Center", 
+                baseCost: 10000, 
+                baseCPS: 5, 
+                level: 0, 
+                icon: "fas fa-database", 
+                description: "Centro de datos completo",
+                details: "Minería profesional. Cada nivel: +5/s"
+            },
+            { 
+                id: 4, 
+                name: "Minería ASIC", 
+                baseCost: 100000, 
+                baseCPS: 20, 
+                level: 0, 
+                icon: "fas fa-hdd", 
+                description: "Hardware especializado",
+                details: "Equipo ASIC de alta eficiencia. Cada nivel: +20/s"
+            },
+            { 
+                id: 5, 
+                name: "Granja Solar", 
+                baseCost: 1000000, 
+                baseCPS: 80, 
+                level: 0, 
+                icon: "fas fa-solar-panel", 
+                description: "Energía renovable para mining",
+                details: "Minería ecológica y eficiente. Cada nivel: +80/s"
+            },
+            { 
+                id: 6, 
+                name: "Blockchain Corp", 
+                baseCost: 10000000, 
+                baseCPS: 400, 
+                level: 0, 
+                icon: "fas fa-building", 
+                description: "Corporación completa",
+                details: "Máxima producción. Cada nivel: +400/s"
+            }
         ];
         
-        // Mejoras con dinero
+        // Mejoras con dinero DETALLADAS
         const moneyUpgrades = [
-            { id: 1, name: "Click Mejorado", cost: 200, type: "click", value: 1, purchased: false, icon: "fas fa-mouse-pointer", description: "+1 al poder de click", roi: 1.5 },
-            { id: 2, name: "Multiplicador x2", cost: 1000, type: "multiplier", value: 2, purchased: false, icon: "fas fa-times", description: "Duplica todo el dinero", roi: 3 },
-            { id: 3, name: "Auto-Click", cost: 5000, type: "autoclick", value: 1, purchased: false, icon: "fas fa-robot", description: "1 click cada 10s", roi: 2 },
-            { id: 4, name: "Generadores +20%", cost: 20000, type: "generatorBoost", value: 1.2, purchased: false, icon: "fas fa-chart-line", description: "+20% producción", roi: 1.8 },
-            { id: 5, name: "Multiplicador x3", cost: 50000, type: "multiplier", value: 3, purchased: false, icon: "fas fa-times", description: "Triplica el dinero", roi: 4 }
+            { 
+                id: 1, 
+                name: "Click Mejorado", 
+                cost: 200, 
+                type: "click", 
+                value: 1, 
+                purchased: false, 
+                icon: "fas fa-mouse-pointer", 
+                description: "Aumenta el poder de cada click",
+                effect: "Click actual: +1 → +2",
+                roi: 1.5 
+            },
+            { 
+                id: 2, 
+                name: "Multiplicador x2", 
+                cost: 1000, 
+                type: "multiplier", 
+                value: 2, 
+                purchased: false, 
+                icon: "fas fa-times", 
+                description: "Duplica TODO el dinero ganado",
+                effect: "Multiplica todas tus ganancias x2",
+                roi: 3 
+            },
+            { 
+                id: 3, 
+                name: "Auto-Click", 
+                cost: 5000, 
+                type: "autoclick", 
+                value: 1, 
+                purchased: false, 
+                icon: "fas fa-robot", 
+                description: "Clicks automáticos cada 10s",
+                effect: "1 click automático cada 10 segundos",
+                roi: 2 
+            },
+            { 
+                id: 4, 
+                name: "Generadores +20%", 
+                cost: 20000, 
+                type: "generatorBoost", 
+                value: 1.2, 
+                purchased: false, 
+                icon: "fas fa-chart-line", 
+                description: "Aumenta producción de generadores",
+                effect: "Todos los generadores +20% de producción",
+                roi: 1.8 
+            },
+            { 
+                id: 5, 
+                name: "Multiplicador x3", 
+                cost: 50000, 
+                type: "multiplier", 
+                value: 3, 
+                purchased: false, 
+                icon: "fas fa-times", 
+                description: "Triplica TODO el dinero ganado",
+                effect: "Multiplica todas tus ganancias x3",
+                roi: 4 
+            }
         ];
         
-        // Mejoras PERMANENTES con gemas (ROI alto)
+        // Mejoras PERMANENTES con gemas DETALLADAS
         const permanentGemUpgrades = [
-            { id: 1, name: "Click Dorado", cost: 10, type: "goldenClick", value: 50, purchased: false, icon: "fas fa-crown", description: "5% de chance de x50 dinero", roi: 50, multiplier: 1.5 },
-            { id: 2, name: "Generador VIP", cost: 25, type: "vipGenerator", value: 3, purchased: false, icon: "fas fa-star", description: "x3 producción generadores", roi: 40, multiplier: 3 },
-            { id: 3, name: "Multiplicador Élite", cost: 50, type: "eliteMultiplier", value: 5, purchased: false, icon: "fas fa-gem", description: "x5 todo el dinero", roi: 60, multiplier: 5 },
-            { id: 4, name: "Cripto Boost", cost: 75, type: "cryptoBoost", value: 5, purchased: false, icon: "fas fa-rocket", description: "x5 cripto obtenida", roi: 45, multiplier: 5 }
+            { 
+                id: 1, 
+                name: "Click Dorado", 
+                cost: 10, 
+                type: "goldenClick", 
+                value: 50, 
+                purchased: false, 
+                icon: "fas fa-crown", 
+                description: "Clicks con efecto especial",
+                effect: "5% de probabilidad de x50 dinero en cada click",
+                roi: 50 
+            },
+            { 
+                id: 2, 
+                name: "Generador VIP", 
+                cost: 25, 
+                type: "vipGenerator", 
+                value: 3, 
+                purchased: false, 
+                icon: "fas fa-star", 
+                description: "Potencia todos los generadores",
+                effect: "Todos los generadores x3 más productivos",
+                roi: 40 
+            },
+            { 
+                id: 3, 
+                name: "Multiplicador Élite", 
+                cost: 50, 
+                type: "eliteMultiplier", 
+                value: 5, 
+                purchased: false, 
+                icon: "fas fa-gem", 
+                description: "Multiplicador global masivo",
+                effect: "Multiplica TODAS tus ganancias x5",
+                roi: 60 
+            },
+            { 
+                id: 4, 
+                name: "Cripto Boost", 
+                cost: 75, 
+                type: "cryptoBoost", 
+                value: 5, 
+                purchased: false, 
+                icon: "fas fa-rocket", 
+                description: "Más cripto por conversión",
+                effect: "Obtén x5 más cripto al convertir dinero",
+                roi: 45 
+            }
         ];
         
-        // Mejoras TEMPORALES con gemas (24 horas, ROI MUY alto)
+        // Mejoras TEMPORALES con gemas DETALLADAS
         const temporalGemUpgrades = [
             { 
                 id: 1, 
@@ -1137,9 +1508,10 @@
                 value: 10, 
                 purchased: false, 
                 icon: "fas fa-bolt", 
-                description: "x10 dinero por 24h", 
-                roi: 100, // ROI del 1000%
-                duration: 24 * 60 * 60 * 1000, // 24 horas en milisegundos
+                description: "Multiplicador temporal masivo",
+                effect: "TODAS tus ganancias x10 por 24 horas",
+                roi: 100,
+                duration: 24 * 60 * 60 * 1000,
                 endTime: null,
                 active: false
             },
@@ -1151,7 +1523,8 @@
                 value: 10, 
                 purchased: false, 
                 icon: "fas fa-robot", 
-                description: "10 clicks/s por 24h", 
+                description: "Auto-click de alta velocidad",
+                effect: "10 clicks automáticos POR SEGUNDO durante 24h",
                 roi: 80,
                 duration: 24 * 60 * 60 * 1000,
                 endTime: null,
@@ -1165,7 +1538,8 @@
                 value: 5, 
                 purchased: false, 
                 icon: "fas fa-industry", 
-                description: "x5 producción por 24h", 
+                description: "Boost temporal de generadores",
+                effect: "Todos los generadores x5 más productivos por 24h",
                 roi: 120,
                 duration: 24 * 60 * 60 * 1000,
                 endTime: null,
@@ -1179,7 +1553,8 @@
                 value: 10, 
                 purchased: false, 
                 icon: "fab fa-bitcoin", 
-                description: "x10 cripto por 24h", 
+                description: "Boost temporal de cripto",
+                effect: "Obtén x10 más cripto al convertir por 24h",
                 roi: 150,
                 duration: 24 * 60 * 60 * 1000,
                 endTime: null,
@@ -1189,12 +1564,66 @@
         
         // Tienda de gemas con ROI garantizado
         const gemShop = [
-            { id: 1, name: "Inversión Básica", gems: 50, price: 0.99, icon: "fas fa-gem", description: "ROI: 300%", roi: 3 },
-            { id: 2, name: "Inversión Plata", gems: 150, price: 2.99, icon: "fas fa-gem", description: "ROI: 350%", roi: 3.5 },
-            { id: 3, name: "Inversión Oro", gems: 300, price: 4.99, icon: "fas fa-gem", description: "ROI: 400%", roi: 4 },
-            { id: 4, name: "Inversión Platino", gems: 750, price: 9.99, icon: "fas fa-gem", description: "ROI: 450%", roi: 4.5 },
-            { id: 5, name: "Inversión Diamante", gems: 1500, price: 19.99, icon: "fas fa-gem", description: "ROI: 500%", roi: 5 },
-            { id: 6, name: "Inversión Élite", gems: 3500, price: 39.99, icon: "fas fa-gem", description: "ROI: 550%", roi: 5.5 }
+            { 
+                id: 1, 
+                name: "Inversión Básica", 
+                gems: 50, 
+                price: 0.99, 
+                icon: "fas fa-gem", 
+                description: "ROI: 300%",
+                details: "Perfecto para empezar. Recuperas $3 por cada $1.",
+                roi: 3 
+            },
+            { 
+                id: 2, 
+                name: "Inversión Plata", 
+                gems: 150, 
+                price: 2.99, 
+                icon: "fas fa-gem", 
+                description: "ROI: 350%",
+                details: "Progreso acelerado. Recuperas $3.50 por cada $1.",
+                roi: 3.5 
+            },
+            { 
+                id: 3, 
+                name: "Inversión Oro", 
+                gems: 300, 
+                price: 4.99, 
+                icon: "fas fa-gem", 
+                description: "ROI: 400%",
+                details: "Inversión inteligente. Recuperas $4 por cada $1.",
+                roi: 4 
+            },
+            { 
+                id: 4, 
+                name: "Inversión Platino", 
+                gems: 750, 
+                price: 9.99, 
+                icon: "fas fa-gem", 
+                description: "ROI: 450%",
+                details: "Alto retorno. Recuperas $4.50 por cada $1.",
+                roi: 4.5 
+            },
+            { 
+                id: 5, 
+                name: "Inversión Diamante", 
+                gems: 1500, 
+                price: 19.99, 
+                icon: "fas fa-gem", 
+                description: "ROI: 500%",
+                details: "Máximo rendimiento. Recuperas $5 por cada $1.",
+                roi: 5 
+            },
+            { 
+                id: 6, 
+                name: "Inversión Élite", 
+                gems: 3500, 
+                price: 39.99, 
+                icon: "fas fa-gem", 
+                description: "ROI: 550%",
+                details: "Rendimiento premium. Recuperas $5.50 por cada $1.",
+                roi: 5.5 
+            }
         ];
         
         // Misiones
@@ -1211,6 +1640,29 @@
         
         // Historial de conversiones
         let conversionHistory = [];
+        
+        // Función para calcular producción de generador con todos los multiplicadores
+        function calculateGeneratorProduction(generator, level) {
+            let production = generator.baseCPS * level;
+            
+            // Aplicar multiplicadores
+            const generatorBoost = moneyUpgrades.find(u => u.type === "generatorBoost" && u.purchased);
+            if (generatorBoost) {
+                production *= generatorBoost.value;
+            }
+            
+            const vipGenerator = permanentGemUpgrades.find(u => u.type === "vipGenerator" && u.purchased);
+            if (vipGenerator) {
+                production *= vipGenerator.value;
+            }
+            
+            const temporalGenerator = temporalGemUpgrades.find(u => u.type === "temporalGenerator" && u.active);
+            if (temporalGenerator) {
+                production *= temporalGenerator.value;
+            }
+            
+            return production;
+        }
         
         // Inicializar el juego
         function initGame() {
@@ -1249,27 +1701,7 @@
             moneyPerSecond = 0;
             generators.forEach(gen => {
                 if (gen.level > 0) {
-                    let genCPS = gen.baseCPS * gen.level;
-                    
-                    // Boost de mejoras con dinero
-                    const generatorBoost = moneyUpgrades.find(u => u.type === "generatorBoost" && u.purchased);
-                    if (generatorBoost) {
-                        genCPS *= generatorBoost.value;
-                    }
-                    
-                    // Boost de mejoras permanentes con gemas
-                    const vipGenerator = permanentGemUpgrades.find(u => u.type === "vipGenerator" && u.purchased);
-                    if (vipGenerator) {
-                        genCPS *= vipGenerator.value;
-                    }
-                    
-                    // Boost de mejoras temporales
-                    const temporalGenerator = temporalGemUpgrades.find(u => u.type === "temporalGenerator" && u.active);
-                    if (temporalGenerator) {
-                        genCPS *= temporalGenerator.value;
-                    }
-                    
-                    moneyPerSecond += genCPS;
+                    moneyPerSecond += calculateGeneratorProduction(gen, gen.level);
                 }
             });
             
@@ -1354,7 +1786,7 @@
         // Comprar generador
         function buyGenerator(generatorId) {
             const generator = generators.find(g => g.id === generatorId);
-            const cost = generator.baseCost * Math.pow(1.25, generator.level);
+            const cost = generator.baseCost * Math.pow(1.15, generator.level);
             
             if (money >= cost) {
                 money -= cost;
@@ -1363,7 +1795,7 @@
                 updateMissionProgress("generators", 1);
                 updateMissionProgress("generatorLevels", 1);
                 
-                showNotification(`¡${generator.name} comprado!`, "success");
+                showNotification(`¡${generator.name} comprado! Nivel ${generator.level}`, "success");
                 updateUI();
                 updateGeneratorsUI();
             } else {
@@ -1379,7 +1811,7 @@
                 clickUpgradeLevel++;
                 clickUpgradeCost = Math.floor(100 * Math.pow(1.8, clickUpgradeLevel));
                 
-                showNotification(`¡Click mejorado a nivel ${clickUpgradeLevel}!`, "success");
+                showNotification(`¡Click mejorado a nivel ${clickUpgradeLevel}! (+${clickPower})`, "success");
                 updateUI();
             } else {
                 showNotification("¡No tienes suficiente dinero!", "error");
@@ -1399,7 +1831,7 @@
                 }
                 
                 updateMissionProgress("upgrades", 1);
-                showNotification(`¡${upgrade.name} comprado! (ROI: ${upgrade.roi}x)`, "success");
+                showNotification(`¡${upgrade.name} comprado! ${upgrade.effect}`, "success");
                 updateUI();
                 updateMoneyUpgradesUI();
             } else if (upgrade.purchased) {
@@ -1421,7 +1853,7 @@
                     clickMultiplier *= upgrade.value;
                 }
                 
-                showNotification(`¡${upgrade.name} comprado! (ROI: ${upgrade.roi}x)`, "premium");
+                showNotification(`¡${upgrade.name} comprado! ${upgrade.effect}`, "premium");
                 updateUI();
                 updatePermanentUpgradesUI();
             } else if (upgrade.purchased) {
@@ -1441,7 +1873,7 @@
                 upgrade.endTime = Date.now() + upgrade.duration;
                 upgrade.purchased = true;
                 
-                showNotification(`¡${upgrade.name} activado por 24h! (ROI: ${upgrade.roi}x)`, "temporal");
+                showNotification(`¡${upgrade.name} activado por 24h! ${upgrade.effect}`, "temporal");
                 updateUI();
                 updateTemporalUpgradesUI();
             } else {
@@ -1584,8 +2016,8 @@
             
             if (lastBonusClaim !== today) {
                 // El usuario puede reclamar el bono hoy
-                const bonusGems = 3 + (bonusStreak - 1) * 2; // 3, 5, 7, 9...
-                if (bonusStreak > 7) bonusGems = 15; // Máximo 15 gemas
+                let bonusGems = 3 + (bonusStreak - 1) * 2;
+                if (bonusStreak > 7) bonusGems = 15;
                 
                 document.getElementById('dailyBonusAmount').textContent = `+${bonusGems} 💎`;
                 document.getElementById('streakCounter').textContent = `Día ${bonusStreak} - Reclama tus ${bonusGems} gemas`;
@@ -1676,10 +2108,28 @@
             document.getElementById('cpsDisplay').textContent = `${formatNumber(moneyPerSecond)} CPS`;
             document.getElementById('clickUpgradeCost').textContent = formatNumber(clickUpgradeCost);
             
+            // Actualizar efecto de mejora del clicker
+            const nextClickPower = clickPower + 1;
+            document.getElementById('clickerImprovementEffect').textContent = 
+                `Click actual: +${clickPower} → +${nextClickPower}`;
+            
             // Actualizar sección de cripto
             document.getElementById('userEarnings').textContent = userEarningsUSD.toFixed(2);
             document.getElementById('availableFund').textContent = availableFund.toFixed(2);
-            document.getElementById('conversionRate').textContent = "10,000";
+            
+            // Calcular boost máximo de cripto
+            let cryptoBoostText = "Hasta x1 más";
+            const cryptoBoost = permanentGemUpgrades.find(u => u.type === "cryptoBoost" && u.purchased);
+            const temporalCrypto = temporalGemUpgrades.find(u => u.type === "temporalCrypto" && u.active);
+            
+            let maxBoost = 1;
+            if (cryptoBoost) maxBoost *= cryptoBoost.value;
+            if (temporalCrypto) maxBoost *= temporalCrypto.value;
+            
+            if (maxBoost > 1) {
+                cryptoBoostText = `Hasta x${maxBoost} más`;
+            }
+            document.getElementById('cryptoWithBoost').textContent = cryptoBoostText;
             
             // Calcular ROI promedio
             const totalInvested = gemShop.reduce((total, pack) => total + (pack.price * 0.4), 0);
@@ -1740,30 +2190,16 @@
             }
         }
         
-        // Renderizar generadores
+        // Renderizar generadores CON DETALLES
         function renderGenerators() {
             const grid = document.getElementById('generatorsGrid');
             grid.innerHTML = '';
             
             generators.forEach(gen => {
-                const cost = gen.baseCost * Math.pow(1.25, gen.level);
-                const production = gen.baseCPS * gen.level;
-                
-                let finalProduction = production;
-                const generatorBoost = moneyUpgrades.find(u => u.type === "generatorBoost" && u.purchased);
-                if (generatorBoost) {
-                    finalProduction *= generatorBoost.value;
-                }
-                
-                const vipGenerator = permanentGemUpgrades.find(u => u.type === "vipGenerator" && u.purchased);
-                if (vipGenerator) {
-                    finalProduction *= vipGenerator.value;
-                }
-                
-                const temporalGenerator = temporalGemUpgrades.find(u => u.type === "temporalGenerator" && u.active);
-                if (temporalGenerator) {
-                    finalProduction *= temporalGenerator.value;
-                }
+                const cost = gen.baseCost * Math.pow(1.15, gen.level);
+                const currentProduction = calculateGeneratorProduction(gen, gen.level);
+                const nextProduction = calculateGeneratorProduction(gen, gen.level + 1);
+                const productionIncrease = nextProduction - currentProduction;
                 
                 const card = document.createElement('div');
                 card.className = `compact-card ${money >= cost ? '' : 'disabled'}`;
@@ -1777,13 +2213,35 @@
                             <div class="card-level">Nivel ${gen.level}</div>
                         </div>
                     </div>
+                    
+                    <div class="production-details">
+                        <div class="production-row">
+                            <div class="production-label">Producción actual:</div>
+                            <div class="production-value">${formatNumber(currentProduction)}/s</div>
+                        </div>
+                        <div class="production-row">
+                            <div class="production-label">Próximo nivel:</div>
+                            <div class="production-value">${formatNumber(nextProduction)}/s</div>
+                        </div>
+                        <div class="production-row">
+                            <div class="production-label">Aumento:</div>
+                            <div class="production-increase">+${formatNumber(productionIncrease)}/s</div>
+                        </div>
+                        <div class="production-row">
+                            <div class="production-label">Por nivel:</div>
+                            <div class="production-value">+${gen.baseCPS}/s</div>
+                        </div>
+                    </div>
+                    
                     <div class="card-stats">
-                        <div class="card-production">+${formatNumber(finalProduction)}/s</div>
+                        <div class="card-production">Nivel ${gen.level} → ${gen.level + 1}</div>
                         <div class="card-cost">${formatNumber(cost)}</div>
                     </div>
-                    <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 10px;">${gen.description}</div>
+                    
+                    <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 10px;">${gen.details}</div>
+                    
                     <button class="btn btn-success" ${money >= cost ? '' : 'disabled'}>
-                        ${gen.level === 0 ? 'Comprar' : 'Mejorar'}
+                        ${gen.level === 0 ? 'Comprar' : 'Mejorar a nivel ' + (gen.level + 1)}
                     </button>
                 `;
                 
@@ -1796,7 +2254,7 @@
             renderGenerators();
         }
         
-        // Renderizar mejoras con dinero
+        // Renderizar mejoras con dinero CON DETALLES
         function renderMoneyUpgrades() {
             const grid = document.getElementById('moneyUpgradesGrid');
             grid.innerHTML = '';
@@ -1806,17 +2264,35 @@
                 card.className = `upgrade-card-compact ${upgrade.purchased ? 'purchased' : ''} ${money >= upgrade.cost && !upgrade.purchased ? '' : 'disabled'}`;
                 card.onclick = () => buyMoneyUpgrade(upgrade.id);
                 
+                // Calcular efecto actual vs siguiente
+                let effectText = '';
+                if (upgrade.type === "click") {
+                    effectText = `Click: +${clickPower} → +${clickPower + upgrade.value}`;
+                } else if (upgrade.type === "multiplier") {
+                    effectText = `Multiplicador: ${clickMultiplier}x → ${clickMultiplier * upgrade.value}x`;
+                }
+                
                 card.innerHTML = `
                     <div class="upgrade-header">
                         <div class="upgrade-icon"><i class="${upgrade.icon}"></i></div>
                         <div class="upgrade-title">${upgrade.name}</div>
                     </div>
-                    <div style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 10px;">${upgrade.description}</div>
+                    
+                    <div class="upgrade-details">
+                        <div class="upgrade-effect">
+                            <i class="fas fa-bolt"></i>
+                            <span>${upgrade.effect}</span>
+                        </div>
+                        ${effectText ? `<div style="font-size:0.85rem; color:var(--premium); margin-top:5px;">${effectText}</div>` : ''}
+                    </div>
+                    
                     <div class="roi-container">
                         <div class="roi-label">ROI:</div>
                         <div class="roi-value positive">${upgrade.roi}x</div>
                     </div>
+                    
                     <div class="upgrade-cost">${formatNumber(upgrade.cost)} dinero</div>
+                    
                     <button class="btn ${upgrade.purchased ? 'btn-success' : 'btn-warning'}" ${money >= upgrade.cost && !upgrade.purchased ? '' : 'disabled'}>
                         ${upgrade.purchased ? '<i class="fas fa-check"></i> Comprado' : 'Comprar'}
                     </button>
@@ -1831,7 +2307,7 @@
             renderMoneyUpgrades();
         }
         
-        // Renderizar mejoras PERMANENTES con gemas
+        // Renderizar mejoras PERMANENTES con gemas CON DETALLES
         function renderPermanentUpgrades() {
             const grid = document.getElementById('permanentUpgradesGrid');
             grid.innerHTML = '';
@@ -1841,17 +2317,33 @@
                 card.className = `upgrade-card-compact ${upgrade.purchased ? 'purchased' : ''} ${gems >= upgrade.cost && !upgrade.purchased ? '' : 'disabled'}`;
                 card.onclick = () => buyPermanentUpgrade(upgrade.id);
                 
+                // Calcular efecto actual vs siguiente
+                let effectText = '';
+                if (upgrade.type === "eliteMultiplier") {
+                    effectText = `Multiplicador: ${clickMultiplier}x → ${clickMultiplier * upgrade.value}x`;
+                }
+                
                 card.innerHTML = `
                     <div class="upgrade-header">
                         <div class="upgrade-icon"><i class="${upgrade.icon}"></i></div>
                         <div class="upgrade-title">${upgrade.name}</div>
                     </div>
-                    <div style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 10px;">${upgrade.description}</div>
+                    
+                    <div class="upgrade-details">
+                        <div class="upgrade-effect">
+                            <i class="fas fa-star"></i>
+                            <span>${upgrade.effect}</span>
+                        </div>
+                        ${effectText ? `<div style="font-size:0.85rem; color:var(--premium); margin-top:5px;">${effectText}</div>` : ''}
+                    </div>
+                    
                     <div class="roi-container">
                         <div class="roi-label">ROI:</div>
                         <div class="roi-value positive">${upgrade.roi}x</div>
                     </div>
+                    
                     <div class="upgrade-cost">${upgrade.cost} gemas</div>
+                    
                     <button class="btn ${upgrade.purchased ? 'btn-success' : 'btn-premium'}" ${gems >= upgrade.cost && !upgrade.purchased ? '' : 'disabled'}>
                         ${upgrade.purchased ? '<i class="fas fa-check"></i> Comprado' : 'Comprar'}
                     </button>
@@ -1866,7 +2358,7 @@
             renderPermanentUpgrades();
         }
         
-        // Renderizar mejoras TEMPORALES con gemas
+        // Renderizar mejoras TEMPORALES con gemas CON DETALLES
         function renderTemporalUpgrades() {
             const grid = document.getElementById('temporalUpgradesGrid');
             grid.innerHTML = '';
@@ -1890,13 +2382,26 @@
                         <div class="upgrade-icon temporal"><i class="${upgrade.icon}"></i></div>
                         <div class="upgrade-title">${upgrade.name}</div>
                     </div>
-                    <div style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 10px;">${upgrade.description}</div>
+                    
+                    <div class="upgrade-details">
+                        <div class="upgrade-effect">
+                            <i class="fas fa-bolt"></i>
+                            <span>${upgrade.effect}</span>
+                        </div>
+                        <div style="font-size:0.8rem; color:#94a3b8; margin-top:5px;">
+                            Duración: 24 horas
+                        </div>
+                    </div>
+                    
+                    ${timerHtml}
+                    
                     <div class="roi-container">
                         <div class="roi-label">ROI:</div>
                         <div class="roi-value positive">${upgrade.roi}x</div>
                     </div>
-                    ${timerHtml}
+                    
                     <div class="upgrade-cost">${upgrade.cost} gemas</div>
+                    
                     <button class="btn ${upgrade.active ? 'btn-success' : 'btn-temporal'}" ${gems >= upgrade.cost && !upgrade.active ? '' : 'disabled'}>
                         ${upgrade.active ? '<i class="fas fa-check"></i> Activo' : 'Activar (24h)'}
                     </button>
@@ -1911,7 +2416,7 @@
             renderTemporalUpgrades();
         }
         
-        // Renderizar tienda de gemas
+        // Renderizar tienda de gemas CON DETALLES
         function renderGemShop() {
             const grid = document.getElementById('gemsShopGrid');
             grid.innerHTML = '';
@@ -1921,16 +2426,34 @@
                 card.className = 'gem-card-compact';
                 card.onclick = () => buyGems(pack.id);
                 
+                const estimatedReturn = (pack.price * pack.roi).toFixed(2);
+                const daysToROI = Math.ceil(pack.roi / 2); // Asumiendo $2 por día
+                
                 card.innerHTML = `
                     <div class="gem-icon-compact"><i class="${pack.icon}"></i></div>
                     <div class="gem-name-compact">${pack.name}</div>
-                    <div style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 8px;">${pack.description}</div>
-                    <div style="font-size: 1.5rem; font-weight: bold; color: var(--premium); margin: 10px 0;">${pack.gems} 💎</div>
-                    <div style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 10px;">$${pack.price}</div>
-                    <div class="roi-container" style="margin: 10px 0;">
-                        <div class="roi-label">ROI Estimado:</div>
-                        <div class="roi-value positive">$${(pack.price * pack.roi).toFixed(2)}</div>
+                    
+                    <div class="production-details" style="margin:10px 0; padding:8px;">
+                        <div class="production-row">
+                            <div class="production-label">Gemas:</div>
+                            <div class="production-value">${pack.gems} 💎</div>
+                        </div>
+                        <div class="production-row">
+                            <div class="production-label">Inversión:</div>
+                            <div class="production-value">$${pack.price}</div>
+                        </div>
+                        <div class="production-row">
+                            <div class="production-label">Retorno:</div>
+                            <div class="production-increase">$${estimatedReturn}</div>
+                        </div>
+                        <div class="production-row">
+                            <div class="production-label">Recuperas en:</div>
+                            <div class="production-value">${daysToROI} días</div>
+                        </div>
                     </div>
+                    
+                    <div style="font-size: 0.85rem; color: #cbd5e1; margin-bottom: 8px;">${pack.details}</div>
+                    
                     <button class="btn btn-premium">
                         <i class="fas fa-shopping-cart"></i> Comprar
                     </button>

@@ -3,161 +3,415 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Clicker Pro - Juego Original</title>
+    <title>Crypto Clicker Admin - Panel Completo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Estilos generales */
         :root {
-            --primary: #3b82f6;
-            --secondary: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --premium: #f59e0b;
-            --mission: #8b5cf6;
-            --success: #10b981;
-            --crypto: #f59e0b;
-            --gold: #FFD700;
+            --admin: #9b59b6;  /* Color morado para admin */
+            --primary: #3498db;
+            --secondary: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #0f172a, #1e1b4b);
-            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #9b59b6 100%);
+            color: #333;
             min-height: 100vh;
-            overflow-x: hidden;
-        }
-        
-        /* Header compacto */
-        .compact-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(30, 41, 59, 0.9);
-            padding: 15px 20px;
-            border-bottom: 3px solid var(--primary);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            flex-wrap: wrap;
-        }
-        
-        .compact-stat {
-            text-align: center;
-            padding: 5px 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            min-width: 150px;
-        }
-        
-        .compact-label {
-            font-size: 0.9rem;
-            color: #94a3b8;
-            margin-bottom: 5px;
-        }
-        
-        .compact-value {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: white;
-        }
-        
-        .compact-subvalue {
-            font-size: 0.8rem;
-            color: #94a3b8;
-        }
-        
-        .gold {
-            color: var(--gold);
-        }
-        
-        .gems {
-            color: var(--mission);
-        }
-        
-        .level {
-            color: var(--secondary);
-        }
-        
-        .usdt {
-            color: var(--success);
-        }
-        
-        /* Login overlay */
-        .login-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, #0f172a, #1e1b4b);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
             padding: 20px;
         }
         
-        .login-container {
-            background: rgba(30, 41, 59, 0.95);
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
             border-radius: 20px;
-            padding: 30px;
-            width: 100%;
-            max-width: 500px;
-            border: 3px solid var(--primary);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+            border: 5px solid var(--admin);
         }
         
-        .login-title {
+        .admin-badge {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: var(--admin);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(155, 89, 182, 0.4);
+        }
+        
+        .header {
+            background: var(--dark);
+            color: white;
+            padding: 25px;
             text-align: center;
-            color: var(--premium);
-            font-size: 2rem;
+            border-bottom: 5px solid var(--admin);
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 2.2rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
             margin-bottom: 10px;
         }
         
-        .login-subtitle {
+        .logo i {
+            color: var(--admin);
+        }
+        
+        .subtitle {
+            color: #95a5a6;
+            font-size: 1.1rem;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            min-height: 700px;
+        }
+        
+        /* Panel del Juego (izquierda) */
+        .game-section {
+            padding: 30px;
+            border-right: 3px solid #eee;
+        }
+        
+        /* Panel de Admin (derecha) */
+        .admin-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 30px;
+            border-left: 3px solid var(--admin);
+        }
+        
+        /* Stats principales */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
             text-align: center;
-            color: #94a3b8;
-            margin-bottom: 30px;
-            font-size: 1rem;
-        }
-        
-        .login-tabs {
-            display: flex;
-            margin-bottom: 20px;
-            border-bottom: 2px solid rgba(59, 130, 246, 0.3);
-        }
-        
-        .login-tab {
-            flex: 1;
-            padding: 15px;
-            background: none;
-            border: none;
-            color: #94a3b8;
-            font-size: 1rem;
-            cursor: pointer;
+            border: 3px solid #e9ecef;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             transition: all 0.3s;
         }
         
-        .login-tab.active {
-            color: var(--primary);
-            border-bottom: 3px solid var(--primary);
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .stat-card.usdt {
+            border-top: 5px solid var(--primary);
+        }
+        
+        .stat-card.gems {
+            border-top: 5px solid var(--danger);
+        }
+        
+        .stat-card.level {
+            border-top: 5px solid var(--secondary);
+        }
+        
+        .stat-value {
+            font-size: 2.2rem;
             font-weight: bold;
+            color: var(--dark);
+            margin: 10px 0;
         }
         
-        .login-form {
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Área de Click */
+        .click-area {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            margin: 30px 0;
+            color: white;
+        }
+        
+        .click-btn {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--warning), #f39c12);
+            border: 5px solid white;
+            color: white;
+            font-size: 1.4rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 25px auto;
+            display: block;
+            box-shadow: 0 15px 30px rgba(243, 156, 18, 0.4);
+            transition: all 0.3s;
+        }
+        
+        .click-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 20px 40px rgba(243, 156, 18, 0.6);
+        }
+        
+        .click-btn:active {
+            transform: scale(0.95);
+        }
+        
+        /* Navegación con pestañas */
+        .tabs-nav {
+            display: flex;
+            background: #f8f9fa;
+            border-radius: 12px;
+            margin: 30px 0;
+            overflow: hidden;
+            border: 2px solid #e9ecef;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 18px;
+            background: none;
+            border: none;
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .tab-btn:hover {
+            background: rgba(52, 152, 219, 0.1);
+            color: var(--primary);
+        }
+        
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .tab-content {
             display: none;
+            animation: fadeIn 0.5s;
         }
         
-        .login-form.active {
+        .tab-content.active {
             display: block;
         }
         
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Tienda */
+        .store-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 25px;
+        }
+        
+        .store-item {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            border: 3px solid #e9ecef;
+            text-align: center;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .store-item:hover {
+            border-color: var(--danger);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(231, 76, 60, 0.1);
+        }
+        
+        .store-item.premium {
+            border-color: var(--warning);
+            background: linear-gradient(135deg, #fff8e1, #fff);
+        }
+        
+        /* Sección de Admin */
+        .admin-panel {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 3px solid var(--admin);
+            box-shadow: 0 10px 20px rgba(155, 89, 182, 0.1);
+        }
+        
+        .admin-title {
+            color: var(--admin);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--admin);
+            padding-bottom: 10px;
+        }
+        
+        /* Referral Section */
+        .referral-box {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px 0;
+            border: 3px dashed var(--admin);
+        }
+        
+        .referral-code {
+            background: var(--admin);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            font-family: monospace;
+            letter-spacing: 2px;
+            margin: 20px 0;
+            display: inline-block;
+            min-width: 300px;
+        }
+        
+        .referral-url {
+            background: white;
+            border: 2px solid var(--admin);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            word-break: break-all;
+            font-size: 0.9rem;
+        }
+        
+        /* Pagos Pendientes */
+        .pending-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 20px 0;
+        }
+        
+        .pending-item {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .pending-item:hover {
+            border-color: var(--admin);
+            transform: translateX(5px);
+        }
+        
+        .user-info {
+            flex: 1;
+        }
+        
+        .user-id {
+            font-weight: bold;
+            color: var(--dark);
+        }
+        
+        .amount {
+            color: var(--secondary);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .time {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        /* Botones */
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-success {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+        }
+        
+        .btn-admin {
+            background: var(--admin);
+            color: white;
+        }
+        
+        .btn-small {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+        }
+        
+        /* Formularios */
         .form-group {
             margin-bottom: 20px;
         }
@@ -165,17 +419,15 @@
         .form-label {
             display: block;
             margin-bottom: 8px;
-            color: #cbd5e1;
-            font-size: 0.9rem;
+            color: var(--dark);
+            font-weight: 600;
         }
         
         .form-input {
             width: 100%;
             padding: 14px;
-            border-radius: 10px;
-            border: 2px solid rgba(59, 130, 246, 0.3);
-            background: rgba(15, 23, 42, 0.8);
-            color: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
             font-size: 1rem;
             transition: all 0.3s;
         }
@@ -183,2734 +435,1143 @@
         .form-input:focus {
             border-color: var(--primary);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
         }
         
-        .password-container {
-            position: relative;
-        }
-        
-        .password-toggle {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: #94a3b8;
-            cursor: pointer;
-        }
-        
-        .confirm-btn {
-            background: linear-gradient(135deg, var(--primary), #3b82f6);
-            color: white;
-            border: none;
-            padding: 14px 28px;
-            border-radius: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: block;
-            width: 100%;
+        /* Stats de Referidos */
+        .referral-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
             margin-top: 20px;
-            font-size: 1.1rem;
         }
         
-        .confirm-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
-        }
-        
-        .subscribe-btn {
-            background: linear-gradient(135deg, var(--success), #10b981);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin: 0 10px;
-            font-size: 1rem;
-        }
-        
-        .subscribe-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
-        }
-        
-        /* Tabs de navegación */
-        .tabs-navigation {
-            display: flex;
-            background: rgba(30, 41, 59, 0.9);
-            border-radius: 12px;
-            margin: 20px auto;
-            max-width: 1400px;
-            overflow: hidden;
-            border: 2px solid var(--primary);
-        }
-        
-        .tab-button {
-            flex: 1;
+        .referral-stat {
+            background: white;
             padding: 15px;
-            background: none;
-            border: none;
-            color: #94a3b8;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .tab-button:hover {
-            background: rgba(59, 130, 246, 0.1);
-            color: white;
-        }
-        
-        .tab-button.active {
-            background: var(--primary);
-            color: white;
-            font-weight: bold;
-        }
-        
-        .tab-content {
-            display: none;
-            padding: 20px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        /* Sistema principal del juego - CLICKER DE ORO */
-        .clicker-section {
-            background: rgba(30, 41, 59, 0.7);
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            border: 3px solid var(--primary);
-            margin-bottom: 20px;
-        }
-        
-        .gold-display {
-            font-size: 3.5rem;
-            font-weight: bold;
-            color: var(--gold);
-            margin: 20px 0;
-            font-family: monospace;
-        }
-        
-        .gold-per-second {
-            font-size: 1.2rem;
-            color: var(--secondary);
-            margin-bottom: 20px;
-        }
-        
-        .click-button {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--gold), #FFC107);
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin: 20px auto;
-            display: block;
-            box-shadow: 0 15px 30px rgba(255, 215, 0, 0.4);
-        }
-        
-        .click-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.6);
-        }
-        
-        .click-button:active {
-            transform: scale(0.95);
-        }
-        
-        .click-stats {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 30px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-        
-        .click-stat {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px;
-            border-radius: 12px;
-            min-width: 150px;
-        }
-        
-        .click-stat-value {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: white;
-        }
-        
-        .click-stat-label {
-            font-size: 0.9rem;
-            color: #94a3b8;
-        }
-        
-        /* Sección de mejoras con ORO */
-        .upgrades-section {
-            background: rgba(30, 41, 59, 0.7);
-            border-radius: 20px;
-            padding: 25px;
-            border: 3px solid var(--warning);
-            margin-bottom: 20px;
-        }
-        
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: white;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .upgrades-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
-        }
-        
-        .upgrade-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 20px;
-            border: 2px solid rgba(245, 158, 11, 0.3);
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-        
-        .upgrade-card:hover {
-            border-color: var(--warning);
-            transform: translateY(-5px);
-        }
-        
-        .upgrade-card.disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        
-        .upgrade-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        
-        .upgrade-name {
-            font-weight: bold;
-            color: white;
-            font-size: 1.1rem;
-        }
-        
-        .upgrade-cost {
-            color: var(--gold);
-            font-weight: bold;
-        }
-        
-        .upgrade-description {
-            color: #94a3b8;
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-        }
-        
-        .upgrade-effect {
-            color: var(--secondary);
-            font-size: 0.9rem;
-            font-weight: bold;
-        }
-        
-        /* Sección de mejoras con GEMAS */
-        .gems-upgrades-section {
-            background: rgba(30, 41, 59, 0.7);
-            border-radius: 20px;
-            padding: 25px;
-            border: 3px solid var(--mission);
-            margin-bottom: 20px;
-        }
-        
-        .gems-upgrade-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 20px;
-            border: 2px solid rgba(139, 92, 246, 0.3);
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-        
-        .gems-upgrade-card:hover {
-            border-color: var(--mission);
-            transform: translateY(-5px);
-        }
-        
-        .gems-cost {
-            color: var(--mission);
-            font-weight: bold;
-        }
-        
-        /* Sección de mejoras temporales */
-        .temporary-upgrades-section {
-            background: rgba(30, 41, 59, 0.7);
-            border-radius: 20px;
-            padding: 25px;
-            border: 3px solid var(--danger);
-            margin-bottom: 20px;
-        }
-        
-        .temporary-upgrade-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 20px;
-            border: 2px solid rgba(239, 68, 68, 0.3);
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-        
-        .temporary-upgrade-card:hover {
-            border-color: var(--danger);
-            transform: translateY(-5px);
-        }
-        
-        .timer {
-            color: var(--danger);
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-        
-        /* Sección de trabajos */
-        .jobs-section {
-            background: rgba(30, 41, 59, 0.7);
-            border-radius: 20px;
-            padding: 25px;
-            border: 3px solid var(--success);
-            margin-bottom: 20px;
-        }
-        
-        .job-card {
-            background: rgba(16, 185, 129, 0.1);
             border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .job-card:hover {
-            background: rgba(16, 185, 129, 0.2);
-        }
-        
-        .job-card.active {
-            background: rgba(16, 185, 129, 0.3);
-            border-color: var(--secondary);
-        }
-        
-        .job-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        
-        .job-name {
-            font-weight: bold;
-            color: white;
-            font-size: 1.1rem;
-        }
-        
-        .job-reward {
-            color: var(--mission);
-            font-weight: bold;
-        }
-        
-        .job-description {
-            color: #cbd5e1;
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-        }
-        
-        .job-progress {
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            overflow: hidden;
-            margin: 10px 0;
-        }
-        
-        .job-progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--success), #34d399);
-            width: 0%;
-            transition: width 0.5s;
-        }
-        
-        /* Panel derecho */
-        .right-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        
-        /* Sistema de nivel */
-        .level-section {
-            background: rgba(30, 41, 59, 0.7);
-            border-radius: 20px;
-            padding: 25px;
-            border: 3px solid var(--secondary);
-        }
-        
-        .level-display {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: var(--secondary);
             text-align: center;
-            margin-bottom: 15px;
-        }
-        
-        .level-progress {
-            height: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-            overflow: hidden;
-            margin: 15px 0;
-        }
-        
-        .level-progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--secondary), #34d399);
-            width: 0%;
-            transition: width 0.5s;
-        }
-        
-        .level-info {
-            color: #94a3b8;
-            font-size: 0.9rem;
-            text-align: center;
-        }
-        
-        /* Estadísticas */
-        .stats-section {
-            background: rgba(30, 41, 59, 0.7);
-            border-radius: 20px;
-            padding: 25px;
-            border: 3px solid var(--primary);
-        }
-        
-        .stat-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .stat-label {
-            color: #94a3b8;
-            font-size: 0.9rem;
-        }
-        
-        .stat-value {
-            color: white;
-            font-weight: bold;
-        }
-        
-        /* Sección de ganancias USDT */
-        .earnings-section {
-            background: rgba(30, 41, 59, 0.7);
-            border-radius: 20px;
-            padding: 25px;
-            border: 3px solid var(--success);
-        }
-        
-        .usdt-display {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--success);
-            text-align: center;
-            margin: 15px 0;
-        }
-        
-        .earnings-info {
-            color: #94a3b8;
-            font-size: 0.9rem;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        
-        /* Sistema de referidos */
-        .referral-section {
-            background: rgba(30, 41, 59, 0.7);
-            border-radius: 20px;
-            padding: 25px;
-            border: 3px solid var(--premium);
-            margin-bottom: 20px;
-        }
-        
-        .referral-code {
-            background: rgba(245, 158, 11, 0.1);
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-            margin: 15px 0;
-            border: 1px solid var(--premium);
-            font-family: monospace;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--premium);
-        }
-        
-        /* TU CÓDIGO ORIGINAL DE PAGOS (EXACTAMENTE IGUAL) */
-        .payment-methods {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-            margin: 20px 0;
-        }
-        
-        @media (min-width: 768px) {
-            .payment-methods {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-        
-        .payment-method {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 12px;
-            padding: 20px;
-            border: 2px solid;
-            transition: all 0.3s;
-        }
-        
-        .payment-method.solana {
-            border-color: #9945FF;
-            background: linear-gradient(135deg, rgba(153, 69, 255, 0.1), rgba(30, 41, 59, 0.8));
-        }
-        
-        .payment-method.optimism {
-            border-color: #FF0420;
-            background: linear-gradient(135deg, rgba(255, 4, 32, 0.1), rgba(30, 41, 59, 0.8));
-        }
-        
-        .payment-method.ethereum {
-            border-color: #627EEA;
-            background: linear-gradient(135deg, rgba(98, 126, 234, 0.1), rgba(30, 41, 59, 0.8));
-        }
-        
-        .network-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .network-icon {
-            font-size: 1.5rem;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .solana .network-icon {
-            background: #9945FF;
-            color: white;
-        }
-        
-        .optimism .network-icon {
-            background: #FF0420;
-            color: white;
-        }
-        
-        .ethereum .network-icon {
-            background: #627EEA;
-            color: white;
-        }
-        
-        .network-name {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: white;
-        }
-        
-        .address-container {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            padding: 15px;
-            margin: 15px 0;
-            position: relative;
-        }
-        
-        .address-label {
-            font-size: 0.8rem;
-            color: #94a3b8;
-            margin-bottom: 8px;
-            display: block;
-        }
-        
-        .address-value {
-            font-family: 'Courier New', monospace;
-            font-size: 0.85rem;
-            word-break: break-all;
-            color: white;
-            margin-bottom: 10px;
-            line-height: 1.4;
-        }
-        
-        .copy-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(59, 130, 246, 0.2);
-            border: 1px solid var(--primary);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: all 0.3s;
-        }
-        
-        .copy-btn:hover {
-            background: var(--primary);
-        }
-        
-        .qrcode-placeholder {
-            width: 150px;
-            height: 150px;
-            background: #f1f5f9;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #64748b;
-            font-size: 0.9rem;
-            margin: 0 auto;
-        }
-        
-        .withdrawal-form {
-            background: rgba(16, 185, 129, 0.1);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-            border: 2px solid var(--secondary);
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            color: #cbd5e1;
-            font-size: 0.9rem;
-        }
-        
-        .form-input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 10px;
-            border: 2px solid var(--crypto);
-            background: rgba(0, 0, 0, 0.3);
-            color: white;
-            font-size: 0.9rem;
-        }
-        
-        .form-select {
-            width: 100%;
-            padding: 12px;
-            border-radius: 10px;
-            border: 2px solid var(--primary);
-            background: rgba(0, 0, 0, 0.3);
-            color: white;
-            font-size: 0.9rem;
-            appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 10px center;
-            background-size: 20px;
-        }
-        
-        .amount-preview {
-            background: rgba(251, 191, 36, 0.1);
-            border-radius: 10px;
-            padding: 15px;
-            margin: 15px 0;
-            border: 1px solid var(--premium);
-        }
-        
-        .preview-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-        
-        .preview-label {
-            color: #94a3b8;
-            font-size: 0.9rem;
-        }
-        
-        .preview-value {
-            color: white;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-        
-        .preview-value.usd {
-            color: var(--secondary);
-        }
-        
-        .preview-value.crypto {
-            color: var(--premium);
-        }
-        
-        .min-amount {
-            color: var(--warning);
-            font-size: 0.9rem;
-            margin-top: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .transactions-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 0.85rem;
-        }
-        
-        .transactions-table th {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 12px;
-            text-align: left;
-            color: var(--crypto);
-            font-weight: bold;
-            border-bottom: 2px solid var(--crypto);
-        }
-        
-        .transactions-table td {
-            padding: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            color: #cbd5e1;
-        }
-        
-        .status-badge {
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
-        
-        .status-pending {
-            background: rgba(245, 158, 11, 0.2);
-            color: var(--warning);
-            border: 1px solid var(--warning);
-        }
-        
-        .status-completed {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--secondary);
-            border: 1px solid var(--secondary);
-        }
-        
-        .status-failed {
-            background: rgba(239, 68, 68, 0.2);
-            color: var(--danger);
-            border: 1px solid var(--danger);
-        }
-        
-        .instructions {
-            background: rgba(139, 92, 246, 0.1);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-            border: 2px solid var(--mission);
-        }
-        
-        .step {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            align-items: flex-start;
-        }
-        
-        .step-number {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: var(--mission);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-        
-        .step-content {
-            flex: 1;
-        }
-        
-        .step-title {
-            color: white;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .step-description {
-            color: #cbd5e1;
-            font-size: 0.9rem;
-            line-height: 1.5;
+            border: 2px solid #e9ecef;
         }
         
         /* Responsive */
-        @media (max-width: 768px) {
-            .compact-header {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .compact-stat {
-                min-width: 100%;
-                margin-bottom: 10px;
-            }
-            
-            .click-button {
-                width: 150px;
-                height: 150px;
-            }
-            
-            .gold-display {
-                font-size: 2.5rem;
-            }
-            
-            .payment-methods {
+        @media (max-width: 992px) {
+            .main-content {
                 grid-template-columns: 1fr;
             }
             
-            .tabs-navigation {
-                flex-direction: column;
-            }
-            
-            .tab-button {
-                width: 100%;
-            }
-            
-            .upgrades-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .compact-stat {
-                min-width: 120px;
-            }
-            
-            .upgrades-grid {
+            .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-        }
-        
-        @media (min-width: 1025px) {
-            .game-container {
-                display: grid;
-                grid-template-columns: 1fr 350px;
-                gap: 20px;
+            
+            .store-grid {
+                grid-template-columns: 1fr;
             }
         }
         
-        /* Botón de notificación */
-        .notification-btn {
-            background: linear-gradient(135deg, var(--warning), #f59e0b);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
-        }
-        
-        .notification-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-badge {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
         }
         
         /* Animaciones */
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
         
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        .highlight {
+            background: linear-gradient(90deg, transparent, rgba(155, 89, 182, 0.1), transparent);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
         }
         
-        .pulse-animation {
-            animation: pulse 2s infinite;
+        /* Scrollbar personalizado */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
         
-        .float-animation {
-            animation: float 3s ease-in-out infinite;
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--admin);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8e44ad;
         }
     </style>
 </head>
 <body>
-    <!-- Overlay de Login -->
-    <div id="loginOverlay" class="login-overlay">
-        <div class="login-container">
-            <h1 class="login-title">Crypto Clicker Pro</h1>
-            <p class="login-subtitle">Inicia sesión o crea una cuenta para comenzar</p>
-            
-            <div class="login-tabs">
-                <button class="login-tab active" data-form="loginForm">Iniciar Sesión</button>
-                <button class="login-tab" data-form="registerForm">Crear Cuenta</button>
-                <button class="login-tab" data-form="guestForm">Jugar como Invitado</button>
+    <div class="admin-badge pulse">
+        <i class="fas fa-crown"></i> VERSIÓN ADMINISTRADOR
+    </div>
+    
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-coins"></i>
+                CRYPTO CLICKER PRO
             </div>
-            
-            <!-- Formulario de Login -->
-            <form id="loginForm" class="login-form active">
-                <div class="form-group">
-                    <label class="form-label">Correo Electrónico o ID de Usuario</label>
-                    <input type="text" id="loginEmail" class="form-input" placeholder="tucorreo@ejemplo.com">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Contraseña</label>
-                    <div class="password-container">
-                        <input type="password" id="loginPassword" class="form-input" placeholder="Tu contraseña">
-                        <button type="button" class="password-toggle" onclick="togglePassword('loginPassword')">
-                            <i class="fas fa-eye"></i>
-                        </button>
+            <p class="subtitle">Sistema de Administración Completo</p>
+        </div>
+        
+        <div class="main-content">
+            <!-- Sección del Juego (Izquierda) -->
+            <div class="game-section">
+                <!-- Stats Principales -->
+                <div class="stats-grid">
+                    <div class="stat-card usdt">
+                        <div class="stat-label">USDT GANADOS</div>
+                        <div class="stat-value" id="usdtBalance">0.000000</div>
+                        <div class="stat-label">≈ $<span id="usdtValue">0.00</span></div>
+                    </div>
+                    
+                    <div class="stat-card gems">
+                        <div class="stat-label">GEMAS</div>
+                        <div class="stat-value" id="gemsBalance">0</div>
+                        <div class="stat-label">Multiplicador: <span id="multiplier">1.0</span>x</div>
+                    </div>
+                    
+                    <div class="stat-card level">
+                        <div class="stat-label">NIVEL</div>
+                        <div class="stat-value" id="userLevel">1</div>
+                        <div class="stat-label">Clicks: <span id="totalClicks">0</span></div>
                     </div>
                 </div>
                 
-                <button type="button" class="confirm-btn" onclick="loginUser()">
-                    <i class="fas fa-check-circle"></i> OK - Iniciar Sesión
-                </button>
-                
-                <div class="login-footer">
-                    <a class="login-link" onclick="showForm('recoveryForm')">¿Olvidaste tu contraseña?</a>
-                </div>
-            </form>
-            
-            <!-- Formulario de Registro -->
-            <form id="registerForm" class="login-form">
-                <div class="form-group">
-                    <label class="form-label">Correo Electrónico</label>
-                    <input type="email" id="registerEmail" class="form-input" placeholder="tucorreo@ejemplo.com">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Nombre de Usuario</label>
-                    <input type="text" id="registerUsername" class="form-input" placeholder="Tu nombre de usuario">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Contraseña</label>
-                    <div class="password-container">
-                        <input type="password" id="registerPassword" class="form-input" placeholder="Mínimo 8 caracteres">
-                        <button type="button" class="password-toggle" onclick="togglePassword('registerPassword')">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Confirmar Contraseña</label>
-                    <div class="password-container">
-                        <input type="password" id="registerConfirmPassword" class="form-input" placeholder="Repite tu contraseña">
-                        <button type="button" class="password-toggle" onclick="togglePassword('registerConfirmPassword')">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Código de Referido (Opcional)</label>
-                    <input type="text" id="registerReferral" class="form-input" placeholder="Código de amigo">
-                </div>
-                
-                <button type="button" class="subscribe-btn" onclick="registerUser()" style="width: 100%; margin: 15px 0;">
-                    <i class="fas fa-user-check"></i> INSCRIBIRSE - Crear Cuenta
-                </button>
-                
-                <div class="login-footer">
-                    Al hacer clic en "INSCRIBIRSE", aceptas los términos y condiciones.
-                </div>
-            </form>
-            
-            <!-- Modo Invitado -->
-            <form id="guestForm" class="login-form">
-                <div class="form-group">
-                    <p style="color: #cbd5e1; text-align: center; margin-bottom: 20px;">
-                        Juega sin crear cuenta. Tus datos se guardarán localmente en este dispositivo.
-                        <br><br>
-                        <strong>⚠️ Advertencia:</strong> Si borras el caché del navegador, perderás tu progreso.
-                    </p>
-                </div>
-                
-                <button type="button" class="confirm-btn" onclick="enterAsGuest()">
-                    <i class="fas fa-play"></i> OK - Jugar como Invitado
-                </button>
-                
-                <div class="login-footer">
-                    Puedes crear una cuenta más tarde para guardar tu progreso en la nube.
-                </div>
-            </form>
-            
-            <!-- Recuperación de Contraseña -->
-            <form id="recoveryForm" class="login-form">
-                <div class="form-group">
-                    <p style="color: #cbd5e1; text-align: center; margin-bottom: 20px;">
-                        Introduce tu correo electrónico o ID de usuario para recuperar tu cuenta.
-                    </p>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Correo o ID de Usuario</label>
-                    <input type="text" id="recoveryEmail" class="form-input" placeholder="tucorreo@ejemplo.com">
-                </div>
-                
-                <button type="button" class="confirm-btn" onclick="recoverAccount()">
-                    <i class="fas fa-check-circle"></i> OK - Recuperar Cuenta
-                </button>
-                
-                <div class="login-footer">
-                    <a class="login-link" onclick="showForm('loginForm')">Volver al Login</a>
-                </div>
-            </form>
-        </div>
-    </div>
-    
-    <!-- Header compacto -->
-    <div class="compact-header" style="display: none;">
-        <div class="compact-stat">
-            <div class="compact-label">💰 Oro</div>
-            <div class="compact-value gold" id="compactGold">0</div>
-            <div class="compact-subvalue" id="compactGoldPerSec">+0/s</div>
-        </div>
-        
-        <div class="compact-stat">
-            <div class="compact-label">💎 Gemas</div>
-            <div class="compact-value gems" id="compactGems">0</div>
-            <div class="compact-subvalue" id="compactGemsPerDay">+0/día</div>
-        </div>
-        
-        <div class="compact-stat">
-            <div class="compact-label">💵 USDT</div>
-            <div class="compact-value usdt" id="compactUSDT">0.00</div>
-            <div class="compact-subvalue">Ganancias</div>
-        </div>
-        
-        <div class="compact-stat">
-            <div class="compact-label">⭐ Nivel</div>
-            <div class="compact-value level" id="compactLevel">1</div>
-            <div class="compact-subvalue" id="compactXP">0/100 XP</div>
-        </div>
-        
-        <button class="subscribe-btn" onclick="showLogin()" id="headerSubscribeBtn">
-            <i class="fas fa-user-plus"></i> INSCRIBIRSE
-        </button>
-    </div>
-    
-    <!-- Navegación por pestañas -->
-    <div class="tabs-navigation" style="display: none;">
-        <button class="tab-button active" onclick="switchTab('game')">
-            <i class="fas fa-gamepad"></i> Juego
-        </button>
-        <button class="tab-button" onclick="switchTab('payments')">
-            <i class="fas fa-money-bill-wave"></i> Pagos
-        </button>
-        <button class="tab-button" onclick="switchTab('stats')">
-            <i class="fas fa-chart-line"></i> Estadísticas
-        </button>
-    </div>
-    
-    <!-- Pestaña: JUEGO -->
-    <div id="tab-game" class="tab-content" style="display: none;">
-        <div class="game-container">
-            <!-- Columna izquierda: Juego principal -->
-            <div class="left-column">
-                <!-- Clicker de Oro -->
-                <div class="clicker-section">
-                    <h2>Haz clic para ganar ORO</h2>
-                    <div class="gold-display" id="goldDisplay">0 Oro</div>
-                    <div class="gold-per-second" id="goldPerSecond">+0 oro por segundo</div>
-                    <button class="click-button" id="clickButton" onclick="clickGold()">
-                        <i class="fas fa-coins"></i><br>
-                        CLIC PARA ORO
+                <!-- Área de Click -->
+                <div class="click-area">
+                    <h2 style="margin-bottom: 10px;">¡Haz clic para ganar USDT!</h2>
+                    <p style="opacity: 0.9; margin-bottom: 20px;">Cada click te acerca a retiros reales</p>
+                    
+                    <button class="click-btn" id="clickBtn">
+                        <i class="fas fa-mouse-pointer fa-3x"></i><br>
+                        <span style="font-size: 1.2rem;">CLICK</span>
                     </button>
                     
-                    <div class="click-stats">
-                        <div class="click-stat">
-                            <div class="click-stat-value" id="clickPower">1</div>
-                            <div class="click-stat-label">Oro por clic</div>
+                    <p style="font-size: 1.3rem; margin-top: 20px;">
+                        +<span id="clickEarnings">0.000001</span> USDT por click
+                    </p>
+                    
+                    <div style="display: flex; justify-content: center; gap: 30px; margin-top: 30px; flex-wrap: wrap;">
+                        <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
+                            <div style="font-size: 0.9rem;">Poder de Click</div>
+                            <div style="font-size: 1.5rem; font-weight: bold;" id="clickPower">1.0x</div>
                         </div>
-                        <div class="click-stat">
-                            <div class="click-stat-value" id="autoClickers">0</div>
-                            <div class="click-stat-label">Trabajadores</div>
-                        </div>
-                        <div class="click-stat">
-                            <div class="click-stat-value" id="totalClicks">0</div>
-                            <div class="click-stat-label">Clics totales</div>
+                        
+                        <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
+                            <div style="font-size: 0.9rem;">Ganancia/s</div>
+                            <div style="font-size: 1.5rem; font-weight: bold;" id="perSecond">0.000000</div>
                         </div>
                     </div>
-                </div>
-                
-                <!-- Mejoras con ORO -->
-                <div class="upgrades-section">
-                    <div class="section-title">
-                        <i class="fas fa-arrow-up"></i> Mejoras con Oro
-                    </div>
                     
-                    <div class="upgrades-grid" id="goldUpgradesGrid">
-                        <!-- Las mejoras con oro se generarán dinámicamente -->
-                    </div>
-                </div>
-                
-                <!-- Mejoras con GEMAS -->
-                <div class="gems-upgrades-section">
-                    <div class="section-title">
-                        <i class="fas fa-gem"></i> Mejoras con Gemas
-                    </div>
-                    
-                    <div class="upgrades-grid" id="gemsUpgradesGrid">
-                        <!-- Las mejoras con gemas se generarán dinámicamente -->
-                    </div>
-                </div>
-                
-                <!-- Mejoras temporales -->
-                <div class="temporary-upgrades-section">
-                    <div class="section-title">
-                        <i class="fas fa-clock"></i> Mejoras Temporales
-                    </div>
-                    
-                    <div class="upgrades-grid" id="temporaryUpgradesGrid">
-                        <!-- Las mejoras temporales se generarán dinámicamente -->
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Columna derecha -->
-            <div class="right-panel">
-                <!-- Sistema de nivel -->
-                <div class="level-section">
-                    <div class="section-title">
-                        <i class="fas fa-trophy"></i> Progreso
-                    </div>
-                    
-                    <div class="level-display">Nivel <span id="currentLevel">1</span></div>
-                    <div class="level-progress">
-                        <div class="level-progress-bar" id="levelProgressBar"></div>
-                    </div>
-                    <div class="level-info">
-                        <span id="currentXP">0</span>/<span id="nextLevelXP">100</span> XP
-                    </div>
-                    <div class="level-info">
-                        <i class="fas fa-info-circle"></i> Gana XP haciendo clics y comprando mejoras
-                    </div>
-                </div>
-                
-                <!-- Ganancias USDT -->
-                <div class="earnings-section">
-                    <div class="section-title">
-                        <i class="fas fa-dollar-sign"></i> Ganancias USDT
-                    </div>
-                    
-                    <div class="usdt-display">$<span id="usdtEarnings">0.00</span></div>
-                    <div class="earnings-info">
-                        <i class="fas fa-chart-line"></i> Ganancias acumuladas
-                    </div>
-                    <div class="earnings-info">
-                        <i class="fas fa-info-circle"></i> Retira desde $5.00 en la pestaña Pagos
-                    </div>
-                    <button class="notification-btn" onclick="switchTab('payments')" style="width: 100%; margin-top: 10px;">
-                        <i class="fas fa-wallet"></i> Retirar Ganancias
+                    <button class="btn btn-warning" style="margin-top: 25px;" onclick="upgradeClick()">
+                        <i class="fas fa-arrow-up"></i> Mejorar Click (50 gemas)
                     </button>
                 </div>
                 
-                <!-- Trabajos -->
-                <div class="jobs-section">
-                    <div class="section-title">
-                        <i class="fas fa-briefcase"></i> Trabajos
+                <!-- Navegación por pestañas -->
+                <div class="tabs-nav">
+                    <button class="tab-btn active" onclick="openTab('tienda')">
+                        <i class="fas fa-store"></i> Tienda
+                    </button>
+                    <button class="tab-btn" onclick="openTab('retiros')">
+                        <i class="fas fa-wallet"></i> Retirar
+                    </button>
+                    <button class="tab-btn" onclick="openTab('estadisticas')">
+                        <i class="fas fa-chart-bar"></i> Estadísticas
+                    </button>
+                    <button class="tab-btn" onclick="openTab('referidos')">
+                        <i class="fas fa-users"></i> Mis Referidos
+                    </button>
+                </div>
+                
+                <!-- Contenido: Tienda -->
+                <div id="tienda" class="tab-content active">
+                    <h3 style="color: var(--dark); margin-bottom: 20px;">
+                        <i class="fas fa-shopping-cart"></i> Tienda de Gemas
+                    </h3>
+                    
+                    <div class="highlight">
+                        <p style="color: var(--admin); margin: 0;">
+                            <i class="fas fa-info-circle"></i> 
+                            Como admin, puedes comprar gemas para probar el sistema. Los usuarios referidos también verán esta tienda.
+                        </p>
                     </div>
                     
-                    <div id="jobsList">
-                        <!-- Los trabajos se generarán dinámicamente -->
+                    <div class="store-grid">
+                        <div class="store-item">
+                            <h4>Paquete Básico</h4>
+                            <div style="color: var(--secondary); margin: 15px 0; font-size: 1.1rem;">
+                                <i class="fas fa-chart-line"></i> +5% multiplicador
+                            </div>
+                            <div style="font-size: 2rem; font-weight: bold; margin: 20px 0;">
+                                50 <i class="fas fa-gem" style="color: var(--danger);"></i>
+                            </div>
+                            <p style="color: #7f8c8d; margin-bottom: 15px;">Precio: <strong style="color: var(--dark);">5 USDT</strong></p>
+                            <button class="btn btn-danger" onclick="buyGems(1)">
+                                <i class="fas fa-shopping-bag"></i> Comprar Ahora
+                            </button>
+                        </div>
+                        
+                        <div class="store-item">
+                            <h4>Paquete Avanzado</h4>
+                            <div style="color: var(--secondary); margin: 15px 0; font-size: 1.1rem;">
+                                <i class="fas fa-chart-line"></i> +15% multiplicador
+                            </div>
+                            <div style="font-size: 2rem; font-weight: bold; margin: 20px 0;">
+                                150 <i class="fas fa-gem" style="color: var(--danger);"></i>
+                            </div>
+                            <p style="color: #7f8c8d; margin-bottom: 15px;">Precio: <strong style="color: var(--dark);">15 USDT</strong></p>
+                            <button class="btn btn-danger" onclick="buyGems(2)">
+                                <i class="fas fa-shopping-bag"></i> Comprar Ahora
+                            </button>
+                        </div>
+                        
+                        <div class="store-item premium">
+                            <h4>Paquete Premium</h4>
+                            <div style="color: var(--warning); margin: 15px 0; font-size: 1.1rem;">
+                                <i class="fas fa-crown"></i> +30% multiplicador
+                            </div>
+                            <div style="font-size: 2rem; font-weight: bold; margin: 20px 0;">
+                                500 <i class="fas fa-gem" style="color: var(--danger);"></i>
+                            </div>
+                            <p style="color: #7f8c8d; margin-bottom: 15px;">Precio: <strong style="color: var(--dark);">50 USDT</strong></p>
+                            <button class="btn btn-warning" onclick="buyGems(3)">
+                                <i class="fas fa-crown"></i> Comprar Premium
+                            </button>
+                        </div>
+                        
+                        <div class="store-item premium">
+                            <h4>Paquete Élite</h4>
+                            <div style="color: var(--warning); margin: 15px 0; font-size: 1.1rem;">
+                                <i class="fas fa-star"></i> +50% multiplicador
+                            </div>
+                            <div style="font-size: 2rem; font-weight: bold; margin: 20px 0;">
+                                1200 <i class="fas fa-gem" style="color: var(--danger);"></i>
+                            </div>
+                            <p style="color: #7f8c8d; margin-bottom: 15px;">Precio: <strong style="color: var(--dark);">100 USDT</strong></p>
+                            <button class="btn btn-warning" onclick="buyGems(4)">
+                                <i class="fas fa-star"></i> Comprar Élite
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Modal de Pago (para admin y usuarios) -->
+                    <div id="paymentModal" style="
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background: rgba(0,0,0,0.9);
+                        display: none;
+                        align-items: center;
+                        justify-content: center;
+                        z-index: 2000;
+                    ">
+                        <div style="
+                            background: white;
+                            padding: 40px;
+                            border-radius: 20px;
+                            max-width: 600px;
+                            width: 90%;
+                            max-height: 90vh;
+                            overflow-y: auto;
+                        ">
+                            <button onclick="closePaymentModal()" style="
+                                float: right;
+                                background: none;
+                                border: none;
+                                font-size: 1.5rem;
+                                cursor: pointer;
+                                color: #7f8c8d;
+                            ">&times;</button>
+                            
+                            <h3 style="color: var(--dark); margin-bottom: 25px;" id="paymentTitle"></h3>
+                            
+                            <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; margin: 20px 0;">
+                                <h4 style="color: var(--dark); margin-bottom: 15px;">
+                                    <i class="fas fa-network-wired"></i> Elige tu red de pago:
+                                </h4>
+                                
+                                <div style="display: flex; gap: 15px; margin-bottom: 25px;">
+                                    <button class="btn btn-primary" onclick="selectPaymentMethod('solana')" id="solanaBtn">
+                                        <i class="fab fa-solana"></i> Solana
+                                    </button>
+                                    <button class="btn btn-primary" onclick="selectPaymentMethod('optimism')" id="optimismBtn">
+                                        <i class="fab fa-ethereum"></i> Optimism
+                                    </button>
+                                </div>
+                                
+                                <div id="paymentInstructions" style="display: none;">
+                                    <div style="background: var(--dark); color: white; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                                        <h5 style="margin-bottom: 10px;">Envía <span id="paymentAmount">5</span> USDT a:</h5>
+                                        <div style="
+                                            background: rgba(255,255,255,0.1);
+                                            padding: 15px;
+                                            border-radius: 8px;
+                                            font-family: monospace;
+                                            word-break: break-all;
+                                            margin: 10px 0;
+                                        " id="walletAddress"></div>
+                                        <button class="btn btn-small" onclick="copyWalletAddress()" style="margin-top: 10px;">
+                                            <i class="fas fa-copy"></i> Copiar dirección
+                                        </button>
+                                    </div>
+                                    
+                                    <div style="background: #fff3cd; padding: 15px; border-radius: 8px; border-left: 4px solid var(--warning);">
+                                        <p style="color: #856404; margin: 0;">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            <strong>IMPORTANTE:</strong> Solo envía USDT en la red seleccionada. 
+                                            Los envíos a otra red se perderán.
+                                        </p>
+                                    </div>
+                                    
+                                    <button class="btn btn-success" onclick="markAsPaid()" id="markPaidBtn" style="width: 100%; margin-top: 25px;">
+                                        <i class="fas fa-check-circle"></i> Ya he enviado el pago
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
-                <!-- Sistema de referidos -->
-                <div class="referral-section">
-                    <div class="section-title">
-                        <i class="fas fa-users"></i> Sistema de Referidos
+                <!-- Contenido: Retiros -->
+                <div id="retiros" class="tab-content">
+                    <h3 style="color: var(--dark); margin-bottom: 20px;">
+                        <i class="fas fa-wallet"></i> Retirar USDT Ganados
+                    </h3>
+                    
+                    <div class="highlight">
+                        <p style="color: var(--admin); margin: 0;">
+                            <i class="fas fa-info-circle"></i> 
+                            Como admin, puedes retirar tus ganancias y también procesar retiros de usuarios referidos.
+                        </p>
                     </div>
                     
-                    <p style="color: #cbd5e1; font-size: 0.9rem; margin-bottom: 15px;">
-                        Invita amigos y gana el 10% de sus compras de gemas.
-                    </p>
-                    
-                    <div class="referral-code" id="referralCode">REF-XXXXXX</div>
-                    
-                    <div style="display: flex; gap: 10px;">
-                        <button class="notification-btn" onclick="copyReferralCode()" style="flex: 1;">
-                            <i class="fas fa-copy"></i> Copiar Código
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; margin-top: 25px;">
+                        <h4 style="color: var(--dark); margin-bottom: 20px;">Solicitar Retiro Personal</h4>
+                        
+                        <div class="form-group">
+                            <label class="form-label">USDT Disponibles:</label>
+                            <input type="text" class="form-input" value="0.000000" id="availableUSDT" readonly>
+                            <small style="color: #7f8c8d;">Mínimo para retirar: 11 USDT</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Red para recibir:</label>
+                            <select class="form-input" id="withdrawNetwork">
+                                <option value="solana">Solana (USDT)</option>
+                                <option value="optimism">Optimism (USDT)</option>
+                                <option value="ethereum">Ethereum (USDT)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Tu dirección de wallet:</label>
+                            <input type="text" class="form-input" id="userWallet" placeholder="Ej: 68rKWUCbuFnjZUsezsHcRh9Nr8G139XGXQhDBQuuSr5U">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Cantidad a retirar (USDT):</label>
+                            <input type="number" class="form-input" id="withdrawAmount" min="11" max="10000" step="0.000001" value="11">
+                            <small style="color: #7f8c8d;">
+                                Comisión: 1 USDT | Recibirás: <span id="netWithdraw">10</span> USDT
+                            </small>
+                        </div>
+                        
+                        <button class="btn btn-success" style="width: 100%;" onclick="requestWithdrawal()">
+                            <i class="fas fa-paper-plane"></i> Solicitar Retiro
                         </button>
-                        <button class="notification-btn" onclick="shareReferral()" style="flex: 1;">
-                            <i class="fas fa-share"></i> Compartir
+                    </div>
+                </div>
+                
+                <!-- Contenido: Estadísticas -->
+                <div id="estadisticas" class="tab-content">
+                    <h3 style="color: var(--dark); margin-bottom: 20px;">
+                        <i class="fas fa-chart-bar"></i> Mis Estadísticas
+                    </h3>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 20px;">
+                        <div class="stat-card">
+                            <div class="stat-label">TOTAL GANADO</div>
+                            <div class="stat-value" id="totalEarned">0</div>
+                            <div class="stat-label">USDT</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-label">RETIRADO</div>
+                            <div class="stat-value" id="totalWithdrawn">0</div>
+                            <div class="stat-label">USDT</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-label">GEMAS COMPRADAS</div>
+                            <div class="stat-value" id="gemsBought">0</div>
+                            <div class="stat-label">Unidades</div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-label">TIEMPO JUGANDO</div>
+                            <div class="stat-value" id="playTime">0</div>
+                            <div class="stat-label">Minutos</div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 15px; margin-top: 30px;">
+                        <h4 style="color: var(--dark); margin-bottom: 15px;">Generadores Activos</h4>
+                        <div id="generatorsList" style="color: #7f8c8d; text-align: center; padding: 20px;">
+                            No tienes generadores activos
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contenido: Referidos -->
+                <div id="referidos" class="tab-content">
+                    <h3 style="color: var(--dark); margin-bottom: 20px;">
+                        <i class="fas fa-users"></i> Mis Referidos
+                    </h3>
+                    
+                    <div class="referral-box">
+                        <h4 style="color: var(--admin); margin-bottom: 15px;">
+                            <i class="fas fa-link"></i> Tu Enlace de Referido
+                        </h4>
+                        <p style="color: #7f8c8d; margin-bottom: 15px;">
+                            Comparte este enlace para invitar amigos y gana comisiones de sus compras.
+                        </p>
+                        
+                        <div class="referral-code" id="referralCode">ADMIN-001</div>
+                        
+                        <div class="referral-url">
+                            https://tu-dominio.com/player.html?ref=<span id="refCodeDisplay">ADMIN-001</span>
+                        </div>
+                        
+                        <button class="btn btn-admin" onclick="copyReferralLink()">
+                            <i class="fas fa-copy"></i> Copiar enlace
+                        </button>
+                        <button class="btn btn-primary" onclick="shareReferralLink()" style="margin-left: 10px;">
+                            <i class="fas fa-share-alt"></i> Compartir
                         </button>
                     </div>
                     
-                    <div class="stat-item" style="margin-top: 15px; border-bottom: none;">
-                        <div class="stat-label">Referidos activos:</div>
-                        <div class="stat-value" id="activeReferrals">0</div>
-                    </div>
-                    <div class="stat-item" style="border-bottom: none;">
-                        <div class="stat-label">Ganancias por referidos:</div>
-                        <div class="stat-value usdt">$<span id="referralEarnings">0.00</span></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Pestaña: PAGOS -->
-    <div id="tab-payments" class="tab-content" style="display: none;">
-        <!-- Sección para comprar gemas -->
-        <div class="section section-gems">
-            <h3 class="section-title">
-                <i class="fas fa-shopping-cart"></i> Comprar Gemas con USDT
-            </h3>
-            <p style="margin-bottom: 15px; color: #cbd5e1; font-size: 0.9rem;">
-                Envía USDT a una de nuestras direcciones para comprar gemas. Cada $1 = 100 gemas. 
-                <strong>ROI garantizado:</strong> Por cada $1 que inviertes, puedes ganar hasta $5 en USDT.
-            </p>
-            
-            <!-- Información de inversión -->
-            <div class="amount-preview" style="background: rgba(16, 185, 129, 0.1); border-color: var(--secondary);">
-                <div class="preview-row">
-                    <div class="preview-label">Inversión mínima:</div>
-                    <div class="preview-value usdt">$1.00</div>
-                </div>
-                <div class="preview-row">
-                    <div class="preview-label">Inversión máxima:</div>
-                    <div class="preview-value usdt">$1,000.00</div>
-                </div>
-                <div class="preview-row">
-                    <div class="preview-label">ROI garantizado:</div>
-                    <div class="preview-value" style="color: var(--success);">300-500%</div>
-                </div>
-                <div class="preview-row">
-                    <div class="preview-label">Tiempo de retorno:</div>
-                    <div class="preview-value">30-60 días</div>
-                </div>
-            </div>
-            
-            <!-- Métodos de pago -->
-            <div class="payment-methods">
-                <!-- Solana -->
-                <div class="payment-method solana">
-                    <div class="network-header">
-                        <div class="network-icon">
-                            <i class="fas fa-bolt"></i>
+                    <div class="referral-stats">
+                        <div class="referral-stat">
+                            <div style="font-size: 0.9rem; color: #7f8c8d;">Referidos Totales</div>
+                            <div style="font-size: 2rem; font-weight: bold; color: var(--admin);" id="totalReferrals">0</div>
                         </div>
-                        <div class="network-name">Solana (SOL)</div>
-                    </div>
-                    
-                    <div class="address-container">
-                        <span class="address-label">Dirección USDT en Solana:</span>
-                        <div class="address-value" id="solanaAddress">
-                            68rKWUCbuFnjZUsezsHcRh9Nr8G139XGXQhDBQuuSr5U
-                        </div>
-                        <button class="copy-btn" onclick="copyToClipboard('solanaAddress')">
-                            <i class="fas fa-copy"></i> Copiar
-                        </button>
-                    </div>
-                    
-                    <div style="text-align: center; margin: 15px 0;">
-                        <div class="qrcode-placeholder">
-                            <div>Escanea para enviar USDT<br>en Solana</div>
+                        
+                        <div class="referral-stat">
+                            <div style="font-size: 0.9rem; color: #7f8c8d;">Comisiones Ganadas</div>
+                            <div style="font-size: 2rem; font-weight: bold; color: var(--secondary);" id="referralEarnings">0</div>
+                            <div style="font-size: 0.9rem;">USDT</div>
                         </div>
                     </div>
                     
-                    <div style="font-size: 0.85rem; color: #94a3b8;">
-                        <i class="fas fa-info-circle"></i> Red rápida y económica. Comisión: ~$0.01
+                    <div style="margin-top: 30px;">
+                        <h4 style="color: var(--dark); margin-bottom: 15px;">
+                            <i class="fas fa-user-friends"></i> Lista de Referidos
+                        </h4>
+                        <div id="referralsList" style="color: #7f8c8d; text-align: center; padding: 30px;">
+                            Aún no tienes referidos. ¡Comparte tu enlace!
+                        </div>
                     </div>
                 </div>
-                
-                <!-- Optimism -->
-                <div class="payment-method optimism">
-                    <div class="network-header">
-                        <div class="network-icon">
-                            <i class="fas fa-rocket"></i>
-                        </div>
-                        <div class="network-name">Optimism (OP)</div>
+            </div>
+            
+            <!-- Sección de Admin (Derecha) -->
+            <div class="admin-section">
+                <!-- Panel: Control de Pagos -->
+                <div class="admin-panel">
+                    <div class="admin-title">
+                        <i class="fas fa-cogs"></i> Panel de Control
                     </div>
                     
-                    <div class="address-container">
-                        <span class="address-label">Dirección USDT en Optimism:</span>
-                        <div class="address-value" id="optimismAddress">
-                            0xadc2fbf9052fe4746a3d415342f4ce31ab0f20c0
-                        </div>
-                        <button class="copy-btn" onclick="copyToClipboard('optimismAddress')">
-                            <i class="fas fa-copy"></i> Copiar
-                        </button>
-                    </div>
+                    <h4 style="color: var(--dark); margin-bottom: 15px;">
+                        <i class="fas fa-clock"></i> Pagos Pendientes
+                    </h4>
                     
-                    <div style="text-align: center; margin: 15px 0;">
-                        <div class="qrcode-placeholder">
-                            <div>Escanea para enviar USDT<br>en Optimism</div>
-                        </div>
-                    </div>
-                    
-                    <div style="font-size: 0.85rem; color: #94a3b8;">
-                        <i class="fas fa-info-circle"></i> Layer 2 de Ethereum. Comisión: ~$0.10
-                    </div>
-                </div>
-                
-                <!-- Ethereum -->
-                <div class="payment-method ethereum">
-                    <div class="network-header">
-                        <div class="network-icon">
-                            <i class="fab fa-ethereum"></i>
-                        </div>
-                        <div class="network-name">Ethereum (ETH)</div>
-                    </div>
-                    
-                    <div class="address-container">
-                        <span class="address-label">Dirección USDT en Ethereum:</span>
-                        <div class="address-value" id="ethereumAddress">
-                            0xadc2fbf9052fe4746a3d415342f4ce31ab0f20c0
-                        </div>
-                        <button class="copy-btn" onclick="copyToClipboard('ethereumAddress')">
-                            <i class="fas fa-copy"></i> Copiar
-                        </button>
-                    </div>
-                    
-                    <div style="text-align: center; margin: 15px 0;">
-                        <div class="qrcode-placeholder">
-                            <div>Escanea para enviar USDT<br>en Ethereum</div>
+                    <div class="pending-list" id="pendingPayments">
+                        <div style="color: #7f8c8d; text-align: center; padding: 30px;">
+                            No hay pagos pendientes
                         </div>
                     </div>
                     
-                    <div style="font-size: 0.85rem; color: #94a3b8;">
-                        <i class="fas fa-info-circle"></i> Red principal. Comisión alta: ~$5-20
-                    </div>
+                    <button class="btn btn-admin" onclick="refreshPendingPayments()" style="width: 100%;">
+                        <i class="fas fa-sync-alt"></i> Actualizar
+                    </button>
                 </div>
-            </div>
-            
-            <!-- Instrucciones para comprar -->
-            <div class="instructions">
-                <h4 style="color: var(--mission); margin-bottom: 15px;">
-                    <i class="fas fa-graduation-cap"></i> Instrucciones para Comprar Gemas
-                </h4>
                 
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <div class="step-title">Envía USDT</div>
-                        <div class="step-description">
-                            Envía USDT a una de nuestras direcciones. Mínimo $1, máximo $1000 por transacción.
-                            <strong>Por cada $1 recibirás 100 gemas.</strong>
+                <!-- Panel: Retiros Pendientes -->
+                <div class="admin-panel">
+                    <h4 style="color: var(--dark); margin-bottom: 15px;">
+                        <i class="fas fa-wallet"></i> Retiros Pendientes
+                    </h4>
+                    
+                    <div class="pending-list" id="pendingWithdrawals">
+                        <div style="color: #7f8c8d; text-align: center; padding: 30px;">
+                            No hay retiros pendientes
                         </div>
                     </div>
+                    
+                    <button class="btn btn-admin" onclick="refreshPendingWithdrawals()" style="width: 100%;">
+                        <i class="fas fa-sync-alt"></i> Actualizar
+                    </button>
                 </div>
                 
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <div class="step-title">Toma Captura</div>
-                        <div class="step-description">
-                            Toma captura del comprobante (hash de transacción) y envía a nuestro Telegram.
+                <!-- Panel: Ganancias del Admin -->
+                <div class="admin-panel">
+                    <h4 style="color: var(--dark); margin-bottom: 15px;">
+                        <i class="fas fa-chart-line"></i> Mis Ganancias
+                    </h4>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px;">
+                        <div style="background: #e8f5e9; padding: 15px; border-radius: 10px; text-align: center;">
+                            <div style="font-size: 0.9rem; color: #666;">Comisiones Retiros</div>
+                            <div style="font-size: 1.5rem; font-weight: bold; color: var(--secondary);" id="adminWithdrawalCommissions">0</div>
+                            <div style="font-size: 0.9rem;">USDT</div>
+                        </div>
+                        
+                        <div style="background: #fff3e0; padding: 15px; border-radius: 10px; text-align: center;">
+                            <div style="font-size: 0.9rem; color: #666;">Ventas de Gemas</div>
+                            <div style="font-size: 1.5rem; font-weight: bold; color: var(--warning);" id="adminGemSales">0</div>
+                            <div style="font-size: 0.9rem;">USDT</div>
                         </div>
                     </div>
-                </div>
-                
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <div class="step-title">Recibe Gemas</div>
-                        <div class="step-description">
-                            Te acreditaremos las gemas en 5-30 minutos (dependiendo de la red).
-                        </div>
+                    
+                    <div style="background: #e3f2fd; padding: 15px; border-radius: 10px; text-align: center; margin-top: 15px;">
+                        <div style="font-size: 0.9rem; color: #666;">Comisiones de Referidos</div>
+                        <div style="font-size: 1.5rem; font-weight: bold; color: var(--admin);" id="adminReferralCommissions">0</div>
+                        <div style="font-size: 0.9rem;">USDT</div>
                     </div>
+                    
+                    <button class="btn btn-success" onclick="withdrawAdminEarnings()" style="width: 100%; margin-top: 20px;">
+                        <i class="fas fa-dollar-sign"></i> Retirar Ganancias
+                    </button>
                 </div>
                 
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <div class="step-content">
-                        <div class="step-title">Comienza a Ganar</div>
-                        <div class="step-description">
-                            Usa las gemas para comprar mejoras y generar USDT. Tu ROI comienza inmediatamente.
-                        </div>
+                <!-- Panel: Configuración -->
+                <div class="admin-panel">
+                    <h4 style="color: var(--dark); margin-bottom: 15px;">
+                        <i class="fas fa-sliders-h"></i> Configuración
+                    </h4>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Comisión por retiro (USDT):</label>
+                        <input type="number" class="form-input" id="withdrawalFee" value="1" min="0.1" step="0.1">
                     </div>
-                </div>
-                
-                <div style="text-align: center; margin-top: 20px;">
-                    <a href="https://t.me/tu_canal_telegram" target="_blank" class="subscribe-btn" style="text-decoration: none;">
-                        <i class="fab fa-telegram"></i> Contactar en Telegram
-                    </a>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Sección para retirar ganancias -->
-        <div class="section section-crypto" style="margin-top: 20px;">
-            <h3 class="section-title">
-                <i class="fas fa-wallet"></i> Retirar Ganancias en USDT
-            </h3>
-            <p style="margin-bottom: 15px; color: #cbd5e1; font-size: 0.9rem;">
-                Retira tus ganancias en USDT a cualquier red compatible. Mínimo $5 para retirar.
-                <strong>Fondo garantizado:</strong> Todas las ganancias están respaldadas por nuestro fondo de inversión.
-            </p>
-            
-            <!-- Formulario de retiro -->
-            <div class="withdrawal-form">
-                <h4 style="color: var(--secondary); margin-bottom: 15px;">
-                    <i class="fas fa-money-bill-wave"></i> Solicitar Retiro
-                </h4>
-                
-                <div class="amount-preview">
-                    <div class="preview-row">
-                        <div class="preview-label">Ganancias disponibles:</div>
-                        <div class="preview-value usdt">$<span id="availableEarnings">0.00</span></div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Mínimo para retirar (USDT):</label>
+                        <input type="number" class="form-input" id="minWithdrawal" value="11" min="1" step="0.1">
                     </div>
-                    <div class="preview-row">
-                        <div class="preview-label">Mínimo para retirar:</div>
-                        <div class="preview-value">$5.00</div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Comisión por referido (%):</label>
+                        <input type="number" class="form-input" id="referralCommission" value="10" min="0" max="50" step="1">
                     </div>
-                    <div class="preview-row">
-                        <div class="preview-label">Retiros procesados:</div>
-                        <div class="preview-value" id="processedWithdrawals">0</div>
-                    </div>
-                    <div class="preview-row">
-                        <div class="preview-label">Tiempo de procesamiento:</div>
-                        <div class="preview-value">24-48 horas</div>
-                    </div>
+                    
+                    <button class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-save"></i> Guardar Configuración
+                    </button>
                 </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Red de retiro:</label>
-                    <select class="form-select" id="withdrawalNetwork">
-                        <option value="solana">Solana (Recomendado)</option>
-                        <option value="optimism">Optimism</option>
-                        <option value="ethereum">Ethereum</option>
-                        <option value="bsc">BNB Chain</option>
-                        <option value="polygon">Polygon</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Tu dirección de billetera:</label>
-                    <input type="text" class="form-input" id="walletAddress" placeholder="Ej: 0x... o 68r...">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Cantidad a retirar (USD):</label>
-                    <input type="number" class="form-input" id="withdrawalAmount" placeholder="Mínimo $5.00" step="0.01" min="5">
-                </div>
-                
-                <div class="min-amount">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    Las transacciones menores a $20 pueden tener comisiones proporcionalmente más altas
-                </div>
-                
-                <button class="confirm-btn" onclick="requestWithdrawal()" style="margin-top: 15px;">
-                    <i class="fas fa-paper-plane"></i> Solicitar Retiro
-                </button>
-            </div>
-            
-            <!-- Historial de transacciones -->
-            <div style="margin-top: 30px;">
-                <h4 class="section-title">
-                    <i class="fas fa-history"></i> Historial de Transacciones
-                </h4>
-                
-                <table class="transactions-table">
-                    <thead>
-                        <tr>
-                            <th>Fecha</th>
-                            <th>Tipo</th>
-                            <th>Cantidad</th>
-                            <th>Estado</th>
-                        </tr>
-                    </thead>
-                    <tbody id="transactionsTable">
-                        <tr>
-                            <td colspan="4" style="text-align: center; padding: 20px; color: #94a3b8;">
-                                No hay transacciones aún
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Pestaña: ESTADÍSTICAS -->
-    <div id="tab-stats" class="tab-content" style="display: none;">
-        <div class="stats-section">
-            <h3 class="section-title">
-                <i class="fas fa-chart-line"></i> Estadísticas del Jugador
-            </h3>
-            
-            <div class="stat-item">
-                <div class="stat-label">Nombre de usuario:</div>
-                <div class="stat-value" id="statUsername">Invitado</div>
-            </div>
-            
-            <div class="stat-item">
-                <div class="stat-label">Tiempo jugando:</div>
-                <div class="stat-value" id="statPlayTime">0h 0m</div>
-            </div>
-            
-            <div class="stat-item">
-                <div class="stat-label">Clics totales:</div>
-                <div class="stat-value" id="statTotalClicks">0</div>
-            </div>
-            
-            <div class="stat-item">
-                <div class="stat-label">Oro total ganado:</div>
-                <div class="stat-value gold" id="statTotalGold">0</div>
-            </div>
-            
-            <div class="stat-item">
-                <div class="stat-label">Gemas totales ganadas:</div>
-                <div class="stat-value gems" id="statTotalGems">0</div>
-            </div>
-            
-            <div class="stat-item">
-                <div class="stat-label">USDT total ganado:</div>
-                <div class="stat-value usdt" id="statTotalUSDT">$0.00</div>
-            </div>
-            
-            <div class="stat-item">
-                <div class="stat-label">Mejoras compradas:</div>
-                <div class="stat-value" id="statUpgradesBought">0</div>
-            </div>
-            
-            <div class="stat-item">
-                <div class="stat-label">Trabajos completados:</div>
-                <div class="stat-value" id="statJobsCompleted">0</div>
-            </div>
-            
-            <div class="stat-item">
-                <div class="stat-label">Inversión total:</div>
-                <div class="stat-value usdt" id="statTotalInvestment">$0.00</div>
-            </div>
-            
-            <div class="stat-item">
-                <div class="stat-label">ROI total:</div>
-                <div class="stat-value" id="statTotalROI">0%</div>
-            </div>
-            
-            <div style="margin-top: 20px;">
-                <button class="confirm-btn" onclick="saveGame()">
-                    <i class="fas fa-save"></i> Guardar Progreso
-                </button>
-                
-                <button class="confirm-btn" onclick="resetGame()" style="background: linear-gradient(135deg, var(--danger), #dc2626); margin-top: 10px;">
-                    <i class="fas fa-redo"></i> Reiniciar Juego
-                </button>
             </div>
         </div>
     </div>
 
     <script>
-        // Variables del juego
-        let gameData = {
-            // Recursos
-            gold: 0,
-            gems: 0,
+        // =============================================
+        // SISTEMA DEL JUEGO (ADMIN)
+        // =============================================
+        
+        // Datos del admin
+        let adminData = {
+            userId: 'admin_' + Math.random().toString(36).substr(2, 9),
             usdt: 0,
-            totalGoldEarned: 0,
-            totalGemsEarned: 0,
-            totalUSDTEarned: 0,
-            
-            // Estadísticas
-            clickPower: 1,
-            goldPerSecond: 0,
-            autoClickers: 0,
-            totalClicks: 0,
-            playTime: 0, // en minutos
-            
-            // Sistema de nivel
+            gems: 0,
             level: 1,
-            xp: 0,
-            xpForNextLevel: 100,
-            
-            // Mejoras compradas
-            goldUpgrades: [],
-            gemsUpgrades: [],
-            temporaryUpgrades: [],
-            
-            // Trabajos
-            activeJob: null,
-            jobProgress: 0,
-            jobReward: 0,
-            jobsCompleted: 0,
-            
-            // Inversión y ganancias
-            totalInvestment: 0,
-            referralEarnings: 0,
-            activeReferrals: 0,
-            processedWithdrawals: 0,
-            
-            // Usuario
-            username: 'Invitado',
-            isLoggedIn: false,
-            referralCode: '',
-            
-            // Transacciones
-            transactions: []
+            totalClicks: 0,
+            clickPower: 0.000001,
+            multiplier: 1.0,
+            totalEarned: 0,
+            totalWithdrawn: 0,
+            gemsBought: 0,
+            playTime: 0,
+            referralCode: 'ADMIN-' + Math.floor(100 + Math.random() * 900)
         };
         
-        // Mejoras con ORO
-        const goldUpgrades = [
-            { id: 1, name: "Picota Mejorada", cost: 50, description: "Aumenta el oro por clic en +1", effect: { type: "clickPower", value: 1 } },
-            { id: 2, name: "Mano Rápida", cost: 200, description: "Aumenta el oro por clic en +5", effect: { type: "clickPower", value: 5 } },
-            { id: 3, name: "Trabajador Básico", cost: 500, description: "Genera +1 oro por segundo", effect: { type: "goldPerSecond", value: 1 } },
-            { id: 4, name: "Trabajador Avanzado", cost: 2000, description: "Genera +5 oro por segundo", effect: { type: "goldPerSecond", value: 5 } },
-            { id: 5, name: "Mina de Oro", cost: 10000, description: "Genera +25 oro por segundo", effect: { type: "goldPerSecond", value: 25 } },
-            { id: 6, name: "Imperio Minero", cost: 50000, description: "Genera +100 oro por segundo", effect: { type: "goldPerSecond", value: 100 } }
-        ];
-        
-        // Mejoras con GEMAS (más poderosas)
-        const gemsUpgrades = [
-            { id: 1, name: "Multiplicador de Oro x2", cost: 10, description: "Multiplica todo el oro ganado por 2", effect: { type: "goldMultiplier", value: 2 } },
-            { id: 2, name: "Auto-Clicker Pro", cost: 50, description: "+10 trabajadores automáticos", effect: { type: "autoClickers", value: 10 } },
-            { id: 3, name: "Boost de XP x3", cost: 100, description: "Gana 3x más experiencia", effect: { type: "xpMultiplier", value: 3 } },
-            { id: 4, name: "Generador de Gemas", cost: 250, description: "Genera +1 gema por hora", effect: { type: "gemsPerHour", value: 1 } },
-            { id: 5, name: "Multiplicador USDT x2", cost: 500, description: "Duplica las ganancias en USDT", effect: { type: "usdtMultiplier", value: 2 } },
-            { id: 6, name: "Máquina de Dinero", cost: 1000, description: "+10% de ROI en todas las inversiones", effect: { type: "roiBonus", value: 0.1 } }
-        ];
-        
-        // Mejoras temporales
-        const temporaryUpgrades = [
-            { id: 1, name: "Boost de 1 Hora", cost: 5, description: "Doble oro por 1 hora", effect: { type: "goldBoost", value: 2, duration: 3600000 } },
-            { id: 2, name: "Boost de 4 Horas", cost: 15, description: "Triple oro por 4 horas", effect: { type: "goldBoost", value: 3, duration: 14400000 } },
-            { id: 3, name: "Boost de 1 Día", cost: 40, description: "Cuádruple oro por 24 horas", effect: { type: "goldBoost", value: 4, duration: 86400000 } },
-            { id: 4, name: "Boost USDT 2x", cost: 25, description: "Doble USDT por 8 horas", effect: { type: "usdtBoost", value: 2, duration: 28800000 } }
-        ];
-        
-        // Trabajos disponibles
-        const jobs = [
-            { id: 1, name: "Minero Novato", description: "Extrae minerales básicos", duration: 300, reward: 5, requirement: { level: 1 } },
-            { id: 2, name: "Artesano", description: "Crea herramientas valiosas", duration: 600, reward: 15, requirement: { level: 5 } },
-            { id: 3, name: "Comerciante", description: "Vende productos en el mercado", duration: 1800, reward: 50, requirement: { level: 10 } },
-            { id: 4, name: "Empresario", description: "Administra tu propia empresa", duration: 3600, reward: 150, requirement: { level: 20 } },
-            { id: 5, name: "Magnate", description: "Controla industrias completas", duration: 7200, reward: 500, requirement: { level: 30 } }
-        ];
-        
-        // Variables para mejoras activas
-        let activeBoosts = {
-            goldBoost: { active: false, multiplier: 1, endTime: 0 },
-            usdtBoost: { active: false, multiplier: 1, endTime: 0 },
-            xpMultiplier: 1,
-            goldMultiplier: 1,
-            usdtMultiplier: 1,
-            gemsPerHour: 0,
-            autoClickers: 0,
-            roiBonus: 0
+        // Datos del sistema
+        let pendingPayments = [];
+        let pendingWithdrawals = [];
+        let referrals = [];
+        let adminEarnings = {
+            withdrawalCommissions: 0,
+            gemSales: 0,
+            referralCommissions: 0
         };
         
-        // Inicializar el juego
-        function initGame() {
-            loadGameData();
-            generateReferralCode();
-            renderGoldUpgrades();
-            renderGemsUpgrades();
-            renderTemporaryUpgrades();
-            renderJobs();
-            updateDisplay();
-            
-            // Iniciar loops del juego
-            setInterval(gameLoop, 1000);
-            setInterval(updatePlayTime, 60000);
-            setInterval(checkBoosts, 1000);
-            
-            // Configurar evento de clic
-            const clickButton = document.getElementById('clickButton');
-            clickButton.addEventListener('mousedown', () => clickButton.style.transform = 'scale(0.95)');
-            clickButton.addEventListener('mouseup', () => clickButton.style.transform = 'scale(1)');
-            clickButton.addEventListener('mouseleave', () => clickButton.style.transform = 'scale(1)');
-        }
+        // Configuración del admin
+        let adminConfig = {
+            withdrawalFee: 1,
+            minWithdrawal: 11,
+            referralCommission: 10
+        };
         
-        // Bucle principal del juego
-        function gameLoop() {
-            // Generar oro automáticamente
-            if (gameData.goldPerSecond > 0) {
-                let goldEarned = gameData.goldPerSecond;
-                if (activeBoosts.goldBoost.active) {
-                    goldEarned *= activeBoosts.goldBoost.multiplier;
-                }
-                if (activeBoosts.goldMultiplier > 1) {
-                    goldEarned *= activeBoosts.goldMultiplier;
-                }
-                
-                gameData.gold += goldEarned;
-                gameData.totalGoldEarned += goldEarned;
+        // Cargar datos guardados
+        function loadGameData() {
+            // Cargar datos del admin
+            const savedAdmin = localStorage.getItem('cryptoClickerAdmin');
+            if (savedAdmin) {
+                adminData = JSON.parse(savedAdmin);
             }
             
-            // Generar gemas automáticamente
-            if (activeBoosts.gemsPerHour > 0) {
-                gameData.gems += activeBoosts.gemsPerHour / 3600; // Por segundo
-                gameData.totalGemsEarned += activeBoosts.gemsPerHour / 3600;
+            // Cargar sistema
+            const savedSystem = localStorage.getItem('cryptoClickerSystem');
+            if (savedSystem) {
+                const system = JSON.parse(savedSystem);
+                pendingPayments = system.pendingPayments || [];
+                pendingWithdrawals = system.pendingWithdrawals || [];
+                referrals = system.referrals || [];
+                adminEarnings = system.adminEarnings || adminEarnings;
+                adminConfig = system.adminConfig || adminConfig;
             }
             
-            // Generar USDT automáticamente (basado en inversión y nivel)
-            generateUSDT();
-            
-            // Actualizar trabajos
-            updateJob();
-            
-            // Actualizar pantalla
             updateDisplay();
+            updateAdminDisplay();
+            updatePendingPayments();
+            updatePendingWithdrawals();
+            updateReferralsDisplay();
             
-            // Guardar datos cada 30 segundos
-            if (Math.floor(Date.now() / 1000) % 30 === 0) {
+            // Actualizar tiempo jugado
+            setInterval(() => {
+                adminData.playTime++;
                 saveGameData();
-            }
+            }, 60000);
         }
         
-        // Generar USDT (sistema de ganancias)
-        function generateUSDT() {
-            // Base: 0.01 USDT por nivel por hora
-            let baseUSDT = 0.01 * gameData.level / 3600;
+        // Guardar datos
+        function saveGameData() {
+            localStorage.setItem('cryptoClickerAdmin', JSON.stringify(adminData));
             
-            // Bonus por inversión: 1% diario del total invertido
-            let investmentUSDT = (gameData.totalInvestment * 0.01) / 86400;
-            
-            // Bonus por referidos: 10% de sus compras
-            let referralUSDT = (gameData.referralEarnings * 0.10) / 86400;
-            
-            // Bonus por ROI
-            let roiUSDT = investmentUSDT * activeBoosts.roiBonus;
-            
-            // Total USDT por segundo
-            let totalUSDTPerSecond = baseUSDT + investmentUSDT + referralUSDT + roiUSDT;
-            
-            // Aplicar boost si está activo
-            if (activeBoosts.usdtBoost.active) {
-                totalUSDTPerSecond *= activeBoosts.usdtBoost.multiplier;
-            }
-            
-            // Aplicar multiplicador de USDT
-            if (activeBoosts.usdtMultiplier > 1) {
-                totalUSDTPerSecond *= activeBoosts.usdtMultiplier;
-            }
-            
-            // Sumar al total
-            gameData.usdt += totalUSDTPerSecond;
-            gameData.totalUSDTEarned += totalUSDTPerSecond;
+            const systemData = {
+                pendingPayments,
+                pendingWithdrawals,
+                referrals,
+                adminEarnings,
+                adminConfig,
+                lastUpdate: new Date().toISOString()
+            };
+            localStorage.setItem('cryptoClickerSystem', JSON.stringify(systemData));
         }
         
-        // Función de clic para ganar oro
-        function clickGold() {
-            let goldEarned = gameData.clickPower;
+        // Actualizar display del juego
+        function updateDisplay() {
+            // Stats principales
+            document.getElementById('usdtBalance').textContent = adminData.usdt.toFixed(6);
+            document.getElementById('usdtValue').textContent = (adminData.usdt * 1).toFixed(2);
+            document.getElementById('gemsBalance').textContent = adminData.gems;
+            document.getElementById('userLevel').textContent = adminData.level;
+            document.getElementById('totalClicks').textContent = adminData.totalClicks;
+            document.getElementById('clickPower').textContent = adminData.multiplier.toFixed(1) + 'x';
+            document.getElementById('multiplier').textContent = adminData.multiplier.toFixed(1);
+            document.getElementById('clickEarnings').textContent = (adminData.clickPower * adminData.multiplier).toFixed(6);
+            document.getElementById('availableUSDT').value = adminData.usdt.toFixed(6);
+            document.getElementById('totalEarned').textContent = adminData.totalEarned.toFixed(2);
+            document.getElementById('totalWithdrawn').textContent = adminData.totalWithdrawn.toFixed(2);
+            document.getElementById('gemsBought').textContent = adminData.gemsBought;
+            document.getElementById('playTime').textContent = adminData.playTime;
             
-            // Aplicar boosts
-            if (activeBoosts.goldBoost.active) {
-                goldEarned *= activeBoosts.goldBoost.multiplier;
-            }
-            if (activeBoosts.goldMultiplier > 1) {
-                goldEarned *= activeBoosts.goldMultiplier;
-            }
+            // Referral code
+            document.getElementById('referralCode').textContent = adminData.referralCode;
+            document.getElementById('refCodeDisplay').textContent = adminData.referralCode;
             
-            // Ganar oro
-            gameData.gold += goldEarned;
-            gameData.totalGoldEarned += goldEarned;
-            gameData.totalClicks++;
+            // Calcular neto de retiro
+            const amount = parseFloat(document.getElementById('withdrawAmount').value) || 0;
+            document.getElementById('netWithdraw').textContent = (amount - adminConfig.withdrawalFee).toFixed(2);
+        }
+        
+        // Sistema de clicks
+        document.getElementById('clickBtn').addEventListener('click', function() {
+            const earnings = adminData.clickPower * adminData.multiplier;
             
-            // Ganar experiencia
-            gainXP(1);
-            
-            updateDisplay();
+            adminData.usdt += earnings;
+            adminData.totalClicks++;
+            adminData.totalEarned += earnings;
             
             // Efecto visual
-            const clickButton = document.getElementById('clickButton');
-            clickButton.style.transform = 'scale(0.95)';
-            setTimeout(() => clickButton.style.transform = 'scale(1)', 100);
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 100);
             
-            // Crear partícula de oro
-            createGoldParticle();
+            updateDisplay();
+            saveGameData();
+        });
+        
+        // =============================================
+        // SISTEMA DE PAGOS Y RETIROS
+        // =============================================
+        
+        // Comprar gemas (admin también puede comprar)
+        function buyGems(packageId) {
+            const packages = {
+                1: { gems: 50, price: 5, name: 'Básico', multiplier: 1.05 },
+                2: { gems: 150, price: 15, name: 'Avanzado', multiplier: 1.15 },
+                3: { gems: 500, price: 50, name: 'Premium', multiplier: 1.30 },
+                4: { gems: 1200, price: 100, name: 'Élite', multiplier: 1.50 }
+            };
+            
+            const pack = packages[packageId];
+            if (!pack) return;
+            
+            // Guardar compra pendiente
+            currentPurchase = {
+                id: 'purchase_' + Date.now(),
+                userId: adminData.userId,
+                packageId: packageId,
+                gems: pack.gems,
+                price: pack.price,
+                name: pack.name,
+                multiplier: pack.multiplier,
+                isAdmin: true,
+                timestamp: new Date().toISOString(),
+                status: 'pending'
+            };
+            
+            // Mostrar modal de pago
+            document.getElementById('paymentTitle').textContent = `Comprar ${pack.gems} Gemas - ${pack.price} USDT`;
+            document.getElementById('paymentAmount').textContent = pack.price;
+            document.getElementById('paymentModal').style.display = 'flex';
+            document.getElementById('paymentInstructions').style.display = 'none';
         }
         
-        // Crear partícula de oro (efecto visual)
-        function createGoldParticle() {
-            const particle = document.createElement('div');
-            particle.style.position = 'fixed';
-            particle.style.color = 'var(--gold)';
-            particle.style.fontWeight = 'bold';
-            particle.style.fontSize = '1.2rem';
-            particle.style.pointerEvents = 'none';
-            particle.style.zIndex = '1000';
-            particle.textContent = '+' + (gameData.clickPower * (activeBoosts.goldBoost.active ? activeBoosts.goldBoost.multiplier : 1)).toFixed(0);
+        // Seleccionar método de pago
+        function selectPaymentMethod(network) {
+            const wallets = {
+                solana: '68rKWUCbuFnjZUsezsHcRh9Nr8G139XGXQhDBQuuSr5U',
+                optimism: '0xadc2fbf9052fe4746a3d415342f4ce31ab0f20c0'
+            };
             
-            // Posición inicial (en el botón de clic)
-            const clickButton = document.getElementById('clickButton');
-            const rect = clickButton.getBoundingClientRect();
-            particle.style.left = (rect.left + rect.width / 2) + 'px';
-            particle.style.top = (rect.top + rect.height / 2) + 'px';
-            
-            document.body.appendChild(particle);
-            
-            // Animación
-            let start = Date.now();
-            let duration = 1000;
-            
-            function animate() {
-                let timePassed = Date.now() - start;
-                let progress = timePassed / duration;
-                
-                if (progress > 1) {
-                    particle.remove();
-                    return;
-                }
-                
-                particle.style.opacity = 1 - progress;
-                particle.style.transform = `translateY(${-progress * 100}px)`;
-                particle.style.left = (rect.left + rect.width / 2 + Math.sin(progress * Math.PI * 2) * 50) + 'px';
-                
-                requestAnimationFrame(animate);
-            }
-            
-            animate();
+            document.getElementById('walletAddress').textContent = wallets[network];
+            document.getElementById('paymentInstructions').style.display = 'block';
+            currentPurchase.network = network;
         }
         
-        // Comprar mejora con ORO
-        function buyGoldUpgrade(id) {
-            const upgrade = goldUpgrades.find(u => u.id === id);
-            if (!upgrade) return;
-            
-            if (gameData.gold >= upgrade.cost) {
-                gameData.gold -= upgrade.cost;
-                
-                // Aplicar efecto
-                if (upgrade.effect.type === "clickPower") {
-                    gameData.clickPower += upgrade.effect.value;
-                } else if (upgrade.effect.type === "goldPerSecond") {
-                    gameData.goldPerSecond += upgrade.effect.value;
-                }
-                
-                // Registrar compra
-                if (!gameData.goldUpgrades.includes(id)) {
-                    gameData.goldUpgrades.push(id);
-                }
-                
-                // Ganar XP por compra
-                gainXP(5);
-                
-                updateDisplay();
-                renderGoldUpgrades();
-                showNotification(`¡Mejora "${upgrade.name}" comprada!`);
-                
-                saveGameData();
-            } else {
-                showNotification("¡No tienes suficiente oro!", "error");
-            }
-        }
-        
-        // Comprar mejora con GEMAS
-        function buyGemsUpgrade(id) {
-            const upgrade = gemsUpgrades.find(u => u.id === id);
-            if (!upgrade) return;
-            
-            if (gameData.gems >= upgrade.cost) {
-                gameData.gems -= upgrade.cost;
-                
-                // Aplicar efecto
-                switch (upgrade.effect.type) {
-                    case "goldMultiplier":
-                        activeBoosts.goldMultiplier = upgrade.effect.value;
-                        break;
-                    case "autoClickers":
-                        activeBoosts.autoClickers += upgrade.effect.value;
-                        gameData.autoClickers += upgrade.effect.value;
-                        break;
-                    case "xpMultiplier":
-                        activeBoosts.xpMultiplier = upgrade.effect.value;
-                        break;
-                    case "gemsPerHour":
-                        activeBoosts.gemsPerHour += upgrade.effect.value;
-                        break;
-                    case "usdtMultiplier":
-                        activeBoosts.usdtMultiplier = upgrade.effect.value;
-                        break;
-                    case "roiBonus":
-                        activeBoosts.roiBonus += upgrade.effect.value;
-                        break;
-                }
-                
-                // Registrar compra
-                if (!gameData.gemsUpgrades.includes(id)) {
-                    gameData.gemsUpgrades.push(id);
-                }
-                
-                // Ganar XP por compra
-                gainXP(10);
-                
-                updateDisplay();
-                renderGemsUpgrades();
-                showNotification(`¡Mejora de gemas "${upgrade.name}" activada!`);
-                
-                saveGameData();
-            } else {
-                showNotification("¡No tienes suficientes gemas!", "error");
-            }
-        }
-        
-        // Comprar mejora temporal
-        function buyTemporaryUpgrade(id) {
-            const upgrade = temporaryUpgrades.find(u => u.id === id);
-            if (!upgrade) return;
-            
-            if (gameData.gems >= upgrade.cost) {
-                gameData.gems -= upgrade.cost;
-                
-                // Activar boost
-                if (upgrade.effect.type === "goldBoost") {
-                    activeBoosts.goldBoost = {
-                        active: true,
-                        multiplier: upgrade.effect.value,
-                        endTime: Date.now() + upgrade.effect.duration
-                    };
-                } else if (upgrade.effect.type === "usdtBoost") {
-                    activeBoosts.usdtBoost = {
-                        active: true,
-                        multiplier: upgrade.effect.value,
-                        endTime: Date.now() + upgrade.effect.duration
-                    };
-                }
-                
-                // Registrar compra
-                if (!gameData.temporaryUpgrades.includes(id)) {
-                    gameData.temporaryUpgrades.push(id);
-                }
-                
-                updateDisplay();
-                renderTemporaryUpgrades();
-                showNotification(`¡Boost "${upgrade.name}" activado por ${upgrade.effect.duration / 3600000} horas!`);
-                
-                saveGameData();
-            } else {
-                showNotification("¡No tienes suficientes gemas!", "error");
-            }
-        }
-        
-        // Iniciar trabajo
-        function startJob(id) {
-            const job = jobs.find(j => j.id === id);
-            if (!job) return;
-            
-            // Verificar requisitos
-            if (gameData.level < job.requirement.level) {
-                showNotification(`Necesitas nivel ${job.requirement.level} para este trabajo`, "error");
+        // Marcar como pagado (admin)
+        function markAsPaid() {
+            if (!currentPurchase || !currentPurchase.network) {
+                alert('Por favor selecciona una red de pago');
                 return;
             }
             
-            // Iniciar trabajo
-            gameData.activeJob = id;
-            gameData.jobProgress = 0;
-            gameData.jobReward = job.reward;
+            // Si es admin, aprobar automáticamente
+            if (currentPurchase.isAdmin) {
+                // Añadir gemas al admin
+                adminData.gems += currentPurchase.gems;
+                adminData.gemsBought += currentPurchase.gems;
+                adminData.multiplier *= currentPurchase.multiplier;
+                
+                alert(`✅ Pago aprobado. Has recibido ${currentPurchase.gems} gemas.`);
+                
+                closePaymentModal();
+                updateDisplay();
+                saveGameData();
+                return;
+            }
+            
+            // Para usuarios referidos, agregar a pendientes
+            pendingPayments.push({
+                ...currentPurchase,
+                status: 'waiting_approval'
+            });
+            
+            alert('✅ Pago registrado como pendiente. El administrador lo aprobará pronto.');
+            
+            closePaymentModal();
+            saveGameData();
+            updatePendingPayments();
+        }
+        
+        // Solicitar retiro
+        function requestWithdrawal() {
+            const amount = parseFloat(document.getElementById('withdrawAmount').value);
+            const network = document.getElementById('withdrawNetwork').value;
+            const wallet = document.getElementById('userWallet').value;
+            
+            if (amount < adminConfig.minWithdrawal) {
+                alert(`El mínimo de retiro es ${adminConfig.minWithdrawal} USDT`);
+                return;
+            }
+            
+            if (adminData.usdt < amount) {
+                alert('No tienes suficiente USDT');
+                return;
+            }
+            
+            if (!wallet) {
+                alert('Por favor ingresa tu dirección de wallet');
+                return;
+            }
+            
+            const fee = adminConfig.withdrawalFee;
+            const netAmount = amount - fee;
+            
+            // Crear retiro pendiente
+            const withdrawal = {
+                id: 'withdrawal_' + Date.now(),
+                userId: adminData.userId,
+                amount: amount,
+                fee: fee,
+                netAmount: netAmount,
+                network: network,
+                wallet: wallet,
+                timestamp: new Date().toISOString(),
+                status: 'pending'
+            };
+            
+            // Restar del balance
+            adminData.usdt -= amount;
+            adminData.totalWithdrawn += netAmount;
+            
+            // Agregar a lista de retiros pendientes
+            pendingWithdrawals.push(withdrawal);
+            
+            // Sumar a ganancias del admin (si fuera usuario, sería comisión)
+            adminEarnings.withdrawalCommissions += fee;
+            
+            alert(`✅ Retiro solicitado. Recibirás ${netAmount} USDT. Comisión: ${fee} USDT.`);
             
             updateDisplay();
-            renderJobs();
-            showNotification(`¡Trabajo "${job.name}" iniciado!`);
+            saveGameData();
+            updatePendingWithdrawals();
+            updateAdminDisplay();
+            
+            // Limpiar formulario
+            document.getElementById('userWallet').value = '';
+            document.getElementById('withdrawAmount').value = adminConfig.minWithdrawal;
         }
         
-        // Actualizar progreso del trabajo
-        function updateJob() {
-            if (gameData.activeJob) {
-                gameData.jobProgress += 1;
-                const job = jobs.find(j => j.id === gameData.activeJob);
-                
-                if (gameData.jobProgress >= job.duration) {
-                    // Completar trabajo
-                    gameData.gems += gameData.jobReward;
-                    gameData.totalGemsEarned += gameData.jobReward;
-                    gameData.jobsCompleted++;
-                    gameData.activeJob = null;
-                    gameData.jobProgress = 0;
-                    
-                    // Ganar XP por trabajo completado
-                    gainXP(job.reward);
-                    
-                    renderJobs();
-                    showNotification(`¡Trabajo completado! Ganaste ${gameData.jobReward} gemas`);
-                }
+        // =============================================
+        // PANEL DE ADMINISTRACIÓN
+        // =============================================
+        
+        // Actualizar pagos pendientes
+        function updatePendingPayments() {
+            const container = document.getElementById('pendingPayments');
+            
+            const userPayments = pendingPayments.filter(p => !p.isAdmin && p.status === 'waiting_approval');
+            
+            if (userPayments.length === 0) {
+                container.innerHTML = '<div style="color: #7f8c8d; text-align: center; padding: 30px;">No hay pagos pendientes</div>';
+                return;
             }
-        }
-        
-        // Ganar experiencia
-        function gainXP(amount) {
-            let xpEarned = amount * activeBoosts.xpMultiplier;
-            gameData.xp += xpEarned;
             
-            // Subir de nivel
-            while (gameData.xp >= gameData.xpForNextLevel) {
-                gameData.xp -= gameData.xpForNextLevel;
-                gameData.level++;
-                gameData.xpForNextLevel = Math.floor(gameData.xpForNextLevel * 1.5);
-                
-                // Recompensa por subir de nivel
-                gameData.gems += gameData.level * 5;
-                gameData.totalGemsEarned += gameData.level * 5;
-                
-                showNotification(`¡Felicidades! Subiste al nivel ${gameData.level}! Ganaste ${gameData.level * 5} gemas.`);
-            }
-        }
-        
-        // Actualizar pantalla
-        function updateDisplay() {
-            // Header
-            document.getElementById('compactGold').textContent = Math.floor(gameData.gold).toLocaleString();
-            document.getElementById('compactGems').textContent = Math.floor(gameData.gems).toLocaleString();
-            document.getElementById('compactUSDT').textContent = gameData.usdt.toFixed(2);
-            document.getElementById('compactLevel').textContent = gameData.level;
-            document.getElementById('compactXP').textContent = `${Math.floor(gameData.xp)}/${gameData.xpForNextLevel} XP`;
-            
-            // Oro por segundo
-            let goldPerSec = gameData.goldPerSecond;
-            if (activeBoosts.goldBoost.active) goldPerSec *= activeBoosts.goldBoost.multiplier;
-            if (activeBoosts.goldMultiplier > 1) goldPerSec *= activeBoosts.goldMultiplier;
-            document.getElementById('compactGoldPerSec').textContent = `+${Math.floor(goldPerSec)}/s`;
-            
-            // Gemas por día
-            document.getElementById('compactGemsPerDay').textContent = `+${Math.floor(activeBoosts.gemsPerHour * 24)}/día`;
-            
-            // Sección de clic
-            document.getElementById('goldDisplay').textContent = Math.floor(gameData.gold).toLocaleString() + " Oro";
-            
-            let displayedGoldPerSec = gameData.goldPerSecond;
-            if (activeBoosts.goldBoost.active) displayedGoldPerSec *= activeBoosts.goldBoost.multiplier;
-            if (activeBoosts.goldMultiplier > 1) displayedGoldPerSec *= activeBoosts.goldMultiplier;
-            document.getElementById('goldPerSecond').textContent = `+${Math.floor(displayedGoldPerSec)} oro por segundo`;
-            
-            document.getElementById('clickPower').textContent = gameData.clickPower;
-            document.getElementById('autoClickers').textContent = gameData.autoClickers + activeBoosts.autoClickers;
-            document.getElementById('totalClicks').textContent = gameData.totalClicks.toLocaleString();
-            
-            // Sistema de nivel
-            document.getElementById('currentLevel').textContent = gameData.level;
-            document.getElementById('currentXP').textContent = Math.floor(gameData.xp);
-            document.getElementById('nextLevelXP').textContent = gameData.xpForNextLevel;
-            
-            const levelProgress = (gameData.xp / gameData.xpForNextLevel) * 100;
-            document.getElementById('levelProgressBar').style.width = `${levelProgress}%`;
-            
-            // Ganancias USDT
-            document.getElementById('usdtEarnings').textContent = gameData.usdt.toFixed(2);
-            document.getElementById('availableEarnings').textContent = gameData.usdt.toFixed(2);
-            
-            // Sistema de referidos
-            document.getElementById('referralCode').textContent = gameData.referralCode;
-            document.getElementById('activeReferrals').textContent = gameData.activeReferrals;
-            document.getElementById('referralEarnings').textContent = gameData.referralEarnings.toFixed(2);
-            document.getElementById('processedWithdrawals').textContent = gameData.processedWithdrawals;
-            
-            // Estadísticas
-            document.getElementById('statUsername').textContent = gameData.username;
-            
-            const hours = Math.floor(gameData.playTime / 60);
-            const minutes = gameData.playTime % 60;
-            document.getElementById('statPlayTime').textContent = `${hours}h ${minutes}m`;
-            
-            document.getElementById('statTotalClicks').textContent = gameData.totalClicks.toLocaleString();
-            document.getElementById('statTotalGold').textContent = Math.floor(gameData.totalGoldEarned).toLocaleString();
-            document.getElementById('statTotalGems').textContent = Math.floor(gameData.totalGemsEarned).toLocaleString();
-            document.getElementById('statTotalUSDT').textContent = "$" + gameData.totalUSDTEarned.toFixed(2);
-            document.getElementById('statUpgradesBought').textContent = gameData.goldUpgrades.length + gameData.gemsUpgrades.length + gameData.temporaryUpgrades.length;
-            document.getElementById('statJobsCompleted').textContent = gameData.jobsCompleted;
-            document.getElementById('statTotalInvestment').textContent = "$" + gameData.totalInvestment.toFixed(2);
-            
-            // Calcular ROI
-            if (gameData.totalInvestment > 0) {
-                const roi = ((gameData.totalUSDTEarned / gameData.totalInvestment) * 100).toFixed(1);
-                document.getElementById('statTotalROI').textContent = roi + "%";
-            } else {
-                document.getElementById('statTotalROI').textContent = "0%";
-            }
-        }
-        
-        // Renderizar mejoras con oro
-        function renderGoldUpgrades() {
-            const grid = document.getElementById('goldUpgradesGrid');
-            grid.innerHTML = '';
-            
-            goldUpgrades.forEach(upgrade => {
-                const canAfford = gameData.gold >= upgrade.cost;
-                const isPurchased = gameData.goldUpgrades.includes(upgrade.id);
-                
-                const card = document.createElement('div');
-                card.className = `upgrade-card ${canAfford ? '' : 'disabled'}`;
-                if (isPurchased) {
-                    card.style.opacity = '0.7';
-                    card.style.borderColor = 'var(--warning)';
-                }
-                
-                card.innerHTML = `
-                    <div class="upgrade-header">
-                        <div class="upgrade-name">${upgrade.name} ${isPurchased ? '✓' : ''}</div>
-                        <div class="upgrade-cost">${upgrade.cost.toLocaleString()} Oro</div>
-                    </div>
-                    <div class="upgrade-description">${upgrade.description}</div>
-                    <div class="upgrade-effect">+${upgrade.effect.value} ${upgrade.effect.type === 'clickPower' ? 'oro/clic' : 'oro/seg'}</div>
-                `;
-                
-                if (!isPurchased) {
-                    card.onclick = () => buyGoldUpgrade(upgrade.id);
-                } else {
-                    card.onclick = null;
-                    card.style.cursor = 'default';
-                }
-                
-                grid.appendChild(card);
-            });
-        }
-        
-        // Renderizar mejoras con gemas
-        function renderGemsUpgrades() {
-            const grid = document.getElementById('gemsUpgradesGrid');
-            grid.innerHTML = '';
-            
-            gemsUpgrades.forEach(upgrade => {
-                const canAfford = gameData.gems >= upgrade.cost;
-                const isPurchased = gameData.gemsUpgrades.includes(upgrade.id);
-                
-                const card = document.createElement('div');
-                card.className = `gems-upgrade-card ${canAfford ? '' : 'disabled'}`;
-                if (isPurchased) {
-                    card.style.opacity = '0.7';
-                    card.style.borderColor = 'var(--mission)';
-                }
-                
-                card.innerHTML = `
-                    <div class="upgrade-header">
-                        <div class="upgrade-name">${upgrade.name} ${isPurchased ? '✓' : ''}</div>
-                        <div class="upgrade-cost gems">${upgrade.cost} Gemas</div>
-                    </div>
-                    <div class="upgrade-description">${upgrade.description}</div>
-                    <div class="upgrade-effect">${getUpgradeEffectText(upgrade.effect)}</div>
-                `;
-                
-                if (!isPurchased) {
-                    card.onclick = () => buyGemsUpgrade(upgrade.id);
-                } else {
-                    card.onclick = null;
-                    card.style.cursor = 'default';
-                }
-                
-                grid.appendChild(card);
-            });
-        }
-        
-        // Obtener texto del efecto de mejora
-        function getUpgradeEffectText(effect) {
-            switch (effect.type) {
-                case "goldMultiplier": return `x${effect.value} Oro`;
-                case "autoClickers": return `+${effect.value} Trabajadores`;
-                case "xpMultiplier": return `x${effect.value} XP`;
-                case "gemsPerHour": return `+${effect.value} Gemas/hora`;
-                case "usdtMultiplier": return `x${effect.value} USDT`;
-                case "roiBonus": return `+${(effect.value * 100)}% ROI`;
-                default: return "";
-            }
-        }
-        
-        // Renderizar mejoras temporales
-        function renderTemporaryUpgrades() {
-            const grid = document.getElementById('temporaryUpgradesGrid');
-            grid.innerHTML = '';
-            
-            temporaryUpgrades.forEach(upgrade => {
-                const canAfford = gameData.gems >= upgrade.cost;
-                
-                const card = document.createElement('div');
-                card.className = `temporary-upgrade-card ${canAfford ? '' : 'disabled'}`;
-                
-                let timeText = "";
-                if (upgrade.effect.duration === 3600000) timeText = "1 hora";
-                else if (upgrade.effect.duration === 14400000) timeText = "4 horas";
-                else if (upgrade.effect.duration === 86400000) timeText = "24 horas";
-                else if (upgrade.effect.duration === 28800000) timeText = "8 horas";
-                
-                card.innerHTML = `
-                    <div class="upgrade-header">
-                        <div class="upgrade-name">${upgrade.name}</div>
-                        <div class="upgrade-cost gems">${upgrade.cost} Gemas</div>
-                    </div>
-                    <div class="upgrade-description">${upgrade.description}</div>
-                    <div class="upgrade-effect">Duración: ${timeText}</div>
-                `;
-                
-                if (canAfford) {
-                    card.onclick = () => buyTemporaryUpgrade(upgrade.id);
-                }
-                
-                grid.appendChild(card);
-            });
-        }
-        
-        // Renderizar trabajos
-        function renderJobs() {
-            const jobsList = document.getElementById('jobsList');
-            jobsList.innerHTML = '';
-            
-            jobs.forEach(job => {
-                const isActive = gameData.activeJob === job.id;
-                const canStart = gameData.level >= job.requirement.level && !gameData.activeJob;
-                
-                const card = document.createElement('div');
-                card.className = `job-card ${isActive ? 'active' : ''} ${canStart ? 'available' : ''}`;
-                
-                let progressHTML = '';
-                if (isActive) {
-                    const progress = (gameData.jobProgress / job.duration) * 100;
-                    progressHTML = `
-                        <div class="job-progress">
-                            <div class="job-progress-bar" style="width: ${progress}%"></div>
+            let html = '';
+            userPayments.forEach((payment, index) => {
+                const originalIndex = pendingPayments.findIndex(p => p.id === payment.id);
+                html += `
+                    <div class="pending-item">
+                        <div class="user-info">
+                            <div class="user-id">Usuario: ${payment.userId.substring(0, 10)}...</div>
+                            <div class="amount">${payment.price} USDT (${payment.gems} gemas)</div>
+                            <div class="time">${new Date(payment.timestamp).toLocaleString()}</div>
                         </div>
-                        <div style="font-size: 0.8rem; color: #94a3b8; text-align: right;">
-                            ${Math.floor(progress)}% completado
+                        <div>
+                            <button class="btn btn-success btn-small" onclick="approvePayment(${originalIndex})">
+                                <i class="fas fa-check"></i>
+                            </button>
+                            <button class="btn btn-danger btn-small" onclick="rejectPayment(${originalIndex})">
+                                <i class="fas fa-times"></i>
+                            </button>
                         </div>
-                    `;
-                }
-                
-                card.innerHTML = `
-                    <div class="job-header">
-                        <div class="job-name">${job.name}</div>
-                        <div class="job-reward">${job.reward} Gemas</div>
                     </div>
-                    <div class="job-description">${job.description}</div>
-                    <div style="font-size: 0.8rem; color: #94a3b8;">
-                        Duración: ${formatTime(job.duration)} | Requisito: Nivel ${job.requirement.level}
-                    </div>
-                    ${progressHTML}
                 `;
-                
-                if (canStart) {
-                    card.onclick = () => startJob(job.id);
-                } else if (!isActive && gameData.level < job.requirement.level) {
-                    card.style.opacity = '0.6';
-                    card.style.cursor = 'not-allowed';
-                }
-                
-                jobsList.appendChild(card);
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        // Aprobar pago (admin)
+        function approvePayment(index) {
+            const payment = pendingPayments[index];
+            
+            // Aquí en un sistema real, buscarías al usuario y le darías las gemas
+            // Por ahora solo simulamos
+            pendingPayments[index].status = 'approved';
+            
+            // Sumar a ganancias del admin
+            adminEarnings.gemSales += payment.price;
+            
+            // Si tiene referente, dar comisión
+            if (payment.referredBy) {
+                const commission = payment.price * (adminConfig.referralCommission / 100);
+                adminEarnings.referralCommissions += commission;
+            }
+            
+            alert(`✅ Pago aprobado. Se han acreditado ${payment.gems} gemas al usuario.`);
+            
+            updatePendingPayments();
+            updateAdminDisplay();
+            saveGameData();
+        }
+        
+        // Rechazar pago
+        function rejectPayment(index) {
+            if (confirm('¿Seguro que quieres rechazar este pago?')) {
+                pendingPayments[index].status = 'rejected';
+                updatePendingPayments();
+                saveGameData();
+            }
+        }
+        
+        // Actualizar retiros pendientes
+        function updatePendingWithdrawals() {
+            const container = document.getElementById('pendingWithdrawals');
+            
+            const userWithdrawals = pendingWithdrawals.filter(w => w.status === 'pending');
+            
+            if (userWithdrawals.length === 0) {
+                container.innerHTML = '<div style="color: #7f8c8d; text-align: center; padding: 30px;">No hay retiros pendientes</div>';
+                return;
+            }
+            
+            let html = '';
+            userWithdrawals.forEach((withdrawal, index) => {
+                const originalIndex = pendingWithdrawals.findIndex(w => w.id === withdrawal.id);
+                html += `
+                    <div class="pending-item">
+                        <div class="user-info">
+                            <div class="user-id">${withdrawal.userId === adminData.userId ? 'Admin' : 'Usuario: ' + withdrawal.userId.substring(0, 10)}...</div>
+                            <div class="amount">${withdrawal.amount} USDT (Neto: ${withdrawal.netAmount})</div>
+                            <div class="time">${new Date(withdrawal.timestamp).toLocaleString()}</div>
+                        </div>
+                        <div>
+                            <button class="btn btn-success btn-small" onclick="completeWithdrawal(${originalIndex})">
+                                <i class="fas fa-check"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        // Completar retiro
+        function completeWithdrawal(index) {
+            if (confirm('¿Ya enviaste el pago al usuario?')) {
+                pendingWithdrawals[index].status = 'completed';
+                alert('✅ Retiro marcado como completado.');
+                updatePendingWithdrawals();
+                saveGameData();
+            }
+        }
+        
+        // Actualizar display del admin
+        function updateAdminDisplay() {
+            document.getElementById('adminWithdrawalCommissions').textContent = 
+                adminEarnings.withdrawalCommissions.toFixed(2);
+            document.getElementById('adminGemSales').textContent = 
+                adminEarnings.gemSales.toFixed(2);
+            document.getElementById('adminReferralCommissions').textContent = 
+                adminEarnings.referralCommissions.toFixed(2);
+            
+            // Actualizar configuración
+            document.getElementById('withdrawalFee').value = adminConfig.withdrawalFee;
+            document.getElementById('minWithdrawal').value = adminConfig.minWithdrawal;
+            document.getElementById('referralCommission').value = adminConfig.referralCommission;
+        }
+        
+        // Actualizar referidos
+        function updateReferralsDisplay() {
+            document.getElementById('totalReferrals').textContent = referrals.length;
+            document.getElementById('referralEarnings').textContent = adminEarnings.referralCommissions.toFixed(2);
+            
+            const container = document.getElementById('referralsList');
+            
+            if (referrals.length === 0) {
+                container.innerHTML = 'Aún no tienes referidos. ¡Comparte tu enlace!';
+                return;
+            }
+            
+            let html = '<div style="text-align: left;">';
+            referrals.forEach((ref, index) => {
+                html += `
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin-bottom: 10px;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <div>
+                                <strong>Usuario ${index + 1}</strong>
+                                <div style="color: #7f8c8d; font-size: 0.9rem;">ID: ${ref.userId.substring(0, 12)}...</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="color: var(--secondary); font-weight: bold;">${ref.commissions || 0} USDT</div>
+                                <div style="color: #7f8c8d; font-size: 0.9rem;">Comisiones</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            
+            container.innerHTML = html;
+        }
+        
+        // =============================================
+        // SISTEMA DE REFERIDOS
+        // =============================================
+        
+        // Copiar enlace de referido
+        function copyReferralLink() {
+            const link = `https://tu-dominio.com/player.html?ref=${adminData.referralCode}`;
+            navigator.clipboard.writeText(link).then(() => {
+                alert('✅ Enlace copiado al portapapeles');
             });
         }
         
-        // Formatear tiempo
-        function formatTime(seconds) {
-            if (seconds < 60) return `${seconds}s`;
-            if (seconds < 3600) return `${Math.floor(seconds / 60)}m`;
-            return `${Math.floor(seconds / 3600)}h`;
-        }
-        
-        // Verificar boosts activos
-        function checkBoosts() {
-            const now = Date.now();
+        // Compartir enlace
+        function shareReferralLink() {
+            const link = `https://tu-dominio.com/player.html?ref=${adminData.referralCode}`;
+            const text = `¡Únete a Crypto Clicker Pro y gana USDT reales haciendo clics! Usa mi enlace: ${link}`;
             
-            if (activeBoosts.goldBoost.active && now > activeBoosts.goldBoost.endTime) {
-                activeBoosts.goldBoost.active = false;
-                activeBoosts.goldBoost.multiplier = 1;
-                showNotification("El boost de oro ha terminado");
-            }
-            
-            if (activeBoosts.usdtBoost.active && now > activeBoosts.usdtBoost.endTime) {
-                activeBoosts.usdtBoost.active = false;
-                activeBoosts.usdtBoost.multiplier = 1;
-                showNotification("El boost de USDT ha terminado");
-            }
-        }
-        
-        // Actualizar tiempo de juego
-        function updatePlayTime() {
-            gameData.playTime++;
-        }
-        
-        // Generar código de referido
-        function generateReferralCode() {
-            if (!gameData.referralCode) {
-                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-                let code = 'REF-';
-                for (let i = 0; i < 6; i++) {
-                    code += chars.charAt(Math.floor(Math.random() * chars.length));
-                }
-                gameData.referralCode = code;
-            }
-        }
-        
-        // Copiar código de referido
-        function copyReferralCode() {
-            navigator.clipboard.writeText(gameData.referralCode).then(() => {
-                showNotification('Código de referido copiado al portapapeles');
-            });
-        }
-        
-        // Compartir referido
-        function shareReferral() {
-            const text = `¡Únete a Crypto Clicker Pro usando mi código de referido ${gameData.referralCode} y gana gemas gratis!`;
             if (navigator.share) {
                 navigator.share({
                     title: 'Crypto Clicker Pro',
                     text: text,
-                    url: window.location.href
+                    url: link
                 });
             } else {
                 navigator.clipboard.writeText(text).then(() => {
-                    showNotification('Enlace de referido copiado al portapapeles');
+                    alert('✅ Enlace copiado. ¡Pégalo donde quieras compartirlo!');
                 });
             }
         }
         
-        // Funciones del sistema de pagos
-        function copyToClipboard(elementId) {
-            const element = document.getElementById(elementId);
-            const text = element.textContent;
+        // Retirar ganancias del admin
+        function withdrawAdminEarnings() {
+            const total = adminEarnings.withdrawalCommissions + adminEarnings.gemSales + adminEarnings.referralCommissions;
             
-            navigator.clipboard.writeText(text).then(() => {
-                showNotification('Dirección copiada al portapapeles');
-            }).catch(err => {
-                console.error('Error al copiar: ', err);
-                showNotification('Error al copiar la dirección', 'error');
-            });
-        }
-        
-        function requestWithdrawal() {
-            const network = document.getElementById('withdrawalNetwork').value;
-            const address = document.getElementById('walletAddress').value;
-            const amount = parseFloat(document.getElementById('withdrawalAmount').value);
-            
-            if (!address) {
-                showNotification('Por favor ingresa tu dirección de billetera', 'error');
+            if (total <= 0) {
+                alert('No tienes ganancias para retirar');
                 return;
             }
             
-            if (!amount || amount < 5) {
-                showNotification('El monto mínimo para retirar es $5.00', 'error');
-                return;
-            }
-            
-            if (amount > gameData.usdt) {
-                showNotification('No tienes suficientes fondos para este retiro', 'error');
-                return;
-            }
-            
-            // Registrar transacción
-            const transaction = {
-                id: Date.now(),
-                date: new Date().toLocaleDateString(),
-                type: 'Retiro',
-                amount: amount,
-                status: 'Pendiente',
-                network: network,
-                address: address.substring(0, 10) + '...' + address.substring(address.length - 8)
-            };
-            
-            gameData.transactions.unshift(transaction);
-            gameData.usdt -= amount;
-            gameData.processedWithdrawals++;
-            
-            updateDisplay();
-            renderTransactions();
-            showNotification('Solicitud de retiro enviada. Será procesada en 24-48 horas.');
-            
-            // Limpiar formulario
-            document.getElementById('walletAddress').value = '';
-            document.getElementById('withdrawalAmount').value = '';
-            
-            saveGameData();
-        }
-        
-        // Simular compra de gemas (para pruebas)
-        function simulateGemPurchase(amountUSD) {
-            const gemsEarned = amountUSD * 100; // $1 = 100 gemas
-            gameData.gems += gemsEarned;
-            gameData.totalGemsEarned += gemsEarned;
-            gameData.totalInvestment += amountUSD;
-            
-            // Registrar transacción
-            const transaction = {
-                id: Date.now(),
-                date: new Date().toLocaleDateString(),
-                type: 'Compra de Gemas',
-                amount: amountUSD,
-                status: 'Completado',
-                gems: gemsEarned
-            };
-            
-            gameData.transactions.unshift(transaction);
-            
-            updateDisplay();
-            renderTransactions();
-            showNotification(`¡Compra exitosa! Recibiste ${gemsEarned} gemas por $${amountUSD}`);
-            
-            saveGameData();
-        }
-        
-        // Renderizar transacciones
-        function renderTransactions() {
-            const table = document.getElementById('transactionsTable');
-            
-            if (gameData.transactions.length === 0) {
-                table.innerHTML = `
-                    <tr>
-                        <td colspan="4" style="text-align: center; padding: 20px; color: #94a3b8;">
-                            No hay transacciones aún
-                        </td>
-                    </tr>
-                `;
-                return;
-            }
-            
-            table.innerHTML = '';
-            
-            gameData.transactions.slice(0, 10).forEach(transaction => {
-                let statusClass = 'status-pending';
-                if (transaction.status === 'Completado') statusClass = 'status-completed';
-                if (transaction.status === 'Fallido') statusClass = 'status-failed';
+            if (confirm(`¿Retirar ${total.toFixed(2)} USDT de tus ganancias?`)) {
+                adminData.usdt += total;
+                adminEarnings.withdrawalCommissions = 0;
+                adminEarnings.gemSales = 0;
+                adminEarnings.referralCommissions = 0;
                 
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${transaction.date}</td>
-                    <td>${transaction.type}</td>
-                    <td>${transaction.type === 'Compra de Gemas' ? `$${transaction.amount}` : `$${transaction.amount}`}</td>
-                    <td><span class="status-badge ${statusClass}">${transaction.status}</span></td>
-                `;
-                table.appendChild(row);
-            });
+                alert(`✅ ${total.toFixed(2)} USDT añadidos a tu balance.`);
+                
+                updateDisplay();
+                updateAdminDisplay();
+                saveGameData();
+            }
         }
         
-        // Funciones de navegación
-        function switchTab(tabName) {
+        // =============================================
+        // FUNCIONES AUXILIARES
+        // =============================================
+        
+        // Cambiar pestañas
+        function openTab(tabName) {
             // Ocultar todas las pestañas
             document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.style.display = 'none';
-            });
-            
-            // Desactivar todos los botones
-            document.querySelectorAll('.tab-button').forEach(button => {
-                button.classList.remove('active');
-            });
-            
-            // Mostrar pestaña seleccionada
-            document.getElementById(`tab-${tabName}`).style.display = 'block';
-            
-            // Activar botón seleccionado
-            document.querySelector(`.tab-button[onclick="switchTab('${tabName}')"]`).classList.add('active');
-            
-            // Renderizar transacciones si es la pestaña de pagos
-            if (tabName === 'payments') {
-                renderTransactions();
-            }
-        }
-        
-        // Funciones del sistema de login
-        function showForm(formId) {
-            // Ocultar todos los formularios
-            document.querySelectorAll('.login-form').forEach(form => {
-                form.classList.remove('active');
-            });
-            
-            // Remover activo de todas las pestañas
-            document.querySelectorAll('.login-tab').forEach(tab => {
                 tab.classList.remove('active');
             });
             
-            // Mostrar formulario seleccionado
-            document.getElementById(formId).classList.add('active');
-            
-            // Activar pestaña correspondiente
-            document.querySelector(`.login-tab[data-form="${formId}"]`).classList.add('active');
-        }
-        
-        function togglePassword(inputId) {
-            const input = document.getElementById(inputId);
-            const toggleBtn = input.nextElementSibling;
-            
-            if (input.type === 'password') {
-                input.type = 'text';
-                toggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i>';
-            } else {
-                input.type = 'password';
-                toggleBtn.innerHTML = '<i class="fas fa-eye"></i>';
-            }
-        }
-        
-        function loginUser() {
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            
-            if (!email || !password) {
-                showNotification('Por favor, completa todos los campos', 'error');
-                return;
-            }
-            
-            // Simular login exitoso
-            document.getElementById('loginOverlay').style.display = 'none';
-            document.querySelector('.compact-header').style.display = 'flex';
-            document.querySelector('.tabs-navigation').style.display = 'flex';
-            
-            gameData.username = email.split('@')[0] || email;
-            gameData.isLoggedIn = true;
-            
-            // Mostrar pestaña de juego por defecto
-            document.getElementById('tab-game').style.display = 'block';
-            
-            // Inicializar juego
-            initGame();
-            
-            showNotification('¡Inicio de sesión exitoso! ¡Bienvenido a Crypto Clicker Pro!');
-        }
-        
-        function registerUser() {
-            const email = document.getElementById('registerEmail').value;
-            const username = document.getElementById('registerUsername').value;
-            const password = document.getElementById('registerPassword').value;
-            const confirmPassword = document.getElementById('registerConfirmPassword').value;
-            const referral = document.getElementById('registerReferral').value;
-            
-            // Validaciones
-            if (!email || !username || !password || !confirmPassword) {
-                showNotification('Por favor, completa todos los campos obligatorios', 'error');
-                return;
-            }
-            
-            if (password.length < 8) {
-                showNotification('La contraseña debe tener al menos 8 caracteres', 'error');
-                return;
-            }
-            
-            if (password !== confirmPassword) {
-                showNotification('Las contraseñas no coinciden', 'error');
-                return;
-            }
-            
-            // Simular registro exitoso
-            document.getElementById('loginOverlay').style.display = 'none';
-            document.querySelector('.compact-header').style.display = 'flex';
-            document.querySelector('.tabs-navigation').style.display = 'flex';
-            
-            gameData.username = username;
-            gameData.isLoggedIn = true;
-            
-            // Bonificación por registro
-            gameData.gold = 100;
-            gameData.gems = 10;
-            gameData.totalGoldEarned = 100;
-            gameData.totalGemsEarned = 10;
-            
-            // Bonificación por código de referido
-            if (referral && referral !== '') {
-                gameData.gems += 50;
-                gameData.totalGemsEarned += 50;
-                showNotification('¡Bonificación de 50 gemas por código de referido!');
-            }
-            
-            // Mostrar pestaña de juego por defecto
-            document.getElementById('tab-game').style.display = 'block';
-            
-            // Inicializar juego
-            initGame();
-            
-            // Guardar datos
-            saveGameData();
-            
-            showNotification(`¡Registro exitoso! Bienvenido ${username}. Recibiste 100 oro y 10 gemas de bienvenida.`);
-        }
-        
-        function enterAsGuest() {
-            // Modo invitado
-            document.getElementById('loginOverlay').style.display = 'none';
-            document.querySelector('.compact-header').style.display = 'flex';
-            document.querySelector('.tabs-navigation').style.display = 'flex';
-            
-            gameData.username = 'Invitado';
-            gameData.isLoggedIn = false;
-            
-            // Bonificación para invitado
-            gameData.gold = 50;
-            gameData.gems = 5;
-            gameData.totalGoldEarned = 50;
-            gameData.totalGemsEarned = 5;
-            
-            // Mostrar pestaña de juego por defecto
-            document.getElementById('tab-game').style.display = 'block';
-            
-            // Inicializar juego
-            initGame();
-            
-            showNotification('Modo invitado activado. Tu progreso se guardará localmente.');
-        }
-        
-        function recoverAccount() {
-            const recoveryEmail = document.getElementById('recoveryEmail').value;
-            
-            if (!recoveryEmail) {
-                showNotification('Por favor, introduce tu correo o ID de usuario', 'error');
-                return;
-            }
-            
-            // Simular recuperación
-            showNotification('Se ha enviado un enlace de recuperación a tu correo electrónico');
-            showForm('loginForm');
-        }
-        
-        function showLogin() {
-            document.getElementById('loginOverlay').style.display = 'flex';
-            showForm('registerForm');
-        }
-        
-        // Funciones de guardado y carga
-        function saveGameData() {
-            localStorage.setItem('cryptoClicker_pro', JSON.stringify(gameData));
-        }
-        
-        function loadGameData() {
-            const savedData = localStorage.getItem('cryptoClicker_pro');
-            if (savedData) {
-                const parsed = JSON.parse(savedData);
-                Object.assign(gameData, parsed);
-                updateDisplay();
-            }
-        }
-        
-        function saveGame() {
-            saveGameData();
-            showNotification('Progreso guardado correctamente');
-        }
-        
-        function resetGame() {
-            if (confirm('¿Estás seguro de que quieres reiniciar el juego? Perderás todo tu progreso.')) {
-                localStorage.removeItem('cryptoClicker_pro');
-                location.reload();
-            }
-        }
-        
-        // Función de notificación
-        function showNotification(message, type = 'success') {
-            // Crear notificación
-            const notification = document.createElement('div');
-            notification.style.position = 'fixed';
-            notification.style.top = '20px';
-            notification.style.right = '20px';
-            notification.style.padding = '15px 20px';
-            notification.style.borderRadius = '10px';
-            notification.style.color = 'white';
-            notification.style.fontWeight = 'bold';
-            notification.style.zIndex = '99999';
-            notification.style.boxShadow = '0 5px 15px rgba(0,0,0,0.3)';
-            notification.style.animation = 'slideIn 0.3s, fadeOut 0.3s 2.7s';
-            
-            if (type === 'success') {
-                notification.style.background = 'linear-gradient(135deg, var(--success), #059669)';
-                notification.style.borderLeft = '5px solid var(--secondary)';
-            } else {
-                notification.style.background = 'linear-gradient(135deg, var(--danger), #dc2626)';
-                notification.style.borderLeft = '5px solid var(--danger)';
-            }
-            
-            notification.textContent = message;
-            
-            // Agregar estilos de animación
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes slideIn {
-                    from { transform: translateX(100%); opacity: 0; }
-                    to { transform: translateX(0); opacity: 1; }
-                }
-                @keyframes fadeOut {
-                    from { opacity: 1; }
-                    to { opacity: 0; }
-                }
-            `;
-            document.head.appendChild(style);
-            
-            document.body.appendChild(notification);
-            
-            // Eliminar notificación después de 3 segundos
-            setTimeout(() => {
-                notification.remove();
-                style.remove();
-            }, 3000);
-        }
-        
-        // Inicializar pestañas
-        document.querySelectorAll('.login-tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                const formId = this.getAttribute('data-form');
-                showForm(formId);
+            // Quitar active de todos los botones
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
             });
-        });
-        
-        // Cargar juego al iniciar si hay datos guardados
-        window.addEventListener('load', function() {
-            const savedData = localStorage.getItem('cryptoClicker_pro');
-            if (savedData) {
-                const parsed = JSON.parse(savedData);
-                if (parsed.username && parsed.username !== 'Invitado') {
-                    // Iniciar directamente con los datos guardados
-                    document.getElementById('loginOverlay').style.display = 'none';
-                    document.querySelector('.compact-header').style.display = 'flex';
-                    document.querySelector('.tabs-navigation').style.display = 'flex';
-                    document.getElementById('tab-game').style.display = 'block';
-                    initGame();
-                }
-            }
-        });
-        
-        // Para pruebas: Botón para simular compra de gemas (eliminar en producción)
-        function addTestButtons() {
-            const testDiv = document.createElement('div');
-            testDiv.style.position = 'fixed';
-            testDiv.style.bottom = '10px';
-            testDiv.style.right = '10px';
-            testDiv.style.zIndex = '9998';
-            testDiv.style.display = 'flex';
-            testDiv.style.gap = '5px';
-            testDiv.style.flexDirection = 'column';
             
-            testDiv.innerHTML = `
-                <button onclick="simulateGemPurchase(1)" style="padding: 5px 10px; background: var(--success); color: white; border: none; border-radius: 5px; cursor: pointer;">Test: $1 → 100 Gemas</button>
-                <button onclick="simulateGemPurchase(10)" style="padding: 5px 10px; background: var(--primary); color: white; border: none; border-radius: 5px; cursor: pointer;">Test: $10 → 1000 Gemas</button>
-                <button onclick="gainXP(1000)" style="padding: 5px 10px; background: var(--warning); color: white; border: none; border-radius: 5px; cursor: pointer;">Test: +1000 XP</button>
-            `;
+            // Mostrar pestaña seleccionada
+            document.getElementById(tabName).classList.add('active');
             
-            document.body.appendChild(testDiv);
+            // Activar botón
+            event.currentTarget.classList.add('active');
         }
         
-        // Descomentar para pruebas
-        // addTestButtons();
+        // Mejorar click
+        function upgradeClick() {
+            const cost = 50;
+            if (adminData.gems >= cost) {
+                adminData.gems -= cost;
+                adminData.multiplier *= 1.05;
+                alert('¡Click mejorado! Multiplicador aumentado.');
+                updateDisplay();
+                saveGameData();
+            } else {
+                alert('¡No tienes suficientes gemas!');
+            }
+        }
+        
+        // Cerrar modal de pago
+        function closePaymentModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+            currentPurchase = null;
+        }
+        
+        // Copiar dirección de wallet
+        function copyWalletAddress() {
+            const address = document.getElementById('walletAddress').textContent;
+            navigator.clipboard.writeText(address).then(() => {
+                alert('✅ Dirección copiada');
+            });
+        }
+        
+        // Refrescar listas
+        function refreshPendingPayments() {
+            updatePendingPayments();
+        }
+        
+        function refreshPendingWithdrawals() {
+            updatePendingWithdrawals();
+        }
+        
+        // Calcular neto de retiro en tiempo real
+        document.getElementById('withdrawAmount').addEventListener('input', function() {
+            const amount = parseFloat(this.value) || 0;
+            document.getElementById('netWithdraw').textContent = (amount - adminConfig.withdrawalFee).toFixed(2);
+        });
+        
+        // Inicializar juego
+        window.onload = function() {
+            loadGameData();
+            
+            // Mostrar instrucciones iniciales
+            setTimeout(() => {
+                alert('👑 BIENVENIDO AL PANEL DE ADMINISTRADOR\n\n' +
+                      '• Tienes acceso completo al juego y panel de control\n' +
+                      '• Usa tu código de referencia para invitar amigos\n' +
+                      '• Los usuarios referidos NO verán el panel de admin\n' +
+                      '• Gana comisiones por cada compra de tus referidos');
+            }, 1000);
+        };
     </script>
 </body>
 </html>
